@@ -10,21 +10,34 @@ const Hero: React.FC = () => {
       className="relative min-h-screen pt-24 pb-16 flex items-center"
     >
       {/* Background grid pattern */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
+      <div className="absolute inset-0 bg-grid-pattern opacity-5" data-scroll data-scroll-speed="-1"></div>
       
       <div className="container-custom relative z-10">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="opacity-0 animate-fade-in text-5xl sm:text-6xl md:text-7xl font-trap font-medium leading-tight tracking-tight text-lumon-dark mb-6">
+          <h1 
+            className="opacity-0 animate-fade-in text-5xl sm:text-6xl md:text-7xl font-trap font-medium leading-tight tracking-tight text-lumon-dark mb-6"
+            data-scroll
+            data-scroll-speed="1"
+            data-scroll-delay="0.1"
+          >
             Work-Life Integration
-            <span className="block text-lumon-accent">Redefined</span>
+            <span className="block text-lumon-accent" data-scroll data-scroll-speed="0.5">Redefined</span>
           </h1>
           
-          <p className="opacity-0 animate-fade-in animate-delay-200 font-jakarta text-lg sm:text-xl text-foreground/80 mb-10 max-w-2xl mx-auto">
+          <p 
+            className="opacity-0 animate-fade-in animate-delay-200 font-jakarta text-lg sm:text-xl text-foreground/80 mb-10 max-w-2xl mx-auto"
+            data-scroll
+            data-scroll-speed="1.2"
+          >
             At Lumon Industries, we believe in complete separation of work and personal life. 
             Our revolutionary severance procedure ensures your work self never meets your home self.
           </p>
           
-          <div className="opacity-0 animate-fade-in animate-delay-300 flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+          <div 
+            className="opacity-0 animate-fade-in animate-delay-300 flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4"
+            data-scroll
+            data-scroll-speed="1.5"
+          >
             <button className="lumon-button group">
               <span className="flex items-center">
                 Apply for Severance
@@ -35,6 +48,7 @@ const Hero: React.FC = () => {
             <a 
               href="#about" 
               className="font-jakarta text-foreground hover:text-lumon-accent transition-colors underline underline-offset-4"
+              data-scroll-to
             >
               Learn More
             </a>
@@ -43,10 +57,14 @@ const Hero: React.FC = () => {
       </div>
       
       {/* Decorative elements */}
-      <div className={cn(
-        "absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-6xl h-1 bg-gradient-to-r",
-        "from-transparent via-lumon-accent/30 to-transparent"
-      )}></div>
+      <div 
+        className={cn(
+          "absolute bottom-0 left-1/2 -translate-x-1/2 w-full max-w-6xl h-1 bg-gradient-to-r",
+          "from-transparent via-lumon-accent/30 to-transparent"
+        )}
+        data-scroll
+        data-scroll-speed="2"
+      ></div>
     </section>
   );
 };
