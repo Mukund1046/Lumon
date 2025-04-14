@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 
 const Hero: React.FC = () => {
@@ -38,20 +39,19 @@ const Hero: React.FC = () => {
             data-scroll
             data-scroll-speed="1.5"
           >
-            <button className="lumon-button group">
+            <Link to="/join-us" className="lumon-button group">
               <span className="flex items-center">
                 Apply for Severance
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </span>
-            </button>
+            </Link>
             
-            <a 
-              href="#about" 
+            <Link 
+              to="/about" 
               className="font-jakarta text-foreground hover:text-lumon-accent transition-colors underline underline-offset-4"
-              data-scroll-to
             >
               Learn More
-            </a>
+            </Link>
           </div>
         </div>
       </div>

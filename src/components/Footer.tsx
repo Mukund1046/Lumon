@@ -1,11 +1,20 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { ArrowUp } from 'lucide-react';
 
 const Footer: React.FC = () => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+  
+  const navItems = [
+    { name: 'Home', path: '/' },
+    { name: 'About', path: '/about' },
+    { name: 'Departments', path: '/departments' },
+    { name: 'Employees', path: '/employees' },
+    { name: 'Join Us', path: '/join-us' },
+  ];
   
   return (
     <footer className="bg-lumon-dark text-white py-16">
@@ -43,14 +52,14 @@ const Footer: React.FC = () => {
           <div>
             <h3 className="text-lg font-trap font-medium mb-4">Quick Links</h3>
             <ul className="space-y-2 font-jakarta">
-              {['Home', 'About', 'Departments', 'Employees', 'Join Us'].map((item) => (
-                <li key={item}>
-                  <a 
-                    href={`#${item.toLowerCase().replace(' ', '-')}`}
+              {navItems.map((item) => (
+                <li key={item.name}>
+                  <Link 
+                    to={item.path}
                     className="text-white/80 hover:text-lumon-accent transition-colors"
                   >
-                    {item}
-                  </a>
+                    {item.name}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -59,10 +68,10 @@ const Footer: React.FC = () => {
           <div>
             <h3 className="text-lg font-trap font-medium mb-4">Legal</h3>
             <ul className="space-y-2 font-jakarta">
-              <li><a href="#" className="text-white/80 hover:text-lumon-accent transition-colors">Privacy Policy</a></li>
-              <li><a href="#" className="text-white/80 hover:text-lumon-accent transition-colors">Terms of Service</a></li>
-              <li><a href="#" className="text-white/80 hover:text-lumon-accent transition-colors">Severance Agreement</a></li>
-              <li><a href="#" className="text-white/80 hover:text-lumon-accent transition-colors">Cookie Policy</a></li>
+              <li><Link to="/privacy" className="text-white/80 hover:text-lumon-accent transition-colors">Privacy Policy</Link></li>
+              <li><Link to="/terms" className="text-white/80 hover:text-lumon-accent transition-colors">Terms of Service</Link></li>
+              <li><Link to="/severance-agreement" className="text-white/80 hover:text-lumon-accent transition-colors">Severance Agreement</Link></li>
+              <li><Link to="/cookies" className="text-white/80 hover:text-lumon-accent transition-colors">Cookie Policy</Link></li>
             </ul>
           </div>
         </div>

@@ -1,11 +1,13 @@
 
 import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const location = useLocation();
   
   useEffect(() => {
     const handleScroll = () => {
@@ -15,6 +17,21 @@ const Navbar: React.FC = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Close mobile menu when route changes
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [location.pathname]);
+  
+  const navItems = [
+    { name: 'Home', path: '/' },
+    { name: 'About', path: '/about' },
+    { name: 'Departments', path: '/departments' },
+    { name: 'Employees', path: '/employees' },
+    { name: 'Join Us', path: '/join-us' },
+  ];
+
+  const isActive = (path: string) => location.pathname === path;
   
   return (
     <header className={cn(
@@ -24,31 +41,37 @@ const Navbar: React.FC = () => {
         : "bg-transparent py-6"
     )}>
       <div className="container-custom flex items-center justify-between">
-        <a 
-          href="#" 
+        <Link 
+          to="/" 
           className="flex items-center space-x-2"
         >
           <span className="font-trap text-2xl font-semibold tracking-tight">LUMON</span>
           <span className="text-xs uppercase tracking-widest font-jakarta opacity-70">Industries</span>
-        </a>
+        </Link>
         
         <nav className="hidden md:flex items-center space-x-8">
-          {['Home', 'About', 'Departments', 'Employees', 'Join Us'].map((item) => (
-            <a 
-              key={item} 
-              href={`#${item.toLowerCase().replace(' ', '-')}`}
-              className="font-jakarta text-sm tracking-wide text-foreground/80 hover:text-lumon-accent transition-colors"
+          {navItems.map((item) => (
+            <Link 
+              key={item.name} 
+              to={item.path}
+              className={cn(
+                "font-jakarta text-sm tracking-wide transition-colors",
+                isActive(item.path) 
+                  ? "text-lumon-accent" 
+                  : "text-foreground/80 hover:text-lumon-accent"
+              )}
             >
-              {item}
-            </a>
+              {item.name}
+            </Link>
           ))}
         </nav>
         
-        <button 
+        <Link 
+          to="/join-us" 
           className="lumon-button hidden md:block"
         >
           Apply Now
-        </button>
+        </Link>
         
         <button 
           className="md:hidden text-foreground"
@@ -64,21 +87,26 @@ const Navbar: React.FC = () => {
         mobileMenuOpen ? "max-h-96" : "max-h-0"
       )}>
         <div className="container-custom py-4 flex flex-col space-y-4">
-          {['Home', 'About', 'Departments', 'Employees', 'Join Us'].map((item) => (
-            <a 
-              key={item} 
-              href={`#${item.toLowerCase().replace(' ', '-')}`}
-              className="font-jakarta text-sm py-2 text-foreground/80 hover:text-lumon-accent transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
+          {navItems.map((item) => (
+            <Link 
+              key={item.name} 
+              to={item.path}
+              className={cn(
+                "font-jakarta text-sm py-2 transition-colors",
+                isActive(item.path) 
+                  ? "text-lumon-accent" 
+                  : "text-foreground/80 hover:text-lumon-accent"
+              )}
             >
-              {item}
-            </a>
+              {item.name}
+            </Link>
           ))}
-          <button 
+          <Link 
+            to="/join-us" 
             className="lumon-button self-start mt-2"
           >
             Apply Now
-          </button>
+          </Link>
         </div>
       </div>
     </header>
