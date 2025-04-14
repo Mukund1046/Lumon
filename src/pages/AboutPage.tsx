@@ -2,6 +2,7 @@
 import React, { useRef } from 'react';
 import Navbar from '../components/Navbar';
 import About from '../components/About';
+import CharacterGallery from '../components/CharacterGallery';
 import Footer from '../components/Footer';
 import { useLocomotiveScroll } from '../hooks/useLocomotiveScroll';
 import 'locomotive-scroll/dist/locomotive-scroll.css';
@@ -22,6 +23,9 @@ const AboutPage: React.FC = () => {
       <Navbar />
       <div data-scroll-section className="pt-24">
         <About />
+      </div>
+      <div data-scroll-section>
+        <CharacterGallery />
       </div>
       <div data-scroll-section>
         <Footer />
