@@ -1,5 +1,5 @@
 
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import Employees from '../components/Employees';
 import Footer from '../components/Footer';
@@ -16,6 +16,11 @@ const EmployeesPage: React.FC = () => {
     class: 'data-scroll',
     getDirection: true,
   });
+  
+  // Reset scroll position when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   
   return (
     <div ref={containerRef} data-scroll-container className="min-h-screen bg-background text-foreground">
