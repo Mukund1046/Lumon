@@ -4,70 +4,38 @@ import { cn } from '@/lib/utils';
 import '../styles/3dscroll.css';
 import { init3DScroll } from '../scripts/3dscroll';
 
+// Define a list of image paths that are guaranteed to exist in the public folder
+const imagePaths = [
+  // First 12 images with correct casing and extensions
+  '/assets/Severance1.jpeg',
+  '/assets/Severance2.jpeg',
+  '/assets/Severance3.jpeg',
+  '/assets/Severance4.jpeg',
+  '/assets/Severance5.jpeg',
+  '/assets/Severance6.jpeg',
+  '/assets/Severance7.jpeg',
+  '/assets/Severance8.jpeg',
+  '/assets/Severance9.jpeg',
+  '/assets/Severance10.jpeg',
+  '/assets/Severance11.jpg',
+  '/assets/Severance12.jpg',
+];
+
 // Component for a grid item with a fallback mechanism
 const GridItem = ({ index }) => {
-  // Use modulo to cycle through the first 24 images
-  // We'll use a smaller modulo to ensure we're using images that definitely exist
-  const imageNumber = (index % 24) + 1;
-
-  // Create an array of fallback images to try using useMemo to avoid recreating on every render
-  const fallbackImages = React.useMemo(() => [
-    // Try with correct path for production
-    `/assets/severance${imageNumber}.jpg`,
-    // Try with different extensions
-    `/assets/severance${imageNumber}.jpeg`,
-    `/assets/severance${imageNumber}.png`,
-    // Try with different image numbers
-    `/assets/severance${(imageNumber % 12) + 1}.jpg`,
-    `/assets/severance${(imageNumber % 6) + 1}.jpg`,
-    // Ultimate fallbacks
-    `/assets/severance1.jpg`,
-    `/assets/severance2.jpg`,
-    `/assets/severance3.jpg`
-  ], [imageNumber]);
-
-  // Use React's useState to track if the primary image fails
-  const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
-  const [hasError, setHasError] = React.useState(false);
-
-  // Handle image load error
-  React.useEffect(() => {
-    // Create an image element to test loading
-    const img = new Image();
-    img.src = fallbackImages[currentImageIndex];
-
-    img.onload = () => {
-      setHasError(false);
-    };
-
-    img.onerror = () => {
-      // If we have more fallbacks, try the next one
-      if (currentImageIndex < fallbackImages.length - 1) {
-        setCurrentImageIndex(currentImageIndex + 1);
-      } else {
-        setHasError(true);
-        console.warn(`Failed to load image for grid item with index ${index}`);
-      }
-    };
-
-    return () => {
-      img.onload = null;
-      img.onerror = null;
-    };
-  }, [currentImageIndex, fallbackImages, index]);
+  // Use modulo to cycle through the available images
+  const imageIndex = index % imagePaths.length;
 
   return (
     <div className="grid__item">
       <div
         className="grid__item-inner"
         style={{
-          backgroundImage: `url(${fallbackImages[currentImageIndex]})`,
+          backgroundImage: `url(${imagePaths[imageIndex]})`,
           backgroundColor: 'rgba(255, 255, 255, 0.1)', // Fallback color
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          // Add a border if all images failed
-          border: hasError ? '1px solid rgba(255, 255, 255, 0.3)' : 'none'
+          backgroundRepeat: 'no-repeat'
         }}
       ></div>
     </div>
@@ -76,6 +44,12 @@ const GridItem = ({ index }) => {
 
 const About: React.FC = () => {
   useEffect(() => {
+    // Preload all images to ensure they're cached
+    imagePaths.forEach(path => {
+      const img = new Image();
+      img.src = path;
+    });
+
     // Initialize 3D scroll effect after component mounts
     const timer = setTimeout(() => {
       init3DScroll();
@@ -88,7 +62,12 @@ const About: React.FC = () => {
       {/* Noise texture overlay */}
       <div
         className="absolute inset-0 opacity-10 mix-blend-overlay animate-noise"
-        style={{ backgroundImage: 'url(/assets/noise.png)', backgroundRepeat: 'repeat' }}
+        style={{
+          backgroundImage: 'url(/assets/noise.png)',
+          backgroundRepeat: 'repeat',
+          // Add a fallback background color in case the image doesn't load
+          backgroundColor: 'rgba(0, 0, 0, 0.05)'
+        }}
       ></div>
 
       {/* Intro section */}
