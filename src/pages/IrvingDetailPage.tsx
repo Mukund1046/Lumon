@@ -549,18 +549,24 @@ const IrvingDetailPage: React.FC = () => {
 
     const time = clockRef.current.getElapsedTime();
 
-    // Smooth scrolling
+    // Smooth scrolling with mobile menu fix
     if (slideshowListRef.current) {
-      // Lerp the current scroll towards the target
-      currentScrollRef.current += (scrollTargetRef.current - currentScrollRef.current) * scrollStrengthRef.current;
+      // Check if mobile menu is open (don't scroll when menu is open)
+      const mobileMenuOpen = document.querySelector('.mobile-menu.max-h-96');
 
-      // Apply the scroll to the slideshow list
-      slideshowListRef.current.style.transform = `translateX(${-currentScrollRef.current}px)`;
+      if (!mobileMenuOpen) {
+        // Lerp the current scroll towards the target
+        currentScrollRef.current += (scrollTargetRef.current - currentScrollRef.current) * scrollStrengthRef.current;
 
-      // Update progress bar
-      if (progressBarRef.current) {
-        const progress = currentScrollRef.current / (slideshowWidthRef.current - window.innerWidth);
-        progressBarRef.current.style.transform = `translateX(${progress * 100}%)`;
+        // Apply the scroll to the slideshow list - ensure it doesn't go beyond viewport
+        const maxScroll = Math.min(currentScrollRef.current, slideshowWidthRef.current - window.innerWidth);
+        slideshowListRef.current.style.transform = `translateX(${-maxScroll}px)`;
+
+        // Update progress bar
+        if (progressBarRef.current) {
+          const progress = maxScroll / (slideshowWidthRef.current - window.innerWidth);
+          progressBarRef.current.style.transform = `translateX(${progress * 100}%)`;
+        }
       }
     }
 

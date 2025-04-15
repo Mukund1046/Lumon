@@ -59,7 +59,7 @@ const Navbar: React.FC = () => {
 
   return (
     <header className={cn(
-      "fixed top-0 left-0 right-0 w-full z-50 transition-all duration-300",
+      "fixed top-0 left-0 right-0 w-full z-[100] transition-all duration-300",
       isScrolled
         ? "bg-wardrobe-light/95 backdrop-blur-sm shadow-sm py-4"
         : "bg-transparent py-6"
@@ -123,7 +123,7 @@ const Navbar: React.FC = () => {
 
       {/* Mobile menu */}
       <div className={cn(
-        "mobile-menu md:hidden absolute top-full left-0 right-0 bg-severance-frost shadow-md transition-all duration-300 overflow-hidden",
+        "mobile-menu md:hidden absolute top-full left-0 right-0 bg-severance-frost shadow-md transition-all duration-300 overflow-hidden z-[100]",
         mobileMenuOpen ? "max-h-96" : "max-h-0"
       )}>
         <div className="container-custom py-4 flex flex-col space-y-4">

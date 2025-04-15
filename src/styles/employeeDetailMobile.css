@@ -19,6 +19,21 @@
   box-sizing: border-box;
 }
 
+/* Ensure content is below mobile menu */
+.employee-detail {
+  z-index: 1;
+}
+
+/* Prevent slideshow from appearing above mobile menu */
+.scrollarea-ctn,
+.scrollarea,
+.slideshow-list,
+.slideshow-list__el,
+.tile,
+#scene {
+  z-index: 1 !important;
+}
+
 /* Base mobile adjustments */
 @media (max-width: 768px) {
   /* Improve page title visibility and positioning */
