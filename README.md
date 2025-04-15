@@ -1,4 +1,4 @@
-# Severance - Lumon Portal
+# Lumon Industries Portal
 
 ## About This Project
 
@@ -23,10 +23,10 @@ To run this project locally:
 
 ```sh
 # Step 1: Clone the repository
-git clone <REPOSITORY_URL>
+git clone https://github.com/Mukund1046/Lumon.git
 
 # Step 2: Navigate to the project directory
-cd severance-lumon-portal
+cd Lumon
 
 # Step 3: Install the necessary dependencies
 npm install
