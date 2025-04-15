@@ -574,7 +574,7 @@ const HellyDetailPage: React.FC = () => {
   };
 
   return (
-    <div className="w-full h-full overflow-hidden bg-wardrobe-dark helly-theme">
+    <div className="w-full h-full overflow-hidden bg-wardrobe-dark helly-theme" style={{ maxWidth: '100vw', boxSizing: 'border-box' }}>
       <Navbar />
 
       <div className="employee-detail helly-theme" ref={containerRef}>

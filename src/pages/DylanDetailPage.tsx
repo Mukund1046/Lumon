@@ -574,7 +574,7 @@ const DylanDetailPage: React.FC = () => {
   };
 
   return (
-    <div className="w-full h-full overflow-hidden bg-wardrobe-dark dylan-theme">
+    <div className="w-full h-full overflow-hidden bg-wardrobe-dark dylan-theme" style={{ maxWidth: '100vw', boxSizing: 'border-box' }}>
       <Navbar />
 
       <div className="employee-detail dylan-theme" ref={containerRef}>
