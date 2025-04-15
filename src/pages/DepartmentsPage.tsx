@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import Departments from '../components/Departments';
 import Footer from '../components/Footer';
@@ -14,6 +14,19 @@ const DepartmentsPage: React.FC = () => {
     touchMultiplier: 1,
     infinite: false
   });
+
+  // Scroll to top when the component mounts
+  useEffect(() => {
+    // Scroll to top immediately
+    window.scrollTo(0, 0);
+
+    // Also use Lenis to scroll to top smoothly (as a backup)
+    if (lenisRef.current) {
+      setTimeout(() => {
+        lenisRef.current.scrollTo(0, { immediate: true });
+      }, 100);
+    }
+  }, []);
 
   return (
     <div className="w-full h-full overflow-hidden">

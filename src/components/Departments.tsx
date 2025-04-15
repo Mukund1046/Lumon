@@ -71,8 +71,8 @@ const Departments: React.FC = () => {
         })}
       </div>
 
-      {/* Intro section */}
-      <div className="content" style={{ paddingTop: '180px' }}>
+      {/* Intro section - adjusted padding for better navigation */}
+      <div className="content" style={{ paddingTop: '120px' }}>
         <p>
           At Lumon Industries, we believe in the power of separation.
           Our departments operate with precision and purpose.

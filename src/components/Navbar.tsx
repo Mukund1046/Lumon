@@ -38,9 +38,13 @@ const Navbar: React.FC = () => {
     return () => clearTimeout(timer);
   }, [mobileMenuOpen]);
 
-  // Close mobile menu when route changes
+  // Handle route changes
   useEffect(() => {
+    // Close mobile menu when route changes
     setMobileMenuOpen(false);
+
+    // Scroll to top when navigating to a new page
+    window.scrollTo(0, 0);
   }, [location.pathname]);
 
   const navItems = [
