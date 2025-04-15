@@ -1,0 +1,104 @@
+/* Mobile-specific styles for the hero section */
+
+/* Specific styles for the hero-mobile class */
+.hero-mobile {
+  height: 100vh !important;
+  max-height: none !important;
+  overflow: hidden !important;
+}
+
+.hero-mobile #hero-canvas {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+
+.hero-mobile [style*="background-image"] {
+  background-size: cover !important;
+  background-position: center center !important;
+}
+
+/* Ensure proper background image display on mobile */
+@media (max-width: 768px) {
+  /* Improve canvas positioning and sizing */
+  #hero-canvas {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+  }
+
+  /* Ensure the fallback background is properly sized and positioned */
+  #home [style*="background-image"] {
+    background-size: cover !important;
+    background-position: center center !important;
+    width: 100% !important;
+    height: 100% !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+  }
+
+  /* Ensure the section takes up the full viewport height */
+  #home {
+    min-height: 100vh !important;
+    height: 100vh !important;
+    max-height: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: hidden !important;
+  }
+
+  /* Ensure the content is properly positioned */
+  #home .container-custom {
+    position: relative !important;
+    z-index: 10 !important;
+  }
+
+  /* Ensure the noise texture overlay is properly sized and positioned */
+  #home .animate-noise {
+    width: 100% !important;
+    height: 100% !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    background-size: 256px 256px !important;
+  }
+}
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+  /* Adjust background position for better framing on small devices */
+  #home [style*="background-image"] {
+    background-position: center 20% !important;
+  }
+}
+
+/* Fix for mobile menu interaction */
+.mobile-menu.max-h-96 ~ #home {
+  z-index: 0 !important;
+  position: relative !important;
+}
+
+.mobile-menu.max-h-96 ~ #home #hero-canvas,
+.mobile-menu.max-h-96 ~ #home [style*="background-image"],
+.mobile-menu.max-h-96 ~ #home .animate-noise {
+  z-index: 0 !important;
+  opacity: 0.5 !important; /* Dim the background when menu is open */
+  transition: opacity 0.3s ease !important;
+}
+
+/* Ensure the mobile menu is always on top */
+.mobile-menu {
+  z-index: 100 !important;
+  position: absolute !important;
+}

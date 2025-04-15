@@ -1,13 +1,34 @@
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import '../styles/textEffect.css';
+import '../styles/heroMobile.css';
 import { initTextAnimation } from '../scripts/textAnimation';
 import AnimatedText from '../components/ui/AnimatedText';
 
 const Hero: React.FC = () => {
+  // State to track if we're on a mobile device
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check if we're on a mobile device
+  useEffect(() => {
+    const checkMobile = () => {
+      const mobile = window.innerWidth <= 768 ||
+                    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      setIsMobile(mobile);
+    };
+
+    // Check initially
+    checkMobile();
+
+    // Check on resize
+    window.addEventListener('resize', checkMobile);
+
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   useEffect(() => {
     // Initialize the text animation when component mounts
     // Small delay to ensure DOM is fully loaded
@@ -30,15 +51,39 @@ const Hero: React.FC = () => {
     script.onload = () => {
       const canvas = document.getElementById('hero-canvas') as HTMLCanvasElement;
       if (canvas && window.BulgeEffect) {
-        // Create the bulge effect with optimal parameters
+        // Optimize parameters for mobile
+        const strength = isMobile ? 1.5 : 2.0;  // Less strength on mobile for better performance
+        const radius = isMobile ? 0.5 : 0.4;     // Larger radius on mobile for better visibility
+
+        // Create the bulge effect with optimized parameters
         new window.BulgeEffect({
           canvas,
           image: '/assets/severance126.jpg',
-          strength: 2.0,  // Higher strength for more pronounced effect
-          radius: 0.4     // Smaller radius for more focused effect
+          strength,
+          radius
         });
 
-        console.log('Bulge effect initialized');
+        console.log(`Bulge effect initialized (${isMobile ? 'mobile' : 'desktop'} mode)`);
+
+        // Ensure canvas is properly sized
+        const resizeCanvas = () => {
+          const displayWidth = canvas.clientWidth;
+          const displayHeight = canvas.clientHeight;
+
+          if (canvas.width !== displayWidth || canvas.height !== displayHeight) {
+            canvas.width = displayWidth;
+            canvas.height = displayHeight;
+          }
+        };
+
+        // Initial resize
+        resizeCanvas();
+
+        // Resize on window resize
+        window.addEventListener('resize', resizeCanvas);
+
+        // Return cleanup function
+        return () => window.removeEventListener('resize', resizeCanvas);
       }
     };
 
@@ -48,15 +93,18 @@ const Hero: React.FC = () => {
         document.head.removeChild(script);
       }
     };
-  }, []);
+  }, [isMobile]); // Add isMobile as a dependency to re-initialize when mobile status changes
   return (
     <section
       id="home"
-      className="relative min-h-screen pt-16 sm:pt-20 pb-8 sm:pb-12 flex items-center overflow-hidden"
+      className={cn(
+        "relative min-h-screen pt-16 sm:pt-20 pb-8 sm:pb-12 flex items-center overflow-hidden",
+        isMobile && "hero-mobile" // Add mobile-specific class
+      )}
     >
       {/* Background image with bulge effect */}
       <div
-        className="absolute inset-0"
+        className="absolute inset-0 z-0"
         data-scroll data-scroll-speed="-0.2"
       >
         <canvas id="hero-canvas" className="w-full h-full object-cover"></canvas>
@@ -65,7 +113,13 @@ const Hero: React.FC = () => {
       {/* Fallback background image (hidden when WebGL works) */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat -z-10"
-        style={{ backgroundImage: 'url(/assets/severance126.jpg)' }}
+        style={{
+          backgroundImage: 'url(/assets/severance126.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center center',
+          width: '100%',
+          height: '100%'
+        }}
       ></div>
 
       {/* Noise texture overlay */}
