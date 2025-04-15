@@ -12,18 +12,18 @@ const GridItem = ({ index }) => {
 
   // Create an array of fallback images to try using useMemo to avoid recreating on every render
   const fallbackImages = React.useMemo(() => [
-    // Try with public prefix first
-    `public/assets/severance${imageNumber}.jpg`,
+    // Try with correct path for production
+    `/assets/severance${imageNumber}.jpg`,
     // Try with different extensions
-    `public/assets/severance${imageNumber}.jpeg`,
-    `public/assets/severance${imageNumber}.png`,
+    `/assets/severance${imageNumber}.jpeg`,
+    `/assets/severance${imageNumber}.png`,
     // Try with different image numbers
-    `public/assets/severance${(imageNumber % 12) + 1}.jpg`,
-    `public/assets/severance${(imageNumber % 6) + 1}.jpg`,
+    `/assets/severance${(imageNumber % 12) + 1}.jpg`,
+    `/assets/severance${(imageNumber % 6) + 1}.jpg`,
     // Ultimate fallbacks
-    `public/assets/severance1.jpg`,
-    `public/assets/severance2.jpg`,
-    `public/assets/severance3.jpg`
+    `/assets/severance1.jpg`,
+    `/assets/severance2.jpg`,
+    `/assets/severance3.jpg`
   ], [imageNumber]);
 
   // Use React's useState to track if the primary image fails
