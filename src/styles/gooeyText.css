@@ -1,0 +1,45 @@
+/* GooeyText component styles */
+
+/* Ensure the filter works properly across browsers */
+@supports (filter: url(#threshold)) {
+  .gooey-text-container {
+    filter: url(#threshold);
+  }
+}
+
+/* Fallback for browsers that don't support the filter */
+@supports not (filter: url(#threshold)) {
+  .gooey-text-container {
+    filter: blur(0.5px);
+  }
+}
+
+/* Ensure the text spans have proper positioning */
+.gooey-text-span {
+  position: absolute;
+  white-space: nowrap;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Adjust for different color schemes */
+[data-color-scheme="woe"] .gooey-text-span {
+  color: var(--woe-primary);
+}
+
+[data-color-scheme="malice"] .gooey-text-span {
+  color: var(--malice-primary);
+}
+
+[data-color-scheme="dread"] .gooey-text-span {
+  color: var(--dread-primary);
+}
+
+[data-color-scheme="frolic"] .gooey-text-span {
+  color: var(--frolic-primary);
+}

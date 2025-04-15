@@ -1,81 +1,155 @@
 
-import React from 'react';
-import { cn } from '@/lib/utils';
+import React, { useEffect } from 'react';
+import '../styles/slicedText.css';
+import { initSlicedText } from '../scripts/slicedText/index.js';
 
 interface Department {
   name: string;
   description: string;
-  icon: string;
+  effect: string;
 }
 
 const departments: Department[] = [
   {
     name: "Macrodata Refinement",
     description: "Our MDR team works with numeric data sequences, refining them through intuition-based processes.",
-    icon: "📊"
+    effect: "1"
   },
   {
     name: "Optics & Design",
     description: "Creating visual assets and maintaining Lumon's distinct aesthetic across all platforms.",
-    icon: "🎨"
+    effect: "2"
   },
   {
     name: "Data Integrity",
     description: "Ensuring the accuracy and consistency of all data processed within Lumon Industries.",
-    icon: "🔍"
+    effect: "3"
   },
   {
     name: "Human Resources",
     description: "Supporting our employees and maintaining the harmonious environment at Lumon.",
-    icon: "👥"
+    effect: "4"
   }
 ];
 
 const Departments: React.FC = () => {
+  useEffect(() => {
+    // Initialize sliced text effect after component mounts
+    const timer = setTimeout(() => {
+      initSlicedText();
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <section id="departments" className="py-24">
-      <div className="container-custom">
-        <div className="max-w-3xl mx-auto text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-trap font-medium tracking-tight mb-4">
-            Our <span className="text-lumon-accent">Departments</span>
-          </h2>
-          
-          <div className="w-20 h-1 bg-lumon-accent/40 mx-auto mb-6"></div>
-          
-          <p className="text-foreground/80 font-jakarta text-lg">
-            Lumon Industries operates through specialized departments, each contributing to our unique vision.
-            Join one of our elite teams to become part of something truly meaningful.
-          </p>
-        </div>
-        
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {departments.map((dept, index) => (
-            <div 
-              key={index}
-              className={cn(
-                "lumon-card hover:shadow-md flex flex-col text-center p-8 transition-all hover:-translate-y-1",
-                "opacity-0 animate-slide-up",
-                index === 0 ? "animate-delay-100" :
-                index === 1 ? "animate-delay-200" :
-                index === 2 ? "animate-delay-300" : "animate-delay-400"
-              )}
-            >
-              <div className="mb-4 mx-auto flex items-center justify-center w-16 h-16 bg-lumon-accent/10 rounded-full">
-                <span className="text-2xl" role="img" aria-label={dept.name}>
-                  {dept.icon}
-                </span>
-              </div>
-              
-              <h3 className="text-xl font-trap font-medium mb-3">
-                {dept.name}
-              </h3>
-              
-              <p className="text-foreground/70 font-jakarta text-sm">
-                {dept.description}
-              </p>
-            </div>
-          ))}
-        </div>
+    <section id="departments" className="sliced-text-container">
+      {/* Background decoration images */}
+      <div className="deco">
+        {Array.from({ length: 36 }, (_, i) => {
+          // Use a variety of Severance images with different indices
+          const imageIndex = ((i * 7) % 134) + 1; // This formula creates a good distribution
+          // Create an array of possible image paths with different extensions
+          const imagePaths = [
+            `/assets/Severance${imageIndex}.jpg`,
+            `/assets/Severance${imageIndex}.jpeg`,
+            `/assets/severance${imageIndex}.jpg`,
+            `/assets/severance${imageIndex}.jpeg`
+          ];
+
+          return (
+            <div
+              key={`deco-${i}`}
+              className="deco__item"
+              style={{
+                backgroundImage: `url(${imagePaths[0]}), url(${imagePaths[1]}), url(${imagePaths[2]}), url(${imagePaths[3]})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center'
+              }}
+            ></div>
+          );
+        })}
+      </div>
+
+      {/* Intro section */}
+      <div className="content" style={{ paddingTop: '180px' }}>
+        <p>
+          At Lumon Industries, we believe in the power of separation.
+          Our departments operate with precision and purpose.
+          Each contributing to our mission in their unique way.
+          Discover the specialized teams that make Lumon exceptional.
+        </p>
+        <h2 className="gtext size-s font-trap end color-frost" data-text="Discover Excellence">Discover Excellence</h2>
+        <h2 className="gtext size-s font-trap end color-frost" data-text="Discover Excellence">Discover Excellence</h2>
+      </div>
+
+      {/* Macrodata Refinement */}
+      <div className="content content--full">
+        <h3 className="gtext size-xxl font-trap shadow-1 spaced color-frost" data-text="MDR" data-effect="1">MDR</h3>
+      </div>
+
+      <div className="content">
+        <p>
+          Our Macrodata Refinement team works with numeric sequences,
+          refining them through intuition-based processes.
+          They find patterns in the chaos, order in the randomness.
+          The work is mysterious, but the results are undeniable.
+        </p>
+        <h2 className="gtext size-s font-space-grotesk end color-slate" data-text="Refine Data">Refine Data</h2>
+      </div>
+
+      {/* Optics & Design */}
+      <div className="content content--full">
+        <h3 className="gtext size-xl font-trap shadow-1 color-brass spaced" data-text="O&D" data-effect="2">O&D</h3>
+      </div>
+
+      <div className="content">
+        <p>
+          Optics & Design creates the visual language of Lumon,
+          crafting our aesthetic across all platforms and spaces.
+          They transform concepts into tangible experiences,
+          ensuring our presence is both distinctive and memorable.
+        </p>
+        <h2 className="gtext size-s font-space-grotesk end color-slate" data-text="Create Vision">Create Vision</h2>
+        <h2 className="gtext size-s font-space-grotesk end color-slate" data-text="Create Vision">Create Vision</h2>
+      </div>
+
+      {/* Data Integrity */}
+      <div className="content content--full">
+        <h3 className="gtext size-xl font-trap shadow-1 spaced color-frost" data-text="DI" data-effect="3">DI</h3>
+      </div>
+
+      <div className="content content--full">
+        <h2 className="gtext size-m font-jetbrains end color-slate" data-text="Verify Truth">Verify Truth</h2>
+      </div>
+
+      <div className="content">
+        <p>
+          Data Integrity ensures the accuracy and consistency
+          of all information processed within Lumon Industries.
+          They are the guardians of truth, the validators of fact,
+          working tirelessly to maintain the purity of our data.
+        </p>
+      </div>
+
+      {/* Human Resources */}
+      <div className="content content--full">
+        <h3 className="gtext size-xl font-trap shadow-1 blendmode-1 spaced color-brass" data-text="HR" data-effect="4">HR</h3>
+      </div>
+
+      <div className="content content--full">
+        <h2 className="gtext size-m font-jetbrains end color-slate" data-text="Support Growth">Support Growth</h2>
+      </div>
+
+      <div className="content">
+        <p>
+          Human Resources supports our most valuable asset: our people.
+          They maintain the harmonious environment at Lumon,
+          ensuring each employee finds their perfect place,
+          and experiences the fulfillment that comes with severance.
+        </p>
+        <h2 className="gtext size-s font-space-grotesk end color-frost" data-text="Join Us">Join Us</h2>
+        <h2 className="gtext size-s font-space-grotesk end color-frost" data-text="Join Us">Join Us</h2>
       </div>
     </section>
   );

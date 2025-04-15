@@ -1,0 +1,207 @@
+/* Neo-Modernist Typography System
+   - Clean, minimal spacing
+   - Tight letter spacing for Trap
+   - Structured vertical rhythm and consistent font scaling
+   - Semantic font sizes with rem units
+   - High visual contrast between text types
+*/
+
+:root {
+  /* Base typography settings */
+  --font-size-base: 1rem;
+  --line-height-base: 1.5;
+
+  /* Font families */
+  --font-trap: 'Trap', 'Space Grotesk', 'Arial Black', 'Helvetica Neue', sans-serif;
+  --font-jakarta: 'Plus Jakarta Sans', sans-serif;
+  --font-jetbrains: 'JetBrains Mono', monospace;
+
+  /* Font sizes (using a structured scale) */
+  --font-size-xs: 0.75rem;    /* 12px */
+  --font-size-sm: 0.875rem;   /* 14px */
+  --font-size-md: 1rem;       /* 16px */
+  --font-size-lg: 1.25rem;    /* 20px */
+  --font-size-xl: 1.5rem;     /* 24px */
+  --font-size-2xl: 2rem;      /* 32px */
+  --font-size-3xl: 2.5rem;    /* 40px */
+  --font-size-4xl: 3rem;      /* 48px */
+
+  /* Letter spacing */
+  --letter-spacing-tight: -0.03em;
+  --letter-spacing-normal: 0;
+  --letter-spacing-wide: 0.05em;
+
+  /* Line heights for vertical rhythm */
+  --line-height-tight: 1.1;
+  --line-height-normal: 1.5;
+  --line-height-loose: 1.7;
+
+  /* Font weights */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+}
+
+/* Base typography reset */
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-jakarta);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-normal);
+  font-weight: var(--font-weight-regular);
+}
+
+/* Trap Heading - Used for main headings */
+.trap-heading {
+  font-family: var(--font-trap);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: var(--letter-spacing-tight);
+  line-height: var(--line-height-tight);
+  margin: 0 0 1.5rem 0;
+  text-transform: uppercase;
+}
+
+.trap-heading.h1 {
+  font-size: var(--font-size-4xl);
+  margin-bottom: 2rem;
+}
+
+.trap-heading.h2 {
+  font-size: var(--font-size-3xl);
+  margin-bottom: 1.75rem;
+}
+
+.trap-heading.h3 {
+  font-size: var(--font-size-2xl);
+  margin-bottom: 1.5rem;
+}
+
+.trap-heading.h4 {
+  font-size: var(--font-size-xl);
+  margin-bottom: 1.25rem;
+}
+
+/* Jakarta Subheading - Used for section headers */
+.jakarta-subheading {
+  font-family: var(--font-jakarta);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: var(--letter-spacing-normal);
+  line-height: var(--line-height-tight);
+  margin: 0 0 1rem 0;
+}
+
+.jakarta-subheading.h3 {
+  font-size: var(--font-size-xl);
+}
+
+.jakarta-subheading.h4 {
+  font-size: var(--font-size-lg);
+}
+
+.jakarta-subheading.h5 {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+}
+
+/* Jakarta Body - Used for main content */
+.jakarta-body {
+  font-family: var(--font-jakarta);
+  font-weight: var(--font-weight-regular);
+  letter-spacing: var(--letter-spacing-normal);
+  line-height: var(--line-height-normal);
+  margin: 0 0 1rem 0;
+}
+
+.jakarta-body.large {
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-loose);
+}
+
+.jakarta-body.medium {
+  font-size: var(--font-size-md);
+}
+
+.jakarta-body.small {
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+}
+
+/* JetBrains Mono Nav - Used for navigation */
+.jetbrains-mono-nav {
+  font-family: var(--font-jetbrains);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-sm);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+  line-height: var(--line-height-tight);
+}
+
+/* JetBrains Mono Button - Used for buttons and CTAs */
+.jetbrains-mono-button {
+  font-family: var(--font-jetbrains);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-sm);
+  letter-spacing: var(--letter-spacing-wide);
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+/* Additional utility classes */
+.text-center {
+  text-align: center;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+.no-margin {
+  margin: 0;
+}
+
+/* Ensure proper spacing between text elements */
+* + h1.trap-heading,
+* + h2.trap-heading,
+* + h3.trap-heading,
+* + h4.trap-heading {
+  margin-top: 2.5rem;
+}
+
+* + h3.jakarta-subheading,
+* + h4.jakarta-subheading,
+* + h5.jakarta-subheading {
+  margin-top: 2rem;
+}
+
+* + p.jakarta-body {
+  margin-top: 1rem;
+}
+
+/* Maintain vertical rhythm with consistent spacing */
+p.jakarta-body + p.jakarta-body {
+  margin-top: 1rem;
+}
+
+/* High contrast adjustments */
+.trap-heading {
+  color: var(--severance-midnight, #0b0e29);
+}
+
+.jakarta-subheading {
+  color: var(--severance-marine, #002c55);
+}
+
+.jakarta-body {
+  color: var(--severance-timber, #4e452a);
+}
+
+.jetbrains-mono-nav,
+.jetbrains-mono-button {
+  color: var(--severance-slate, #89aec8);
+}

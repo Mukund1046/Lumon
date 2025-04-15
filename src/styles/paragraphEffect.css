@@ -1,0 +1,28 @@
+/* Paragraph hover effect styles */
+.paragraph-hover {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.paragraph-hover:hover {
+  color: var(--severance-frost, #f0f6f7);
+  text-shadow: 0 0 8px rgba(240, 246, 247, 0.5);
+  transform: translateY(-1px);
+}
+
+/* Create a subtle underline effect on hover */
+.paragraph-hover::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: var(--severance-frost, #f0f6f7);
+  transition: width 0.3s ease;
+  opacity: 0.7;
+}
+
+.paragraph-hover:hover::after {
+  width: 100%;
+}

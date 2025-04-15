@@ -1,0 +1,152 @@
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+:root {
+  font-size: 12px;
+  --color-text: #fff;
+  --color-bg: #000;
+  --color-link: #fff;
+  --color-link-hover: #fff;
+  --page-padding: 1.5rem;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+
+  width: 100svw;
+  height: 100svh;
+
+  overflow: hidden;
+  overscroll-behavior: none;
+
+  background: #F8F7F9;
+
+  font-family: ui-monospace, monospace;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+header {
+  /* visibility: hidden; */
+}
+
+#THREE-CONTAINER {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+}
+
+.frame {
+  padding: 3rem var(--page-padding) 0;
+  display: grid;
+  z-index: 1000;
+  position: relative;
+  grid-row-gap: 1rem;
+  grid-column-gap: 2rem;
+  pointer-events: none;
+  justify-items: start;
+  grid-template-columns: auto auto;
+  grid-template-areas:
+    'title'
+    'back'
+    'archive'
+    'github'
+    'demos'
+    'tags'
+    'sponsor';
+
+  #cdawrap {
+    justify-self: start;
+    grid-area: sponsor;
+  }
+
+  a,
+  button {
+    pointer-events: auto;
+  }
+
+  .frame__title {
+    grid-area: title;
+    font-size: inherit;
+    margin: 0;
+  }
+
+  .frame__back {
+    grid-area: back;
+    justify-self: start;
+  }
+
+  .frame__archive {
+    grid-area: archive;
+    justify-self: start;
+  }
+
+  .frame__github {
+    grid-area: github;
+  }
+
+  .frame__tags {
+    grid-area: tags;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .frame__demos {
+    grid-area: demos;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  @media screen and (min-width: 53em) {
+    padding: var(--page-padding);
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    grid-template-columns: auto auto auto auto 1fr;
+    grid-template-rows: auto auto;
+    align-content: space-between;
+    grid-template-areas:
+      'title back github archive demos'
+      'tags tags tags sponsor sponsor';
+
+    .frame__tags {
+      align-self: end;
+    }
+
+    .frame__demos,
+    #cdawrap {
+      justify-self: end;
+      text-align: right;
+      max-width: 300px;
+    }
+  }
+}
+
+.content {
+  padding: var(--page-padding);
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  @media screen and (min-width: 53em) {
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
+  }
+}

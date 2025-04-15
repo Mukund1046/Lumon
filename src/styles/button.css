@@ -1,0 +1,139 @@
+/* Neo-Modernist Button Styles
+   Based on the JetBrains Mono button styling from the typography system
+*/
+
+/* Base button styles */
+.lumon-button,
+button.primary,
+button.secondary,
+.btn-primary,
+.btn-secondary {
+  /* Typography */
+  font-family: var(--font-jetbrains, 'JetBrains Mono', monospace);
+  font-weight: var(--font-weight-medium, 500);
+  font-size: var(--font-size-sm, 0.875rem);
+  letter-spacing: var(--letter-spacing-wide, 0.05em);
+  text-transform: uppercase;
+  line-height: 1;
+  
+  /* Layout */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.25rem;
+  
+  /* Interaction */
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  position: relative;
+  overflow: hidden;
+  
+  /* Focus state */
+  outline: none;
+}
+
+/* Primary button - dark background, light text */
+.lumon-button.primary,
+button.primary,
+.btn-primary {
+  background-color: var(--severance-midnight, #0b0e29);
+  color: var(--severance-frost, #f0f6f7);
+  border: 1px solid var(--severance-midnight, #0b0e29);
+}
+
+/* Secondary button - light background, dark text, with border */
+.lumon-button.secondary,
+button.secondary,
+.btn-secondary {
+  background-color: var(--severance-frost, #f0f6f7);
+  color: var(--severance-midnight, #0b0e29);
+  border: 1px solid var(--severance-midnight, #0b0e29);
+}
+
+/* Hover states */
+.lumon-button.primary:hover,
+button.primary:hover,
+.btn-primary:hover {
+  background-color: var(--severance-marine, #002c55);
+  border-color: var(--severance-marine, #002c55);
+}
+
+.lumon-button.secondary:hover,
+button.secondary:hover,
+.btn-secondary:hover {
+  background-color: var(--severance-slate, #89aec8);
+  color: var(--severance-frost, #f0f6f7);
+  border-color: var(--severance-slate, #89aec8);
+}
+
+/* Focus states */
+.lumon-button:focus-visible,
+button.primary:focus-visible,
+button.secondary:focus-visible,
+.btn-primary:focus-visible,
+.btn-secondary:focus-visible {
+  outline: 2px solid var(--severance-brass, #7b6727);
+  outline-offset: 2px;
+}
+
+/* Active states */
+.lumon-button:active,
+button.primary:active,
+button.secondary:active,
+.btn-primary:active,
+.btn-secondary:active {
+  transform: translateY(1px);
+}
+
+/* Disabled state */
+.lumon-button:disabled,
+button.primary:disabled,
+button.secondary:disabled,
+.btn-primary:disabled,
+.btn-secondary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Small variant */
+.lumon-button.small,
+button.small,
+.btn-small {
+  padding: 0.5rem 1rem;
+  font-size: var(--font-size-xs, 0.75rem);
+}
+
+/* Large variant */
+.lumon-button.large,
+button.large,
+.btn-large {
+  padding: 1rem 2rem;
+  font-size: var(--font-size-md, 1rem);
+}
+
+/* Full width variant */
+.lumon-button.full-width,
+button.full-width,
+.btn-full-width {
+  width: 100%;
+}
+
+/* Icon button spacing */
+.lumon-button svg,
+button svg,
+.btn svg {
+  margin-right: 0.5rem;
+}
+
+.lumon-button.icon-only,
+button.icon-only,
+.btn.icon-only {
+  padding: 0.75rem;
+}
+
+.lumon-button.icon-only svg,
+button.icon-only svg,
+.btn.icon-only svg {
+  margin-right: 0;
+}

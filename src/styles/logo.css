@@ -1,0 +1,16 @@
+/* Logo styling */
+.gooey-text-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* Ensure the logo text is properly aligned */
+.gooey-text-span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}

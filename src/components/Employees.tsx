@@ -1,159 +1,175 @@
 
-import React, { useState } from 'react';
-import { cn } from '@/lib/utils';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import EmployeeScene from './EmployeeScene';
+import React from 'react';
+import InfiniteMenu from '../components/ui/InfiniteMenu/InfiniteMenu';
+import '../components/ui/InfiniteMenu/InfiniteMenu.css';
+import './Employees.css'; // We'll create this file for custom styling
 
 interface Employee {
   name: string;
   position: string;
   quote: string;
   image: string;
-  color: string;
+  link: string;
+  title: string;
+  description: string;
 }
 
-// Using placeholder images for employees - in a real scenario, you'd use actual employee photos
+// Using Severance images for employees
 const employees: Employee[] = [
   {
     name: "Mark Scout",
-    position: "MDR Department",
+    position: "MDR Team Lead",
     quote: "I never take my work home with me. Literally.",
-    image: "/placeholder.svg",
-    color: "#9b87f5" // Lumon accent color
+    image: "/assets/Severance128.jpg", // Mark's image
+    link: "/employees/mark",
+    title: "Mark Scout",
+    description: "MDR Team Lead who chose severance after a personal tragedy."
   },
   {
     name: "Helly R.",
-    position: "MDR Department",
+    position: "MDR Refiner",
     quote: "Every day feels like my first day here.",
-    image: "/placeholder.svg",
-    color: "#4c8bf5" // Blue
-  },
-  {
-    name: "Dylan George",
-    position: "MDR Department",
-    quote: "I like the perks. Especially the waffle parties.",
-    image: "/placeholder.svg",
-    color: "#f55142" // Red
+    image: "/assets/Severance31.jpeg", // Helly's image
+    link: "/employees/helly",
+    title: "Helly R.",
+    description: "New MDR employee with a rebellious spirit."
   },
   {
     name: "Irving Bailiff",
-    position: "MDR Department",
+    position: "MDR Refiner",
     quote: "The handbook provides all the answers we need.",
-    image: "/placeholder.svg",
-    color: "#42f59e" // Green
+    image: "/assets/Severance47.jpg", // Irving's image
+    link: "/employees/irving",
+    title: "Irving Bailiff",
+    description: "Loyal employee with a deep appreciation for company policy."
+  },
+  {
+    name: "Dylan George",
+    position: "MDR Refiner",
+    quote: "I like the perks. Especially the waffle parties.",
+    image: "/assets/Severance52.jpg", // Dylan's image
+    link: "/employees/dylan",
+    title: "Dylan George",
+    description: "Competitive employee who enjoys Lumon's unique incentives."
+  },
+  // Duplicate employees with the same images to fill out the sphere
+  {
+    name: "Mark Scout",
+    position: "MDR Team Lead",
+    quote: "I never take my work home with me. Literally.",
+    image: "/assets/Severance128.jpg",
+    link: "/employees/mark",
+    title: "Mark Scout",
+    description: "MDR Team Lead who chose severance after a personal tragedy."
+  },
+  {
+    name: "Helly R.",
+    position: "MDR Refiner",
+    quote: "Every day feels like my first day here.",
+    image: "/assets/Severance31.jpeg",
+    link: "/employees/helly",
+    title: "Helly R.",
+    description: "New MDR employee with a rebellious spirit."
+  },
+  {
+    name: "Irving Bailiff",
+    position: "MDR Refiner",
+    quote: "The handbook provides all the answers we need.",
+    image: "/assets/Severance47.jpg",
+    link: "/employees/irving",
+    title: "Irving Bailiff",
+    description: "Loyal employee with a deep appreciation for company policy."
+  },
+  {
+    name: "Dylan George",
+    position: "MDR Refiner",
+    quote: "I like the perks. Especially the waffle parties.",
+    image: "/assets/Severance52.jpg",
+    link: "/employees/dylan",
+    title: "Dylan George",
+    description: "Competitive employee who enjoys Lumon's unique incentives."
+  },
+  // More duplicates to fill the sphere
+  {
+    name: "Mark Scout",
+    position: "MDR Team Lead",
+    quote: "I never take my work home with me. Literally.",
+    image: "/assets/Severance128.jpg",
+    link: "/employees/mark",
+    title: "Mark Scout",
+    description: "MDR Team Lead who chose severance after a personal tragedy."
+  },
+  {
+    name: "Helly R.",
+    position: "MDR Refiner",
+    quote: "Every day feels like my first day here.",
+    image: "/assets/Severance31.jpeg",
+    link: "/employees/helly",
+    title: "Helly R.",
+    description: "New MDR employee with a rebellious spirit."
+  },
+  {
+    name: "Irving Bailiff",
+    position: "MDR Refiner",
+    quote: "The handbook provides all the answers we need.",
+    image: "/assets/Severance47.jpg",
+    link: "/employees/irving",
+    title: "Irving Bailiff",
+    description: "Loyal employee with a deep appreciation for company policy."
+  },
+  {
+    name: "Dylan George",
+    position: "MDR Refiner",
+    quote: "I like the perks. Especially the waffle parties.",
+    image: "/assets/Severance52.jpg",
+    link: "/employees/dylan",
+    title: "Dylan George",
+    description: "Competitive employee who enjoys Lumon's unique incentives."
   }
 ];
 
 const Employees: React.FC = () => {
-  const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
-  const [dialogOpen, setDialogOpen] = useState(false);
-
-  const handleEmployeeSelect = (employee: Employee) => {
-    setSelectedEmployee(employee);
-    setDialogOpen(true);
-  };
-
   return (
-    <section id="employees" className="py-12 bg-lumon-dark text-white">
-      <div className="container-custom">
-        <div className="max-w-3xl mx-auto text-center mb-8">
-          <h2 className="text-3xl md:text-4xl font-trap font-medium tracking-tight mb-4">
-            Our <span className="text-lumon-accent">Employees</span>
+    <section id="employees" className="employees-section bg-wardrobe-dark text-wardrobe-light relative overflow-hidden">
+      {/* Background elements */}
+      <div className="employees-background"></div>
+      <div className="employees-grid"></div>
+
+      {/* Noise texture overlay */}
+      <div
+        className="absolute inset-0 opacity-15 mix-blend-overlay animate-noise"
+        style={{ backgroundImage: 'url(/assets/noise.png)', backgroundRepeat: 'repeat' }}
+      ></div>
+
+      <div className="container-custom employees-content">
+        <div className="max-w-3xl mx-auto text-center mb-12">
+          <h2 className="text-4xl md:text-5xl font-trap font-medium tracking-tight mb-4 employees-title">
+            Our <span className="text-wardrobe-blue">Employees</span>
           </h2>
-          
-          <div className="w-20 h-1 bg-lumon-accent/60 mx-auto mb-6"></div>
-          
-          <p className="text-white/80 font-jakarta text-lg mb-8">
+
+          <p className="text-wardrobe-light/80 font-space-grotesk text-lg md:text-xl mb-8 max-w-2xl mx-auto">
             Meet the dedicated team members who have chosen the severed work experience.
-            Interact with the 3D scene below to learn more about each employee.
+            Each contributes to Lumon's mission in their unique way.
+          </p>
+
+          <p className="text-wardrobe-blue/90 font-jetbrains-mono text-sm mb-4 italic">
+            Drag the sphere to explore our employees
           </p>
         </div>
-        
-        {/* 3D Scene */}
-        <div className="mb-16">
-          <EmployeeScene 
-            employees={employees} 
-            onSelectEmployee={handleEmployeeSelect} 
-            className="rounded-md border border-white/10 shadow-lg"
+
+        {/* InfiniteMenu Component */}
+        <div className="infinite-menu-container">
+          <InfiniteMenu
+            items={employees}
+            onItemClick={(item) => {
+              window.location.href = item.link;
+            }}
           />
-          <p className="text-center text-white/60 mt-4 italic">
-            Click on an employee cube to learn more. Drag to rotate the view.
-          </p>
         </div>
-        
-        {/* Employee Grid (alternative display) */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {employees.map((employee, index) => (
-            <div 
-              key={index}
-              className={cn(
-                "bg-white/5 backdrop-blur-sm border border-white/10 rounded-sm p-6 flex flex-col cursor-pointer",
-                "opacity-0 animate-slide-up transition-transform hover:scale-105",
-                index === 0 ? "animate-delay-100" :
-                index === 1 ? "animate-delay-200" :
-                index === 2 ? "animate-delay-300" : "animate-delay-400"
-              )}
-              onClick={() => handleEmployeeSelect(employee)}
-            >
-              <div className="mb-4 mx-auto w-20 h-20 overflow-hidden rounded-full">
-                <img 
-                  src={employee.image} 
-                  alt={employee.name}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              
-              <h3 className="text-lg font-trap font-medium mb-1 text-center">
-                {employee.name}
-              </h3>
-              
-              <p className="text-lumon-accent text-sm mb-4 text-center">
-                {employee.position}
-              </p>
-              
-              <blockquote className="text-white/70 font-jakarta text-sm italic text-center">
-                "{employee.quote}"
-              </blockquote>
-            </div>
-          ))}
+
+        <div className="text-center mt-8 text-wardrobe-light/60 font-space-grotesk text-sm">
+          <p>All employees shown have undergone the severance procedure.</p>
         </div>
-        
-        {/* Employee Detail Dialog */}
-        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-          <DialogContent className="bg-lumon-dark border-lumon-accent/50 text-white">
-            {selectedEmployee && (
-              <>
-                <DialogHeader>
-                  <DialogTitle className="text-xl font-trap">
-                    {selectedEmployee.name}
-                  </DialogTitle>
-                  <DialogDescription className="text-lumon-accent">
-                    {selectedEmployee.position}
-                  </DialogDescription>
-                </DialogHeader>
-                
-                <div className="flex flex-col items-center py-4">
-                  <div className="w-32 h-32 rounded-full overflow-hidden mb-4 border-2 border-lumon-accent/70">
-                    <img
-                      src={selectedEmployee.image}
-                      alt={selectedEmployee.name}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  
-                  <blockquote className="text-white/90 text-lg italic text-center mb-4">
-                    "{selectedEmployee.quote}"
-                  </blockquote>
-                  
-                  <p className="text-white/70 text-sm text-center">
-                    As a severed employee, {selectedEmployee.name} experiences a complete separation between work and personal life.
-                    Their work self has no knowledge of their outside life, and vice versa.
-                  </p>
-                </div>
-              </>
-            )}
-          </DialogContent>
-        </Dialog>
       </div>
     </section>
   );

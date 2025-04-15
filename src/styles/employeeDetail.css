@@ -1,0 +1,526 @@
+/* Employee Detail Page Styles */
+
+/* Base theme variables - based on Gooey Hover */
+:root {
+  --color-text1: #deedcf;
+  --color-text2: #ffcbcc;
+  --color-text3: #b9e6e3;
+  --color-text4: #e1d0a1;
+  --color-text5: #ccd3f6;
+  --color-bg1: #3f4849;
+  --color-bg2: #493f46;
+  --color-bg3: #2b3242;
+  --color-bg4: #3b3232;
+  --color-bg5: #2d3a40;
+  --color-text: var(--color-text1);
+  --color-bg: var(--color-bg1);
+  --color-link: var(--color-text);
+  --color-link-hover: #fff;
+}
+
+/* Mark theme - WOE theme */
+.mark-theme {
+  --color-text: #d7dde2;
+  --color-bg: #171d28;
+  --color-accent: #68916a;
+  --color-secondary: #27372d;
+}
+
+/* Helly theme - MALICE theme */
+.helly-theme {
+  --color-text: #dce0e9;
+  --color-bg: #1f3451;
+  --color-accent: #00abf7;
+  --color-secondary: #0259d0;
+}
+
+/* Irving theme - DREAD theme */
+.irving-theme {
+  --color-text: #9d714e;
+  --color-bg: #0e1b3b;
+  --color-accent: #336268;
+  --color-secondary: #43484b;
+}
+
+/* Dylan theme - FROLIC theme */
+.dylan-theme {
+  --color-text: #9d714e;
+  --color-bg: #0e1b3b;
+  --color-accent: #336268;
+  --color-secondary: #43484b;
+}
+
+/* Main container */
+.employee-detail {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  overflow: hidden;
+  transition: background-color 0.5s;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 300; /* Light weight */
+}
+
+/* Background elements - based on Gooey Hover */
+.employee-detail__bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, var(--color-bg), rgba(0, 0, 0, 0.9));
+  z-index: 0;
+}
+
+.employee-detail__grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(rgba(127, 150, 174, 0.05) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(127, 150, 174, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+  z-index: 1;
+  opacity: 0.3;
+}
+
+.employee-detail__noise {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/assets/noise.png');
+  background-repeat: repeat;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  z-index: 2;
+}
+
+/* Additional background elements */
+.employee-detail__vignette {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.4) 100%);
+  z-index: 3;
+  pointer-events: none;
+}
+
+.employee-detail__glow {
+  position: absolute;
+  top: 20%;
+  left: 10%;
+  width: 60%;
+  height: 60%;
+  background: radial-gradient(circle at center, var(--color-accent) 0%, transparent 70%);
+  opacity: 0.05;
+  filter: blur(100px);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Content container */
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 32rem);
+  z-index: 2; /* Added z-index to position in front of page title */
+}
+
+@media screen and (min-width: 53em) {
+  .content {
+    height: 100vh;
+    justify-content: center;
+  }
+}
+
+/* Detail view */
+.detail-view {
+  overflow: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+  min-height: 100vh;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.detail-view.is-interactive {
+  pointer-events: all;
+}
+
+.detail-view.is-visible {
+  opacity: 1;
+}
+
+.detail-view__inner {
+  padding-left: 10vw;
+}
+
+/* Scroll area for horizontal scrolling - based on Gooey Hover */
+.scrollarea-ctn {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+.scrollarea {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Progress bar */
+.slideshow__progress-ctn {
+  overflow: hidden;
+  position: absolute;
+  bottom: 5%;
+  left: calc(50% - 6.5rem);
+  width: 13rem;
+  height: 0.4rem;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 0.4rem;
+  will-change: transform;
+  z-index: 100;
+}
+
+.slideshow__progress {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  border-radius: 0.4rem;
+  transform: translateX(-100%);
+}
+
+/* Slideshow list */
+.slideshow-list {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  will-change: transform;
+}
+
+.slideshow-list__el {
+  flex: 0 0 auto;
+  width: 100%;
+  min-width: 25rem;
+  max-width: 40vmin;
+  margin-left: 15vw;
+}
+
+.slideshow-list__el:last-child {
+  padding-right: 10vw;
+  box-sizing: content-box;
+}
+
+@media (min-width: 768px) {
+  .slideshow-list__el {
+    margin-left: 20vw;
+  }
+
+  .slideshow-list__el:nth-child(odd) {
+    transform: translateY(8vh);
+  }
+
+  .slideshow-list__el:nth-child(even) {
+    transform: translateY(-8vh);
+  }
+}
+
+/* Close detail button - based on Gooey Hover */
+.close-detail {
+  position: relative;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  z-index: 100;
+}
+
+.close-detail__path {
+  fill: var(--color-text);
+}
+
+.close-detail__back {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 28px;
+  height: 28px;
+}
+
+.close-detail__round {
+  animation: rotate 40s linear infinite;
+}
+
+@keyframes rotate {
+  to { transform: rotate(1turn); }
+}
+
+/* Tile styles - based on Gooey Hover */
+.tile {
+  position: relative;
+  z-index: 3; /* Added z-index to position in front of page title */
+}
+
+.tile__fig {
+  position: relative;
+  width: 100%;
+}
+
+.tile__fig::before {
+  content: '';
+  display: block;
+  padding-top: 136.36%;
+}
+
+.tile__img {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: opacity 0.3s;
+}
+
+.tile__img.is-loaded {
+  opacity: 0;
+}
+
+.tile__content {
+  position: absolute;
+  bottom: 3.6rem;
+  left: 0;
+  width: 100%;
+  font-size: 1.4rem;
+  transition: color 0.3s;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 300; /* Light weight */
+}
+
+.tile:hover .tile__content {
+  color: #fff;
+}
+
+.tile__title {
+  margin-left: -10%;
+  white-space: nowrap;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 300; /* Light weight */
+}
+
+.tile__cta {
+  display: block;
+  margin-top: 2rem;
+  margin-left: 6.4%;
+  line-height: 1.5;
+}
+
+@media (min-width: 768px) {
+  .tile__title {
+    margin-left: -45%;
+  }
+
+  .tile__cta {
+    margin-left: -11%;
+  }
+}
+
+/* Canvas for WebGL effect */
+#scene {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* Typography - based on Gooey Hover */
+.title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 300; /* Light weight */
+  line-height: 1.1;
+  color: var(--color-text);
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+}
+
+.title--large {
+  font-size: 5.5rem;
+}
+
+.title--medium {
+  font-size: 3.6rem;
+}
+
+.title__offset {
+  display: block;
+  margin-left: 4rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 300; /* Light weight */
+}
+
+.title__offset--medium {
+  margin-left: 2.4rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 300; /* Light weight */
+}
+
+.page-title {
+  position: absolute;
+  top: 40%; /* Changed from 50% to 40% to move text up */
+  left: 10vw;
+  z-index: 0; /* Changed from 1 to 0 to position behind images */
+  margin: 0;
+  transform: translateY(-50%);
+  font-size: 5.5rem;
+  opacity: 0.7; /* Added opacity to match original theme */
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 300; /* Light weight */
+}
+
+.slideshow__title__offset {
+  margin-left: 4rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 300; /* Light weight */
+}
+
+/* Detail view typography */
+.detail-view__title {
+  margin-top: 4rem;
+  margin-bottom: 5rem;
+  color: var(--color-text);
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 300; /* Light weight */
+}
+
+.detail-view__content p {
+  width: 100%;
+  max-width: 35vw;
+  font-size: 1.8rem;
+  line-height: 1.9;
+  opacity: 0.7;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 300; /* Light weight */
+}
+
+.detail-view__content p:not(:last-child) {
+  margin-bottom: 3rem;
+}
+
+/* Button inline */
+.btn-inline {
+  position: relative;
+  font-size: 1.4rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 300; /* Light weight */
+}
+
+.btn-inline::after {
+  content: '';
+  position: absolute;
+  bottom: -0.4rem;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform 0.3s;
+}
+
+.btn-inline:hover::after {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+/* Line container for animation */
+.line-ctn {
+  overflow: hidden;
+}
+
+.line {
+  display: block;
+  transform: translateY(100%);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .employee-detail__tiles {
+    grid-template-columns: 1fr;
+  }
+
+  .employee-detail__title {
+    font-size: 3rem;
+  }
+
+  .employee-detail__title-offset {
+    margin-left: 2rem;
+  }
+
+  .employee-detail__subtitle {
+    font-size: 1.2rem;
+  }
+
+  .employee-detail__text {
+    font-size: 1rem;
+  }
+}
+
+/* Animation classes */
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 1s forwards;
+}
+
+.slide-up {
+  transform: translateY(50px);
+  opacity: 0;
+  animation: slideUp 1s forwards;
+}
+
+.slide-up-delay-1 {
+  animation-delay: 0.2s;
+}
+
+.slide-up-delay-2 {
+  animation-delay: 0.4s;
+}
+
+.slide-up-delay-3 {
+  animation-delay: 0.6s;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

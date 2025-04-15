@@ -72,10 +72,41 @@ export default {
 					charcoal: '#221F26',
 					neutral: '#aaadb0',
 				},
+				// New Severance-inspired color palette
+				severance: {
+					frost: '#f0f6f7',    // Clean, sterile white-blue for backgrounds
+					slate: '#89aec8',    // Soft corporate blue for typography and UI
+					brass: '#7b6727',    // Warm contrast color
+					timber: '#4e452a',   // Muted brown with earthy depth
+					marine: '#002c55',   // Deep navy for contrast and structure
+					midnight: '#0b0e29', // Darkest shade for backgrounds and text
+				},
+				// Office theme colors (corporate/sterile)
+				office: {
+					green: '#7da17e',     // Deep corporate green
+					white: '#f7f6f9',     // Sterile white
+					teal: '#98b6b0',      // Muted teal
+					darkGreen: '#163f38', // Deep forest green
+					pale: '#d6e0e2',      // Pale blue-gray
+				},
+				// Wardrobe theme colors (retro office)
+				wardrobe: {
+					dark: '#18232a',      // Dark navy-black
+					light: '#dfe1e2',     // Light gray
+					gray: '#393f3a',      // Muted gray-green
+					blue: '#7f96ae',      // Dusty blue
+				},
+				// Personal life theme colors (outside Lumon)
+				personal: {
+					brown: '#673b15',     // Warm brown
+					gray: '#495954',      // Muted gray
+					blue: '#03468b',      // Deep blue
+				},
 			},
 			fontFamily: {
-				trap: ['Trap', 'sans-serif'],
+				trap: ['Trap', 'Space Grotesk', 'Arial Black', 'Helvetica Neue', 'sans-serif'],
 				jakarta: ['Plus Jakarta Sans', 'sans-serif'],
+				mono: ['JetBrains Mono', 'monospace'],
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

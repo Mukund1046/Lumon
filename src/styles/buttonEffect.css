@@ -1,0 +1,118 @@
+/* Button hover effect */
+button,
+.lumon-button,
+.btn,
+.button {
+  --button-bg: var(--severance-frost, #f0f6f7);
+  --button-fg: var(--severance-midnight, #0b0e29);
+  --hover-bg: var(--severance-marine, #002c55);
+  touch-action: none;
+  position: relative;
+  overflow: hidden;
+}
+
+button.secondary,
+.lumon-button.secondary,
+.btn.secondary,
+.button.secondary {
+  --button-bg: var(--severance-midnight, #0b0e29);
+  --hover-bg: var(--severance-marine, #002c55);
+  color: var(--severance-frost, #f0f6f7);
+}
+
+/* Specific color overrides for different button types */
+button[data-button-enhanced="true"],
+.lumon-button[data-button-enhanced="true"] {
+  --hover-bg: #002c55; /* Marine blue */
+}
+
+button[data-button-enhanced="true"].secondary,
+.lumon-button[data-button-enhanced="true"].secondary {
+  --hover-bg: #7b6727; /* Brass */
+}
+
+/* Back element that contains the hover effect */
+button .back,
+.lumon-button .back,
+.btn .back,
+.button .back {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: inherit;
+  z-index: 1;
+}
+
+/* The actual circle that expands */
+.back > span {
+  left: calc(var(--x, 0) * 1px);
+  top: calc(var(--y, 0) * 1px);
+  width: 100%;
+  height: auto;
+  display: inline-block;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%) scale(var(--active, 0));
+  transition: transform 0.25s ease-out;
+  background: var(--hover-bg, #002c55);
+  position: absolute;
+  pointer-events: none;
+  overflow: hidden;
+  mix-blend-mode: difference;
+  border-radius: 50%;
+  opacity: 0.8;
+}
+
+/* Make sure button content stays on top */
+button > *:not(.back),
+.lumon-button > *:not(.back),
+.btn > *:not(.back),
+.button > *:not(.back) {
+  position: relative;
+  z-index: 2;
+}
+
+/* Hover state */
+button:is(:hover, :focus-visible) .back > span,
+.lumon-button:is(:hover, :focus-visible) .back > span,
+.btn:is(:hover, :focus-visible) .back > span,
+.button:is(:hover, :focus-visible) .back > span {
+  --active: 1.5;
+}
+
+/* Active state */
+button:active .back > span,
+.lumon-button:active .back > span,
+.btn:active .back > span,
+.button:active .back > span {
+  --active: 3;
+  transition: transform 0.15s;
+}
+
+/* Advanced timing function for smoother animation */
+@supports (transition-timing-function: linear(0, 1)) {
+  button:is(:hover, :focus-visible) .back > span,
+  .lumon-button:is(:hover, :focus-visible) .back > span,
+  .btn:is(:hover, :focus-visible) .back > span,
+  .button:is(:hover, :focus-visible) .back > span {
+    transition-duration: 0.5s;
+    transition-timing-function: linear(
+      0, 0.5007 7.21%, 0.7803 12.29%,
+      0.8883 14.93%, 0.9724 17.63%,
+      1.0343 20.44%, 1.0754 23.44%,
+      1.0898 25.22%, 1.0984 27.11%,
+      1.1014 29.15%, 1.0989 31.4%,
+      1.0854 35.23%, 1.0196 48.86%,
+      1.0043 54.06%, 0.9956 59.6%,
+      0.9925 68.11%, 1
+    );
+  }
+}
+
+/* Fallback for browsers that don't support mix-blend-mode */
+@supports not (mix-blend-mode: difference) {
+  .back > span {
+    mix-blend-mode: normal;
+    opacity: 0.3;
+  }
+}

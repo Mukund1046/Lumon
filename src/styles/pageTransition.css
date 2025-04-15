@@ -1,0 +1,76 @@
+/* Page transition overlay styles */
+.page-transition-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    display: grid;
+    pointer-events: none;
+    opacity: 0;
+    --columns: 16;
+    grid-template-columns: repeat(var(--columns, 16), 1fr);
+    /* Ensure the overlay is visible in all browsers */
+    background-color: transparent;
+    /* Prevent any potential issues with stacking contexts */
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+}
+
+/* Demo1 - Vertical rows */
+.page-transition-overlay div {
+    background-color: var(--severance-midnight, #0b0e29);
+    will-change: transform, opacity;
+    /* Ensure cells are visible in all browsers */
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    /* Prevent any potential issues with cell sizing */
+    box-sizing: border-box;
+    min-height: 1px;
+}
+
+/* Demo2 - From center */
+[data-transition="demo2"] .page-transition-overlay div {
+    background-color: var(--office-darkGreen, #163f38);
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+}
+
+/* Demo4 - From edges to center */
+[data-transition="demo4"] .page-transition-overlay div {
+    background-color: var(--wardrobe-dark, #18232a);
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+}
+
+/* Demo5 - Vertical columns */
+[data-transition="demo5"] .page-transition-overlay div {
+    background-color: var(--personal-brown, #673b15);
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+}
+
+/* Demo6 - Horizontal slide */
+[data-transition="demo6"] .page-transition-overlay div {
+    background-color: var(--wardrobe-blue, #7f96ae);
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+}
+
+/* Fallback for browsers that don't support CSS Grid properly */
+@supports not (display: grid) {
+    .page-transition-overlay {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .page-transition-overlay div {
+        flex: 1 0 calc(100% / var(--columns, 16));
+        min-width: calc(100% / var(--columns, 16));
+    }
+}

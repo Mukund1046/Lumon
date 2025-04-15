@@ -1,0 +1,89 @@
+/* Marquee Menu Effect for Mobile Menu
+   Based on Codrops Marquee Menu effect
+*/
+
+.mobile-menu-marquee {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.mobile-menu-item {
+  position: relative;
+  overflow: hidden;
+  min-height: 40px;
+  display: block;
+  width: 100%;
+}
+
+.marquee {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: var(--severance-midnight, #0b0e29);
+  transform: translate3d(0, 101%, 0);
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.4s ease;
+}
+
+.mobile-menu-item:hover .marquee,
+.mobile-menu-item:active .marquee {
+  opacity: 1;
+  transform: translate3d(0, 0%, 0);
+}
+
+.mobile-menu-item:hover .marquee__inner-wrap,
+.mobile-menu-item:active .marquee__inner-wrap {
+  transform: translate3d(0, 0%, 0);
+}
+
+.marquee__inner-wrap {
+  height: 100%;
+  width: 100%;
+  transform: translate3d(0, -101%, 0);
+  transition: transform 0.4s ease;
+}
+
+.marquee__inner {
+  height: 100%;
+  width: fit-content;
+  align-items: center;
+  display: flex;
+  position: relative;
+  animation: marquee 15s linear infinite;
+  will-change: transform;
+}
+
+@keyframes marquee {
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.marquee span {
+  white-space: nowrap;
+  font-size: 1rem;
+  line-height: 1.2;
+  font-weight: 400;
+  padding: 0 1rem;
+  text-transform: uppercase;
+  color: var(--severance-frost, #f0f6f7);
+  font-family: var(--font-jetbrains, 'JetBrains Mono', monospace);
+}
+
+/* Apply Now button in mobile menu */
+.mobile-menu-apply {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.25rem;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  width: auto !important;
+}

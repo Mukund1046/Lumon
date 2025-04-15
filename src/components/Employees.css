@@ -1,0 +1,200 @@
+.employees-section {
+  min-height: 100vh;
+  padding: 6rem 0 3rem;
+  background-color: var(--wardrobe-dark);
+  color: var(--wardrobe-light);
+  position: relative;
+  overflow: hidden;
+}
+
+.infinite-menu-container {
+  height: 75vh;
+  width: 100%;
+  position: relative;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(127, 150, 174, 0.2);
+  background-color: rgba(24, 35, 42, 0.85);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.infinite-menu-container::before {
+  content: '';
+  position: absolute;
+  top: -10%;
+  left: -10%;
+  width: 120%;
+  height: 120%;
+  background: radial-gradient(circle at center, rgba(127, 150, 174, 0.1) 0%, transparent 70%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.infinite-menu-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/assets/noise.png');
+  background-repeat: repeat;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+/* Override InfiniteMenu styles to match Severance theme */
+#infinite-grid-menu-canvas {
+  background-color: var(--wardrobe-dark) !important;
+  cursor: grab !important;
+}
+
+#infinite-grid-menu-canvas:active {
+  cursor: grabbing !important;
+}
+
+.face-title {
+  font-family: 'Trap', sans-serif !important;
+  font-weight: 500 !important;
+  color: var(--wardrobe-light) !important;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 4.5rem !important;
+  text-shadow: 0 0 15px rgba(223, 225, 226, 0.3) !important;
+  transform: translate(20%, -50%) !important;
+}
+
+.face-title.active {
+  transform: translate(20%, -50%) !important;
+  transition: opacity 0.5s ease, transform 0.5s ease !important;
+}
+
+.face-description {
+  font-family: 'Space Grotesk', sans-serif !important;
+  font-weight: 300 !important;
+  color: var(--wardrobe-blue) !important;
+  max-width: 25ch !important;
+  font-size: 1.5rem !important;
+  line-height: 1.4 !important;
+  opacity: 0.9 !important;
+  transform: translate(-90%, -50%) !important;
+}
+
+.face-description.active {
+  transform: translate(-90%, -50%) !important;
+  transition: opacity 0.5s ease, transform 0.5s ease !important;
+}
+
+.action-button {
+  background-color: var(--wardrobe-blue) !important;
+  border: none !important;
+  box-shadow: 0 0 20px rgba(127, 150, 174, 0.5);
+  transition: all 0.3s ease;
+  width: 70px !important;
+  height: 70px !important;
+  bottom: 5rem !important;
+}
+
+.action-button:hover {
+  transform: translateX(-50%) scale(1.1) !important;
+  box-shadow: 0 0 30px rgba(127, 150, 174, 0.7);
+}
+
+.action-button.active {
+  transform: translateX(-50%) scale(1) !important;
+  transition: opacity 0.5s ease, transform 0.5s ease, bottom 0.5s ease !important;
+}
+
+.action-button-icon {
+  color: var(--wardrobe-dark) !important;
+  font-size: 30px !important;
+}
+
+/* Add a subtle background pattern */
+.employees-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(to bottom, rgba(24, 35, 42, 0.9), rgba(24, 35, 42, 1));
+  z-index: 0;
+}
+
+/* Add a subtle grid pattern */
+.employees-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(rgba(127, 150, 174, 0.05) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(127, 150, 174, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+  z-index: 1;
+  opacity: 0.5;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .infinite-menu-container {
+    height: 60vh;
+  }
+
+  .face-title {
+    font-size: 2.5rem !important;
+    transform: translate(10%, -50%) !important;
+  }
+
+  .face-title.active {
+    transform: translate(10%, -50%) !important;
+  }
+
+  .face-description {
+    font-size: 1rem !important;
+    transform: translate(-80%, -50%) !important;
+    max-width: 20ch !important;
+  }
+
+  .face-description.active {
+    transform: translate(-80%, -50%) !important;
+  }
+
+  .action-button {
+    width: 60px !important;
+    height: 60px !important;
+    bottom: 3rem !important;
+  }
+
+  .action-button-icon {
+    font-size: 24px !important;
+  }
+}
+
+/* Additional container for better layout */
+.employees-content {
+  position: relative;
+  z-index: 10;
+  padding: 0 1rem;
+}
+
+/* Section title styling */
+.employees-title {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 1.5rem;
+}
+
+.employees-title::after {
+  content: '';
+  position: absolute;
+  bottom: -0.5rem;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background-color: var(--wardrobe-blue);
+}

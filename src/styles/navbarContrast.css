@@ -1,0 +1,87 @@
+/* Enhanced contrast for navbar links */
+
+/* Default state with improved contrast */
+.nav-link {
+  position: relative;
+  font-weight: 500 !important;
+  text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+/* Active state with stronger contrast */
+.nav-link.active {
+  color: #002c55 !important; /* severance-marine - darker blue for better contrast */
+  text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.3);
+}
+
+/* Hover state with stronger contrast */
+.nav-link:hover {
+  color: #002c55 !important; /* severance-marine - darker blue for better contrast */
+  text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.3);
+}
+
+/* Special styling for dark backgrounds (employee detail pages) */
+.mark-theme .nav-link,
+.helly-theme .nav-link,
+.irving-theme .nav-link,
+.dylan-theme .nav-link {
+  color: #f0f6f7 !important; /* severance-frost - light color for dark backgrounds */
+  text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Add semi-transparent background to navbar on dark pages */
+.mark-theme header,
+.helly-theme header,
+.irving-theme header,
+.dylan-theme header {
+  background-color: rgba(11, 14, 41, 0.7) !important; /* severance-midnight with opacity */
+  backdrop-filter: blur(8px);
+}
+
+.mark-theme .nav-link:hover,
+.helly-theme .nav-link:hover,
+.irving-theme .nav-link:hover,
+.dylan-theme .nav-link:hover,
+.mark-theme .nav-link.active,
+.helly-theme .nav-link.active,
+.irving-theme .nav-link.active,
+.dylan-theme .nav-link.active {
+  color: #89aec8 !important; /* severance-slate - brighter blue for hover on dark backgrounds */
+  text-shadow: 0px 0px 3px rgba(137, 174, 200, 0.5);
+}
+
+/* Add a subtle background to links on dark pages for better visibility */
+.mark-theme .nav-link,
+.helly-theme .nav-link,
+.irving-theme .nav-link,
+.dylan-theme .nav-link {
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+/* Ensure the logo is always visible */
+.font-trap-bold {
+  text-shadow: 0px 0px 2px rgba(255, 255, 255, 0.5);
+}
+
+/* Adjust logo color on dark backgrounds */
+.mark-theme .font-trap-bold,
+.helly-theme .font-trap-bold,
+.irving-theme .font-trap-bold,
+.dylan-theme .font-trap-bold {
+  color: #f0f6f7 !important; /* severance-frost - light color for dark backgrounds */
+  text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.7);
+}
+
+/* Ensure mobile menu links have good contrast too */
+.mobile-menu .nav-link {
+  font-weight: 600 !important;
+  color: #002c55 !important;
+}
+
+.mobile-menu .nav-link:hover,
+.mobile-menu .nav-link.active {
+  color: #002c55 !important;
+  background-color: rgba(137, 174, 200, 0.2);
+}

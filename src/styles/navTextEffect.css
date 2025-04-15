@@ -1,0 +1,54 @@
+/* Text hover effect styles based on Codrops example */
+.hover-effect {
+  font-kerning: none;
+  position: relative;
+  white-space: nowrap;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.hover-effect .word {
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.hover-effect .char {
+  position: relative;
+  display: inline-block;
+}
+
+/* Background effect */
+.hover-effect--bg-south {
+  --anim: 0;
+}
+
+.hover-effect--bg-south::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: -8px;
+  right: -8px;
+  top: -8px;
+  bottom: -8px;
+  border-radius: 2px;
+  height: auto;
+  width: auto;
+  background-color: rgba(127, 150, 174, 0.15); /* wardrobe-blue with opacity */
+  transform-origin: 50% 100%;
+  transform: scaleY(var(--anim));
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* For debugging - can be removed later */
+.hover-effect--bg-south:hover::after {
+  --anim: 1;
+}
+
+/* Character animation styles */
+.hover-effect .char {
+  transition: color 0.3s ease;
+}
+
+.hover-effect:hover .char {
+  color: #7f96ae; /* wardrobe-blue */
+}

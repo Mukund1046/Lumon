@@ -1,0 +1,84 @@
+/* Hero animations for award-winning design */
+
+@keyframes slide-up {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  animation-delay: calc(var(--animation-delay, 0) * 100ms);
+}
+
+/* Staggered animation delays */
+.animate-slide-up:nth-child(1) {
+  --animation-delay: 1;
+}
+
+.animate-slide-up:nth-child(2) {
+  --animation-delay: 2;
+}
+
+.animate-slide-up:nth-child(3) {
+  --animation-delay: 3;
+}
+
+.animate-slide-up:nth-child(4) {
+  --animation-delay: 4;
+}
+
+/* Enhanced fade-in animation */
+@keyframes enhanced-fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-enhanced-fade-in {
+  animation: enhanced-fade-in 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  animation-delay: calc(var(--animation-delay, 0) * 100ms);
+}
+
+/* Subtle text reveal animation */
+@keyframes text-reveal {
+  0% {
+    clip-path: inset(0 100% 0 0);
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+.animate-text-reveal {
+  animation: text-reveal 1s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+  animation-delay: calc(var(--animation-delay, 0) * 100ms);
+}
+
+/* Subtle background animation */
+@keyframes bg-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-bg-shift {
+  animation: bg-shift 15s ease infinite;
+  background-size: 200% 200%;
+}

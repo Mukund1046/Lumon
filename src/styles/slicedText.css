@@ -1,0 +1,218 @@
+/* Sliced Text Effect CSS */
+
+:root {
+  font-size: 14px;
+  --color-text: var(--severance-frost);
+  --color-bg: var(--severance-midnight);
+  --color-link: var(--severance-slate);
+  --color-link-hover: var(--severance-frost);
+  --page-padding: 1rem;
+}
+
+.sliced-text-container {
+  padding: var(--page-padding);
+  position: relative;
+  overflow: hidden;
+  background-color: var(--severance-midnight);
+  color: var(--severance-frost);
+}
+
+.content {
+  display: grid;
+  padding-top: 120px; /* Add padding to the top to move content below navbar */
+}
+
+.content--full {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding-top: 0; /* Override the padding for full-height content sections */
+}
+
+.content p {
+  justify-self: start;
+  margin-bottom: 20vh;
+  font-weight: 600;
+  opacity: 0.6;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 300;
+  max-width: 40ch;
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+}
+
+.end {
+  justify-content: end;
+  justify-self: end;
+}
+
+.spaced {
+  margin: 15vh auto;
+  padding: 0 5vw;
+}
+
+.gtext {
+  line-height: 1;
+  margin: 0;
+  display: grid;
+  font-weight: 400;
+  justify-content: center;
+  white-space: nowrap;
+  --text-width: 100px;
+  --gsplits: 4;
+  --gcolor: #fff;
+  --gsize: 1rem;
+  font-size: var(--gsize);
+  color: var(--gcolor);
+  --offset: calc(var(--text-width) / var(--gsplits));
+  grid-template-columns: repeat(var(--gsplits),var(--offset));
+}
+
+.size-s {
+  --gsize: clamp(2rem, 6vw, 3rem);
+  text-transform: lowercase;
+}
+
+.size-m {
+  --gsize: clamp(3rem,10vw,8rem);
+}
+
+.size-xl {
+  --gsize: clamp(5rem,18vw,22rem);
+  text-transform: uppercase;
+}
+
+.size-xxl {
+  --gsize: clamp(5rem,25vw,22rem);
+  text-transform: uppercase;
+}
+
+.font-trap {
+  font-family: "Trap", sans-serif;
+  font-weight: 400;
+}
+
+.font-space-grotesk {
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 300;
+}
+
+.font-jetbrains {
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 400;
+}
+
+.color-frost {
+  --gcolor: var(--severance-frost);
+}
+
+.color-slate {
+  --gcolor: var(--severance-slate);
+}
+
+.color-brass {
+  --gcolor: var(--severance-brass);
+}
+
+.color-timber {
+  --gcolor: var(--severance-timber);
+}
+
+.color-marine {
+  --gcolor: var(--severance-marine);
+}
+
+.blendmode-1 {
+  mix-blend-mode: plus-lighter;
+}
+
+.shadow-1 {
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+}
+
+.shadow-2 {
+  text-shadow: 0 0 8px rgba(139, 30, 24, 0.5);
+}
+
+.gtext__box {
+  overflow: hidden;
+  position: relative;
+  will-change: transform;
+  margin-right: -0.5px;
+}
+
+.gtext__box-inner {
+  width: max-content;
+  position: relative;
+  display: block;
+  will-change: transform;
+}
+
+.deco {
+  display: grid;
+  width: 80%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 10%;
+  z-index: 0;
+  filter: brightness(0.4) contrast(1.2);
+  pointer-events: none;
+  grid-template-columns: repeat(3,auto);
+  grid-template-rows: repeat(36,1fr);
+  opacity: 0.8;
+  mix-blend-mode: luminosity;
+}
+
+.deco__item {
+  grid-column: 3 / span 1;
+  background-size: cover;
+  width: auto;
+  aspect-ratio: 2/3;
+  max-width: 33vw;
+  border-radius: 4px;
+}
+
+.deco__item:nth-child(2n) {
+  max-width: 18vw;
+  grid-column: 1 / span 3;
+}
+
+.deco__item:nth-child(3n) {
+  max-width: 12vw;
+  grid-column: 2 / span 2;
+}
+
+@media screen and (min-width: 53em) {
+  .sliced-text-container {
+    --page-padding: 2rem 3rem;
+  }
+
+  .deco {
+    grid-template-columns: repeat(5,auto);
+  }
+
+  .deco__item {
+    grid-column: 5 / span 1;
+    max-width: 20vw;
+  }
+
+  .deco__item:nth-child(2n) {
+    max-width: 18vw;
+    grid-column: 1 / span 5;
+  }
+
+  .deco__item:nth-child(3n) {
+    max-width: 7vw;
+    grid-column: 4 / span 2;
+  }
+
+  .deco__item:nth-child(4n) {
+    grid-column: 3 / span 3;
+  }
+
+  .deco__item:nth-child(5n) {
+    max-width: 10vw;
+    grid-column: 2 / span 4;
+  }
+}

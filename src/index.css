@@ -1,6 +1,10 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
-@import url('https://api.fontshare.com/v2/css?f[]=trap@400,500,600,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+/* Import local Trap font */
+@import url('/assets/fonts/trap/trap.css');
 
 @tailwind base;
 @tailwind components;
@@ -8,33 +12,34 @@
 
 @layer base {
   :root {
-    --background: 220 20% 97%;
-    --foreground: 220 10% 10%;
+    /* Severance-inspired theme */
+    --background: 195 33% 95%;  /* frost */
+    --foreground: 220 55% 10%;  /* near midnight */
 
     --card: 0 0% 100%;
-    --card-foreground: 220 10% 10%;
+    --card-foreground: 210 100% 17%;  /* marine */
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 10% 10%;
+    --popover-foreground: 220 55% 10%;  /* near midnight */
 
-    --primary: 217 33% 17%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 210 100% 17%;  /* marine */
+    --primary-foreground: 195 33% 95%;  /* frost */
 
-    --secondary: 222 47% 26%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 206 32% 66%;  /* slate */
+    --secondary-foreground: 220 55% 10%;  /* near midnight */
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 195 33% 95%;  /* frost */
+    --muted-foreground: 45 51% 32%;  /* timber */
 
-    --accent: 258 26% 75%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 45 51% 32%;  /* timber */
+    --accent-foreground: 195 33% 95%;  /* frost */
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 206 32% 66%;  /* slate */
+    --input: 206 32% 66%;  /* slate */
+    --ring: 45 51% 32%;  /* timber */
 
     --radius: 0.25rem;
 
@@ -49,34 +54,35 @@
   }
 
   .dark {
-    --background: 217 33% 17%;
-    --foreground: 210 40% 98%;
+    /* Severance dark theme */
+    --background: 222 55% 10%;  /* midnight */
+    --foreground: 195 33% 95%;  /* frost */
 
-    --card: 222 47% 11%;
-    --card-foreground: 210 40% 98%;
+    --card: 210 100% 17%;  /* marine */
+    --card-foreground: 195 33% 95%;  /* frost */
 
-    --popover: 222 47% 11%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 210 100% 17%;  /* marine */
+    --popover-foreground: 195 33% 95%;  /* frost */
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 195 33% 95%;  /* frost */
+    --primary-foreground: 222 55% 10%;  /* midnight */
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 45 51% 32%;  /* timber */
+    --secondary-foreground: 195 33% 95%;  /* frost */
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 210 100% 17%;  /* marine */
+    --muted-foreground: 206 32% 66%;  /* slate */
 
-    --accent: 258 26% 75%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 49 52% 32%;  /* brass */
+    --accent-foreground: 195 33% 95%;  /* frost */
 
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 195 33% 95%;  /* frost */
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    
+    --border: 45 51% 32%;  /* timber */
+    --input: 45 51% 32%;  /* timber */
+    --ring: 206 32% 66%;  /* slate */
+
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -107,33 +113,51 @@
     @apply container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
 
+  /* Button styles are now in button.css */
   .lumon-button {
-    @apply bg-lumon-dark text-white font-jakarta font-medium rounded-sm px-6 py-3 
-    transition-colors hover:bg-lumon-accent/90 focus:outline-none focus:ring-2 
-    focus:ring-lumon-accent focus:ring-offset-2;
+    /* Keep this class for backward compatibility, but styles are in button.css */
   }
-  
+
   .lumon-card {
-    @apply bg-white rounded-sm border border-lumon-neutral/20 p-6 shadow-sm transition-all;
+    @apply bg-office-white rounded-sm border border-office-teal/20 p-6 shadow-sm transition-all;
   }
 
   .animate-delay-100 {
     animation-delay: 100ms;
   }
-  
+
   .animate-delay-200 {
     animation-delay: 200ms;
   }
-  
+
   .animate-delay-300 {
     animation-delay: 300ms;
   }
-  
+
   .animate-delay-400 {
     animation-delay: 400ms;
   }
-  
+
   .animate-delay-500 {
     animation-delay: 500ms;
+  }
+
+  /* Noise animation */
+  @keyframes noise {
+    0% { transform: translate(0, 0); }
+    10% { transform: translate(-1%, -1%); }
+    20% { transform: translate(-2%, 1%); }
+    30% { transform: translate(1%, -2%); }
+    40% { transform: translate(2%, 2%); }
+    50% { transform: translate(-1%, 1%); }
+    60% { transform: translate(-2%, -1%); }
+    70% { transform: translate(2%, 1%); }
+    80% { transform: translate(-1%, -2%); }
+    90% { transform: translate(1%, 2%); }
+    100% { transform: translate(0, 0); }
+  }
+
+  .animate-noise {
+    animation: noise 8s steps(10) infinite;
   }
 }

@@ -16,16 +16,19 @@ const JoinUsPage: React.FC = () => {
     class: 'data-scroll',
     getDirection: true,
   });
-  
+
   return (
-    <div ref={containerRef} data-scroll-container className="min-h-screen bg-background text-foreground">
-      <Navbar />
-      <div data-scroll-section className="pt-24">
-        <JoinUs />
+    <div className="w-full bg-severance-frost items-center justify-center h-full overflow-auto">
+      {/* Main content with higher z-index */}
+      <div className="relative z-10">
+        <Navbar />
+        <div className="pt-24 relative">
+          <JoinUs />
+        </div>
       </div>
-      <div data-scroll-section>
-        <Footer />
-      </div>
+
+      {/* Sticky footer with lower z-index */}
+      <Footer />
     </div>
   );
 };

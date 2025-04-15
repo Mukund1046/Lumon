@@ -1,74 +1,176 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { cn } from '@/lib/utils';
+import '../styles/3dscroll.css';
+import { init3DScroll } from '../scripts/3dscroll';
 
-const features = [
-  {
-    title: "Complete Separation",
-    description: "Our patented procedure ensures your work self (innie) never meets your home self (outie)."
-  },
-  {
-    title: "Perfect Focus",
-    description: "With no distractions from your personal life, productivity reaches unprecedented levels."
-  },
-  {
-    title: "Work-Life Balance",
-    description: "Leave work at work, literally. Your home self will never worry about pending tasks."
-  },
-  {
-    title: "Dedicated Care",
-    description: "Our wellness counselors ensure your work self is always comfortable and supported."
-  }
-];
+// Component for a grid item with a fallback mechanism
+const GridItem = ({ index }) => {
+  // Use modulo to cycle through the first 24 images
+  // We'll use a smaller modulo to ensure we're using images that definitely exist
+  const imageNumber = (index % 24) + 1;
+
+  // Create an array of fallback images to try using useMemo to avoid recreating on every render
+  const fallbackImages = React.useMemo(() => [
+    // Try with public prefix first
+    `public/assets/severance${imageNumber}.jpg`,
+    // Try with different extensions
+    `public/assets/severance${imageNumber}.jpeg`,
+    `public/assets/severance${imageNumber}.png`,
+    // Try with different image numbers
+    `public/assets/severance${(imageNumber % 12) + 1}.jpg`,
+    `public/assets/severance${(imageNumber % 6) + 1}.jpg`,
+    // Ultimate fallbacks
+    `public/assets/severance1.jpg`,
+    `public/assets/severance2.jpg`,
+    `public/assets/severance3.jpg`
+  ], [imageNumber]);
+
+  // Use React's useState to track if the primary image fails
+  const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
+  const [hasError, setHasError] = React.useState(false);
+
+  // Handle image load error
+  React.useEffect(() => {
+    // Create an image element to test loading
+    const img = new Image();
+    img.src = fallbackImages[currentImageIndex];
+
+    img.onload = () => {
+      setHasError(false);
+    };
+
+    img.onerror = () => {
+      // If we have more fallbacks, try the next one
+      if (currentImageIndex < fallbackImages.length - 1) {
+        setCurrentImageIndex(currentImageIndex + 1);
+      } else {
+        setHasError(true);
+        console.warn(`Failed to load image for grid item with index ${index}`);
+      }
+    };
+
+    return () => {
+      img.onload = null;
+      img.onerror = null;
+    };
+  }, [currentImageIndex, fallbackImages, index]);
+
+  return (
+    <div className="grid__item">
+      <div
+        className="grid__item-inner"
+        style={{
+          backgroundImage: `url(${fallbackImages[currentImageIndex]})`,
+          backgroundColor: 'rgba(255, 255, 255, 0.1)', // Fallback color
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          // Add a border if all images failed
+          border: hasError ? '1px solid rgba(255, 255, 255, 0.3)' : 'none'
+        }}
+      ></div>
+    </div>
+  );
+};
 
 const About: React.FC = () => {
+  useEffect(() => {
+    // Initialize 3D scroll effect after component mounts
+    const timer = setTimeout(() => {
+      init3DScroll();
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, []);
   return (
-    <section id="about" className="py-24 bg-gray-50">
-      <div className="container-custom">
-        <div className="max-w-3xl mx-auto text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-trap font-medium tracking-tight mb-4">
-            About <span className="text-lumon-accent">Severance</span>
-          </h2>
-          
-          <div className="w-20 h-1 bg-lumon-accent/40 mx-auto mb-6"></div>
-          
-          <p className="text-foreground/80 font-jakarta text-lg">
-            Severance is a revolutionary procedure that surgically divides your memories between your work and personal life.
-            When you're at work, you only have work memories. When you're outside of work, you only have personal memories.
-          </p>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {features.map((feature, index) => (
-            <div 
-              key={index}
-              className={cn(
-                "lumon-card hover:shadow-md overflow-hidden flex flex-col",
-                "opacity-0 animate-slide-up",
-                index === 0 ? "animate-delay-100" :
-                index === 1 ? "animate-delay-200" :
-                index === 2 ? "animate-delay-300" : "animate-delay-400"
-              )}
-            >
-              <div className="h-2 bg-lumon-accent/70 w-full -mt-6 mb-6"></div>
-              
-              <h3 className="text-xl font-trap font-medium mb-3">
-                {feature.title}
-              </h3>
-              
-              <p className="text-foreground/70 font-jakarta flex-grow">
-                {feature.description}
-              </p>
-              
-              <div className="pt-4 mt-auto">
-                <span className="inline-block px-3 py-1 text-xs font-jakarta text-lumon-dark bg-lumon-neutral/10 rounded-full">
-                  Lumon Certified
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
+    <section id="about" className="bg-severance-midnight relative overflow-hidden">
+      {/* Noise texture overlay */}
+      <div
+        className="absolute inset-0 opacity-10 mix-blend-overlay animate-noise"
+        style={{ backgroundImage: 'url(/assets/noise.png)', backgroundRepeat: 'repeat' }}
+      ></div>
+
+      {/* Intro section */}
+      <div className="intro">
+        <h1 className="intro__title">
+          <span className="intro__title-pre">Severance</span>
+          <span className="intro__title-sub">Work-Life Separation</span>
+        </h1>
+        <span className="intro__info">Scroll moderately to fully experience the animations</span>
       </div>
+
+      {/* First grid section - Type 1 animation */}
+      <section className="grid-section">
+        <h3 className="grid-section__title grid-section__title--right grid-section__title--top">Life at <br/>Lumon Industries</h3>
+        <div className="grid grid--1">
+          <div className="grid-wrap">
+            {Array.from({ length: 48 }, (_, i) => (
+              <GridItem key={`grid1-${i}`} index={i} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Second grid section - Type 2 animation */}
+      <section className="grid-section">
+        <h3 className="grid-section__title">Severed <br/>Work Environment</h3>
+        <div className="grid grid--2">
+          <div className="grid-wrap">
+            {Array.from({ length: 48 }, (_, i) => (
+              <GridItem key={`grid2-${i}`} index={i + 48} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Third grid section - Type 3 animation */}
+      <section className="grid-section grid-section--spacing">
+        <h3 className="grid-section__title grid-section__title--left grid-section__title--bottom">Embrace <br/>the Procedure</h3>
+        <div className="grid grid--3">
+          <div className="grid-wrap">
+            {Array.from({ length: 48 }, (_, i) => (
+              <GridItem key={`grid3-${i}`} index={i + 96} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Fourth grid section - Type 4 animation */}
+      <section className="grid-section grid-section--spacing">
+        <h3 className="grid-section__title grid-section__title--right">Now unfolds <br/>eternity's grace</h3>
+        <div className="grid grid--4">
+          <div className="grid-wrap">
+            {Array.from({ length: 48 }, (_, i) => (
+              <GridItem key={`grid4-${i}`} index={i + 12} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Fifth grid section - Type 5 animation */}
+      <section className="grid-section grid-section--spacing">
+        <h3 className="grid-section__title">An infinite universe<br/> of moments unfolding</h3>
+        <div className="grid grid--5">
+          <div className="grid-wrap">
+            {Array.from({ length: 48 }, (_, i) => (
+              <GridItem key={`grid5-${i}`} index={i + 72} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Sixth grid section - Type 6 animation */}
+      <section className="grid-section grid-section--spacing">
+        <h3 className="grid-section__title">Seasons shift, <br/>moments flow.</h3>
+        <div className="grid grid--6">
+          <div className="grid-wrap">
+            {Array.from({ length: 21 }, (_, i) => (
+              <GridItem key={`grid6-${i}`} index={i + 120} />
+            ))}
+          </div>
+        </div>
+      </section>
     </section>
   );
 };

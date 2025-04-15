@@ -1,0 +1,6 @@
+/* Fix for Apply Now button in navbar on mobile */
+@media (max-width: 767px) {
+  .navbar-apply-button {
+    display: none !important;
+  }
+}

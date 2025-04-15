@@ -1,0 +1,15 @@
+export const AssetsId = Object.freeze({
+  // Textures
+  TEXTURE_1: "TEXTURE_1",
+  TEXTURE_2: "TEXTURE_2",
+  TEXTURE_3: "TEXTURE_3",
+  TEXTURE_4: "TEXTURE_4",
+  TEXTURE_5: "TEXTURE_5",
+  TEXTURE_6: "TEXTURE_6",
+  TEXTURE_7: "TEXTURE_7",
+  TEXTURE_8: "TEXTURE_8",
+  TEXTURE_9: "TEXTURE_9",
+  TEXTURE_10: "TEXTURE_10",
+
+  // Sounds
+});

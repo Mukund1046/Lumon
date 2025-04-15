@@ -1,0 +1,236 @@
+/* Color Schemes for Severance Concepts
+   WOE, MALICE, DREAD, and FROLIC color palettes
+*/
+
+:root {
+  /* WOE Color Scheme */
+  --woe-primary: #68916a;    /* Muted green */
+  --woe-dark: #171d28;       /* Dark blue-gray */
+  --woe-light: #d7dde2;      /* Light gray-blue */
+  --woe-accent: #27372d;     /* Deep forest green */
+  
+  /* MALICE Color Scheme */
+  --malice-light: #dce0e9;   /* Pale blue-gray */
+  --malice-accent: #00abf7;  /* Bright blue */
+  --malice-dark: #1f3451;    /* Navy blue */
+  --malice-primary: #0259d0; /* Royal blue */
+  
+  /* DREAD Color Scheme */
+  --dread-primary: #9d714e;  /* Copper brown */
+  --dread-accent: #336268;   /* Teal */
+  --dread-neutral: #43484b;  /* Slate gray */
+  --dread-dark: #0e1b3b;     /* Deep navy */
+  
+  /* FROLIC Color Scheme - same as DREAD in the provided colors */
+  --frolic-primary: #9d714e; /* Copper brown */
+  --frolic-accent: #336268;  /* Teal */
+  --frolic-neutral: #43484b; /* Slate gray */
+  --frolic-dark: #0e1b3b;    /* Deep navy */
+}
+
+/* Page-specific color schemes */
+[data-color-scheme="woe"] {
+  --page-primary: var(--woe-primary);
+  --page-dark: var(--woe-dark);
+  --page-light: var(--woe-light);
+  --page-accent: var(--woe-accent);
+  
+  /* Override Severance theme colors for this page */
+  --severance-frost: var(--woe-light);
+  --severance-slate: var(--woe-primary);
+  --severance-brass: var(--woe-accent);
+  --severance-timber: var(--woe-accent);
+  --severance-marine: var(--woe-dark);
+  --severance-midnight: var(--woe-dark);
+  
+  /* Department-specific colors */
+  --office-darkGreen: var(--woe-accent);
+  --office-lightGreen: var(--woe-primary);
+  --office-white: var(--woe-light);
+  
+  /* Button colors */
+  --button-primary-bg: var(--woe-dark);
+  --button-primary-text: var(--woe-light);
+  --button-secondary-bg: var(--woe-light);
+  --button-secondary-text: var(--woe-dark);
+  --button-hover: var(--woe-primary);
+}
+
+[data-color-scheme="malice"] {
+  --page-primary: var(--malice-primary);
+  --page-dark: var(--malice-dark);
+  --page-light: var(--malice-light);
+  --page-accent: var(--malice-accent);
+  
+  /* Override Severance theme colors for this page */
+  --severance-frost: var(--malice-light);
+  --severance-slate: var(--malice-accent);
+  --severance-brass: var(--malice-primary);
+  --severance-timber: var(--malice-dark);
+  --severance-marine: var(--malice-primary);
+  --severance-midnight: var(--malice-dark);
+  
+  /* Department-specific colors */
+  --wardrobe-dark: var(--malice-dark);
+  --wardrobe-light: var(--malice-light);
+  --wardrobe-blue: var(--malice-accent);
+  
+  /* Button colors */
+  --button-primary-bg: var(--malice-primary);
+  --button-primary-text: var(--malice-light);
+  --button-secondary-bg: var(--malice-light);
+  --button-secondary-text: var(--malice-dark);
+  --button-hover: var(--malice-accent);
+}
+
+[data-color-scheme="dread"] {
+  --page-primary: var(--dread-primary);
+  --page-dark: var(--dread-dark);
+  --page-light: var(--dread-neutral);
+  --page-accent: var(--dread-accent);
+  
+  /* Override Severance theme colors for this page */
+  --severance-frost: #f0f6f7; /* Keep frost light for readability */
+  --severance-slate: var(--dread-neutral);
+  --severance-brass: var(--dread-primary);
+  --severance-timber: var(--dread-accent);
+  --severance-marine: var(--dread-accent);
+  --severance-midnight: var(--dread-dark);
+  
+  /* Department-specific colors */
+  --personal-brown: var(--dread-primary);
+  --personal-gray: var(--dread-neutral);
+  --personal-blue: var(--dread-dark);
+  
+  /* Button colors */
+  --button-primary-bg: var(--dread-primary);
+  --button-primary-text: var(--dread-dark);
+  --button-secondary-bg: var(--dread-dark);
+  --button-secondary-text: var(--dread-primary);
+  --button-hover: var(--dread-accent);
+}
+
+[data-color-scheme="frolic"] {
+  --page-primary: var(--frolic-primary);
+  --page-dark: var(--frolic-dark);
+  --page-light: var(--frolic-neutral);
+  --page-accent: var(--frolic-accent);
+  
+  /* Override Severance theme colors for this page */
+  --severance-frost: #f0f6f7; /* Keep frost light for readability */
+  --severance-slate: var(--frolic-neutral);
+  --severance-brass: var(--frolic-primary);
+  --severance-timber: var(--frolic-accent);
+  --severance-marine: var(--frolic-accent);
+  --severance-midnight: var(--frolic-dark);
+  
+  /* Button colors */
+  --button-primary-bg: var(--frolic-primary);
+  --button-primary-text: #ffffff;
+  --button-secondary-bg: var(--frolic-accent);
+  --button-secondary-text: #ffffff;
+  --button-hover: var(--frolic-neutral);
+}
+
+/* Pixel transition colors based on color scheme */
+[data-color-scheme="woe"] .page-transition-overlay div {
+  background-color: var(--woe-dark);
+}
+
+[data-color-scheme="malice"] .page-transition-overlay div {
+  background-color: var(--malice-primary);
+}
+
+[data-color-scheme="dread"] .page-transition-overlay div {
+  background-color: var(--dread-dark);
+}
+
+[data-color-scheme="frolic"] .page-transition-overlay div {
+  background-color: var(--frolic-primary);
+}
+
+/* Transition type specific colors */
+[data-color-scheme="woe"] [data-transition="demo2"] .page-transition-overlay div {
+  background-color: var(--woe-primary);
+}
+
+[data-color-scheme="woe"] [data-transition="demo4"] .page-transition-overlay div {
+  background-color: var(--woe-accent);
+}
+
+[data-color-scheme="woe"] [data-transition="demo5"] .page-transition-overlay div {
+  background-color: var(--woe-primary);
+}
+
+[data-color-scheme="woe"] [data-transition="demo6"] .page-transition-overlay div {
+  background-color: var(--woe-accent);
+}
+
+[data-color-scheme="malice"] [data-transition="demo2"] .page-transition-overlay div {
+  background-color: var(--malice-accent);
+}
+
+[data-color-scheme="malice"] [data-transition="demo4"] .page-transition-overlay div {
+  background-color: var(--malice-dark);
+}
+
+[data-color-scheme="malice"] [data-transition="demo5"] .page-transition-overlay div {
+  background-color: var(--malice-primary);
+}
+
+[data-color-scheme="malice"] [data-transition="demo6"] .page-transition-overlay div {
+  background-color: var(--malice-accent);
+}
+
+[data-color-scheme="dread"] [data-transition="demo2"] .page-transition-overlay div {
+  background-color: var(--dread-primary);
+}
+
+[data-color-scheme="dread"] [data-transition="demo4"] .page-transition-overlay div {
+  background-color: var(--dread-accent);
+}
+
+[data-color-scheme="dread"] [data-transition="demo5"] .page-transition-overlay div {
+  background-color: var(--dread-neutral);
+}
+
+[data-color-scheme="dread"] [data-transition="demo6"] .page-transition-overlay div {
+  background-color: var(--dread-dark);
+}
+
+[data-color-scheme="frolic"] [data-transition="demo2"] .page-transition-overlay div {
+  background-color: var(--frolic-primary);
+}
+
+[data-color-scheme="frolic"] [data-transition="demo4"] .page-transition-overlay div {
+  background-color: var(--frolic-accent);
+}
+
+[data-color-scheme="frolic"] [data-transition="demo5"] .page-transition-overlay div {
+  background-color: var(--frolic-neutral);
+}
+
+[data-color-scheme="frolic"] [data-transition="demo6"] .page-transition-overlay div {
+  background-color: var(--frolic-dark);
+}
+
+/* Button hover effect colors based on color scheme */
+[data-color-scheme="woe"] button,
+[data-color-scheme="woe"] .lumon-button {
+  --hover-bg: var(--woe-primary);
+}
+
+[data-color-scheme="malice"] button,
+[data-color-scheme="malice"] .lumon-button {
+  --hover-bg: var(--malice-accent);
+}
+
+[data-color-scheme="dread"] button,
+[data-color-scheme="dread"] .lumon-button {
+  --hover-bg: var(--dread-accent);
+}
+
+[data-color-scheme="frolic"] button,
+[data-color-scheme="frolic"] .lumon-button {
+  --hover-bg: var(--frolic-accent);
+}

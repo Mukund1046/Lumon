@@ -1,34 +1,34 @@
 
 import React, { useState } from 'react';
-import { 
-  Carousel, 
-  CarouselContent, 
-  CarouselItem, 
-  CarouselPrevious, 
-  CarouselNext 
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext
 } from "@/components/ui/carousel";
-import { 
-  Card, 
-  CardContent, 
-  CardDescription, 
-  CardFooter, 
-  CardHeader, 
-  CardTitle 
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle
 } from "@/components/ui/card";
-import { 
-  HoverCard, 
-  HoverCardContent, 
-  HoverCardTrigger 
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger
 } from "@/components/ui/hover-card";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { 
-  Dialog, 
-  DialogContent, 
-  DialogDescription, 
-  DialogHeader, 
-  DialogTitle, 
-  DialogTrigger 
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 
@@ -158,49 +158,49 @@ const CharacterGallery: React.FC = () => {
   const [selectedVenture, setSelectedVenture] = useState<CharacterVenture | null>(null);
 
   return (
-    <section id="character-gallery" className="py-20 bg-lumon-dark text-white" data-scroll-section>
+    <section id="character-gallery" className="py-20 bg-severance-midnight text-severance-frost" data-scroll-section>
       <div className="container-custom">
         <div className="max-w-3xl mx-auto text-center mb-14" data-scroll data-scroll-speed="0.3">
           <h2 className="text-3xl md:text-4xl font-trap font-medium tracking-tight mb-4">
-            Character <span className="text-lumon-accent">Ventures</span>
+            Character <span className="text-severance-brass">Ventures</span>
           </h2>
-          
-          <div className="w-20 h-1 bg-lumon-accent/60 mx-auto mb-6"></div>
-          
-          <p className="text-white/80 font-jakarta text-lg">
+
+          <div className="w-20 h-1 bg-severance-slate mx-auto mb-6"></div>
+
+          <p className="text-severance-frost/80 font-jakarta text-lg">
             Explore the unique journeys and ventures of Lumon's severed employees,
             both inside and outside the mysterious corporation.
           </p>
         </div>
-        
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Character Selection */}
           <div className="lg:col-span-1" data-scroll data-scroll-speed="0.1">
-            <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-sm p-6">
-              <h3 className="text-xl font-trap mb-4 text-lumon-accent">Characters</h3>
-              
+            <div className="bg-severance-marine/30 backdrop-blur-sm border border-severance-slate/20 rounded-sm p-6">
+              <h3 className="text-xl font-trap mb-4 text-severance-brass">Characters</h3>
+
               <div className="space-y-3">
                 {characters.map((character) => (
-                  <div 
+                  <div
                     key={character.id}
                     className={cn(
                       "p-3 cursor-pointer transition-all duration-300",
-                      "hover:bg-white/10 rounded-sm border border-transparent",
-                      selectedCharacter.id === character.id ? "bg-white/10 border-lumon-accent/50" : ""
+                      "hover:bg-severance-marine/20 rounded-sm border border-transparent",
+                      selectedCharacter.id === character.id ? "bg-severance-marine/20 border-severance-brass/50" : ""
                     )}
                     onClick={() => setSelectedCharacter(character)}
                   >
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-full overflow-hidden">
-                        <img 
-                          src={character.image} 
+                        <img
+                          src={character.image}
                           alt={character.name}
                           className="w-full h-full object-cover"
                         />
                       </div>
                       <div>
-                        <h4 className="font-trap text-white">{character.name}</h4>
-                        <p className="text-sm text-lumon-gray">{character.role}</p>
+                        <h4 className="font-trap text-severance-frost">{character.name}</h4>
+                        <p className="text-sm text-severance-slate">{character.role}</p>
                       </div>
                     </div>
                   </div>
@@ -208,27 +208,27 @@ const CharacterGallery: React.FC = () => {
               </div>
             </div>
           </div>
-          
+
           {/* Character Ventures */}
           <div className="lg:col-span-2" data-scroll data-scroll-speed="0.2">
-            <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-sm p-6">
+            <div className="bg-severance-marine/30 backdrop-blur-sm border border-severance-slate/20 rounded-sm p-6">
               <div className="flex justify-between items-center mb-6">
                 <div>
-                  <h3 className="text-2xl font-trap text-white">{selectedCharacter.name}</h3>
-                  <p className="text-lumon-accent">{selectedCharacter.role}</p>
+                  <h3 className="text-2xl font-trap text-severance-frost">{selectedCharacter.name}</h3>
+                  <p className="text-severance-brass">{selectedCharacter.role}</p>
                 </div>
-                
+
                 <HoverCard>
                   <HoverCardTrigger asChild>
-                    <Button variant="outline" className="bg-transparent border-lumon-accent/30 text-lumon-accent hover:bg-lumon-accent/10">
+                    <Button variant="outline" className="bg-transparent border-severance-brass/30 text-severance-brass hover:bg-severance-brass/10">
                       Bio
                     </Button>
                   </HoverCardTrigger>
-                  <HoverCardContent className="w-80 bg-lumon-charcoal text-white border-lumon-accent/30">
+                  <HoverCardContent className="w-80 bg-severance-marine text-severance-frost border-severance-brass/30">
                     <div className="flex justify-between space-x-4">
                       <div className="space-y-1">
                         <h4 className="text-sm font-semibold">{selectedCharacter.name}</h4>
-                        <p className="text-sm text-white/80">
+                        <p className="text-sm text-severance-frost/80">
                           {selectedCharacter.bio}
                         </p>
                       </div>
@@ -236,9 +236,9 @@ const CharacterGallery: React.FC = () => {
                   </HoverCardContent>
                 </HoverCard>
               </div>
-              
-              <h4 className="text-lg font-trap mb-3 text-lumon-accent">Ventures</h4>
-              
+
+              <h4 className="text-lg font-trap mb-3 text-severance-brass">Ventures</h4>
+
               <Carousel
                 opts={{
                   align: "start",
@@ -249,10 +249,10 @@ const CharacterGallery: React.FC = () => {
                 <CarouselContent>
                   {selectedCharacter.ventures.map((venture) => (
                     <CarouselItem key={venture.id} className="md:basis-1/2">
-                      <Card className="bg-lumon-charcoal border-white/10 h-full">
+                      <Card className="bg-severance-marine border-severance-slate/20 h-full">
                         <CardHeader className="pb-2">
-                          <CardTitle className="text-lg text-white">{venture.title}</CardTitle>
-                          <CardDescription className="text-lumon-gray">{venture.location}</CardDescription>
+                          <CardTitle className="text-lg text-severance-frost">{venture.title}</CardTitle>
+                          <CardDescription className="text-severance-slate">{venture.location}</CardDescription>
                         </CardHeader>
                         <CardContent className="pb-2">
                           <div className="h-32 mb-3 rounded-sm overflow-hidden bg-black/20">
@@ -262,23 +262,23 @@ const CharacterGallery: React.FC = () => {
                               className="w-full h-full object-cover"
                             />
                           </div>
-                          <p className="text-sm text-white/70">{venture.description}</p>
+                          <p className="text-sm text-severance-frost/70">{venture.description}</p>
                         </CardContent>
                         <CardFooter>
                           <Dialog>
                             <DialogTrigger asChild>
-                              <Button 
-                                variant="outline" 
-                                className="w-full bg-transparent border-lumon-accent/30 text-lumon-accent hover:bg-lumon-accent/10"
+                              <Button
+                                variant="outline"
+                                className="w-full bg-transparent border-severance-brass/30 text-severance-brass hover:bg-severance-brass/10"
                                 onClick={() => setSelectedVenture(venture)}
                               >
                                 Explore
                               </Button>
                             </DialogTrigger>
-                            <DialogContent className="bg-lumon-charcoal text-white border-lumon-accent/30 max-w-xl">
+                            <DialogContent className="bg-severance-marine text-severance-frost border-severance-brass/30 max-w-xl">
                               <DialogHeader>
                                 <DialogTitle className="text-xl font-trap">{venture.title}</DialogTitle>
-                                <DialogDescription className="text-lumon-gray">
+                                <DialogDescription className="text-severance-slate">
                                   {venture.location}
                                 </DialogDescription>
                               </DialogHeader>
@@ -292,7 +292,7 @@ const CharacterGallery: React.FC = () => {
                                 </div>
                                 <ScrollArea className="h-[120px] rounded-sm">
                                   <div className="p-1">
-                                    <p className="text-white/80 font-jakarta">
+                                    <p className="text-severance-frost/80 font-jakarta">
                                       {venture.details}
                                     </p>
                                   </div>
