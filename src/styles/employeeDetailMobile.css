@@ -1,0 +1,116 @@
+/* Mobile-specific styles for employee detail pages */
+
+/* Base mobile adjustments */
+@media (max-width: 768px) {
+  /* Improve page title visibility and positioning */
+  .page-title {
+    font-size: 3.5rem;
+    top: 30%;
+    left: 5vw;
+  }
+
+  /* Adjust slideshow container for better mobile experience */
+  .scrollarea-ctn {
+    height: auto;
+    min-height: 100vh;
+  }
+
+  /* Adjust slideshow list for better mobile layout */
+  .slideshow-list__el {
+    min-width: 80vw;
+    max-width: 80vw;
+    margin-left: 10vw;
+  }
+
+  .slideshow-list__el:last-child {
+    padding-right: 10vw;
+  }
+
+  /* Remove vertical offset on mobile for better layout */
+  .slideshow-list__el:nth-child(odd),
+  .slideshow-list__el:nth-child(even) {
+    transform: translateY(0);
+  }
+
+  /* Adjust progress bar position for mobile */
+  .slideshow__progress-ctn {
+    bottom: 2%;
+  }
+
+  /* Improve tile content positioning on mobile */
+  .tile__content {
+    bottom: 1.5rem;
+  }
+
+  .tile__title {
+    margin-left: 0;
+    font-size: 1.2rem;
+    text-align: center;
+  }
+
+  /* Optimize WebGL canvas for mobile */
+  #scene {
+    pointer-events: none !important;
+  }
+
+  /* Improve touch scrolling experience */
+  .employee-detail {
+    touch-action: pan-y;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Add extra padding at the bottom for better scrolling */
+  .slideshow-list {
+    padding-bottom: 100px;
+  }
+}
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+  .page-title {
+    font-size: 2.5rem;
+  }
+
+  .slideshow-list__el {
+    min-width: 85vw;
+    max-width: 85vw;
+    margin-left: 7.5vw;
+  }
+
+  /* Ensure tiles are properly sized on small screens */
+  .tile__fig {
+    max-height: 70vh;
+  }
+}
+
+/* Improve touch handling for horizontal scrolling */
+.touch-scroll-indicator {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.touch-scroll-indicator.visible {
+  opacity: 1;
+}
+
+/* Add swipe animation */
+@keyframes swipeHint {
+  0% { transform: translateX(-50%) translateX(-20px); }
+  50% { transform: translateX(-50%) translateX(20px); }
+  100% { transform: translateX(-50%) translateX(-20px); }
+}
+
+.touch-scroll-indicator.animate {
+  animation: swipeHint 2s infinite;
+}

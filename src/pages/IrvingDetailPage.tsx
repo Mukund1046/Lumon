@@ -4,6 +4,7 @@ import { useLenisScroll } from '../hooks/useLenisScroll';
 import Navbar from '../components/Navbar';
 
 import '../styles/employeeDetail.css';
+import '../styles/employeeDetailMobile.css';
 import * as THREE from 'three';
 import { gsap } from 'gsap';
 

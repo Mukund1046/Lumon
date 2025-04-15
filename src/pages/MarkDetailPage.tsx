@@ -4,6 +4,7 @@ import { useLenisScroll } from '../hooks/useLenisScroll';
 import Navbar from '../components/Navbar';
 
 import '../styles/employeeDetail.css';
+import '../styles/employeeDetailMobile.css';
 import * as THREE from 'three';
 import { gsap } from 'gsap';
 
@@ -44,6 +45,11 @@ const MarkDetailPage: React.FC = () => {
   const currentScrollRef = useRef<number>(0);
   const scrollTargetRef = useRef<number>(0);
   const scrollStrengthRef = useRef<number>(0.1);
+
+  // Mobile-specific refs
+  const touchStartXRef = useRef<number>(0);
+  const touchScrollIndicatorRef = useRef<HTMLDivElement>(null);
+  const isMobileRef = useRef<boolean>(window.innerWidth <= 768);
 
   // Vertex shader
   const vertexShader = `
@@ -485,6 +491,28 @@ const MarkDetailPage: React.FC = () => {
 
     // Recalculate sizes
     calculateSizes();
+
+    // Update mobile detection
+    isMobileRef.current = window.innerWidth <= 768;
+
+    // Show touch scroll indicator on mobile devices
+    if (isMobileRef.current && touchScrollIndicatorRef.current) {
+      showTouchScrollIndicator();
+    }
+  };
+
+  // Show touch scroll indicator for mobile users
+  const showTouchScrollIndicator = () => {
+    if (!touchScrollIndicatorRef.current) return;
+
+    touchScrollIndicatorRef.current.classList.add('visible', 'animate');
+
+    // Hide after 3 seconds
+    setTimeout(() => {
+      if (touchScrollIndicatorRef.current) {
+        touchScrollIndicatorRef.current.classList.remove('visible', 'animate');
+      }
+    }, 3000);
   };
 
   // Handle mouse move
@@ -504,26 +532,44 @@ const MarkDetailPage: React.FC = () => {
 
   // Handle touch start
   const handleTouchStart = (event: TouchEvent) => {
-    const touchStartX = event.touches[0].clientX;
-    mouseRef.current.x = touchStartX;
+    if (event.touches.length === 1) {
+      // Store the initial touch position
+      touchStartXRef.current = event.touches[0].clientX;
+      mouseRef.current.x = touchStartXRef.current;
+      mouseRef.current.y = event.touches[0].clientY;
+
+      // Show touch scroll indicator on first touch for mobile users
+      if (isMobileRef.current && touchScrollIndicatorRef.current) {
+        showTouchScrollIndicator();
+      }
+    }
   };
 
   // Handle touch move
   const handleTouchMove = (event: TouchEvent) => {
-    const touchX = event.touches[0].clientX;
-    const touchY = event.touches[0].clientY;
+    if (event.touches.length === 1) {
+      const touchX = event.touches[0].clientX;
+      const touchY = event.touches[0].clientY;
 
-    // Calculate touch delta
-    const deltaX = touchX - mouseRef.current.x;
+      // Calculate touch delta with improved sensitivity for mobile
+      const deltaX = touchX - mouseRef.current.x;
+      const sensitivity = isMobileRef.current ? 2.5 : 2.0;
 
-    // Update scroll target based on touch delta
-    scrollTargetRef.current -= deltaX * 2;
+      // Update scroll target based on touch delta
+      scrollTargetRef.current -= deltaX * sensitivity;
 
-    // Clamp scroll target to slideshow width
-    scrollTargetRef.current = Math.max(0, Math.min(scrollTargetRef.current, slideshowWidthRef.current - window.innerWidth));
+      // Clamp scroll target to slideshow width
+      scrollTargetRef.current = Math.max(0, Math.min(scrollTargetRef.current, slideshowWidthRef.current - window.innerWidth));
 
-    mouseRef.current.x = touchX;
-    mouseRef.current.y = touchY;
+      // Update mouse position for WebGL effects
+      mouseRef.current.x = touchX;
+      mouseRef.current.y = touchY;
+
+      // Prevent default to avoid page scrolling on mobile
+      if (isMobileRef.current && Math.abs(deltaX) > 5) {
+        event.preventDefault();
+      }
+    }
   };
 
   // Handle tile enter - Fixed for proper gooey effect
@@ -731,6 +777,11 @@ const MarkDetailPage: React.FC = () => {
             </ul>
           </div>
           <div className="slideshow__progress-ctn"><span className="slideshow__progress" ref={progressBarRef}></span></div>
+
+          {/* Touch scroll indicator for mobile */}
+          <div className="touch-scroll-indicator" ref={touchScrollIndicatorRef}>
+            Swipe to explore
+          </div>
         </section>
 
 
