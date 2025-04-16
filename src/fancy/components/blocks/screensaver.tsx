@@ -3,7 +3,7 @@ import {
   motion,
   useAnimationFrame,
   useMotionValue,
-} from "motion/react"
+} from "framer-motion"
 
 import { cn } from "@/lib/utils"
 import { useDimensions } from "@/hooks/use-dimensions"
