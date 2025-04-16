@@ -9,7 +9,7 @@
 /* Define Trap font faces for when the actual font is available */
 @font-face {
   font-family: 'Trap';
-  src: url('trap-regular.woff2') format('woff2');
+  src: url('/assets/fonts/trap/trap-regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -17,7 +17,7 @@
 
 @font-face {
   font-family: 'Trap';
-  src: url('trap-medium.woff2') format('woff2');
+  src: url('/assets/fonts/trap/trap-medium.woff2') format('woff2');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -25,7 +25,7 @@
 
 @font-face {
   font-family: 'Trap';
-  src: url('trap-semibold.woff2') format('woff2');
+  src: url('/assets/fonts/trap/trap-semibold.woff2') format('woff2');
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -33,7 +33,7 @@
 
 @font-face {
   font-family: 'Trap';
-  src: url('trap-bold.woff2') format('woff2');
+  src: url('/assets/fonts/trap/trap-bold.woff2') format('woff2');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
