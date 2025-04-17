@@ -58,36 +58,26 @@
 }
 
 .face-title {
-  font-family: 'Trap', sans-serif !important;
+  font-family: 'JetBrains Mono', monospace !important;
   font-weight: 500 !important;
   color: var(--wardrobe-light) !important;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  font-size: 4.5rem !important;
-  text-shadow: 0 0 15px rgba(223, 225, 226, 0.3) !important;
-  transform: translate(20%, -50%) !important;
+  font-size: 1rem !important;
+  text-shadow: 0 0 5px rgba(223, 225, 226, 0.3) !important;
+  transform: translateX(-50%) !important;
+  bottom: 10% !important;
+  left: 50% !important;
+  text-align: center !important;
+  width: 100% !important;
 }
 
 .face-title.active {
-  transform: translate(20%, -50%) !important;
+  transform: translateX(-50%) !important;
   transition: opacity 0.5s ease, transform 0.5s ease !important;
 }
 
-.face-description {
-  font-family: 'Space Grotesk', sans-serif !important;
-  font-weight: 300 !important;
-  color: var(--wardrobe-blue) !important;
-  max-width: 25ch !important;
-  font-size: 1.5rem !important;
-  line-height: 1.4 !important;
-  opacity: 0.9 !important;
-  transform: translate(-90%, -50%) !important;
-}
-
-.face-description.active {
-  transform: translate(-90%, -50%) !important;
-  transition: opacity 0.5s ease, transform 0.5s ease !important;
-}
+/* Face description removed */
 
 .action-button {
   background-color: var(--wardrobe-blue) !important;
@@ -146,22 +136,12 @@
   }
 
   .face-title {
-    font-size: 2.5rem !important;
-    transform: translate(10%, -50%) !important;
+    font-size: 0.875rem !important;
+    transform: translateX(-50%) !important;
   }
 
   .face-title.active {
-    transform: translate(10%, -50%) !important;
-  }
-
-  .face-description {
-    font-size: 1rem !important;
-    transform: translate(-80%, -50%) !important;
-    max-width: 20ch !important;
-  }
-
-  .face-description.active {
-    transform: translate(-80%, -50%) !important;
+    transform: translateX(-50%) !important;
   }
 
   .action-button {

@@ -960,8 +960,6 @@ export default function InfiniteMenu({ items = [], onItemClick }) {
             {activeItem.title}
           </h2>
 
-          <p className={`face-description ${isMoving ? 'inactive' : 'active'}`}> {activeItem.description}</p>
-
           <div onClick={handleButtonClick} className={`action-button shiny-button ${isMoving ? 'inactive' : 'active'}`}>
             <div className="action-button-icon">&#x2197;</div>
           </div>
