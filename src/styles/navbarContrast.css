@@ -3,21 +3,25 @@
 /* Default state with improved contrast */
 .nav-link {
   position: relative;
-  font-weight: 500 !important;
-  text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);
+  font-weight: 600 !important;
+  text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.3);
   transition: all 0.3s ease;
+  letter-spacing: 0.03em;
+  color: rgba(0, 44, 85, 0.9) !important; /* severance-marine with slight transparency */
 }
 
 /* Active state with stronger contrast */
 .nav-link.active {
   color: #002c55 !important; /* severance-marine - darker blue for better contrast */
-  text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.3);
+  text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.4);
+  font-weight: 700 !important;
 }
 
 /* Hover state with stronger contrast */
 .nav-link:hover {
   color: #002c55 !important; /* severance-marine - darker blue for better contrast */
-  text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.3);
+  text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.4);
+  transform: translateY(-1px);
 }
 
 /* Special styling for dark backgrounds (employee detail pages) */
@@ -26,7 +30,9 @@
 .irving-theme .nav-link,
 .dylan-theme .nav-link {
   color: #f0f6f7 !important; /* severance-frost - light color for dark backgrounds */
-  text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
+  text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.7);
+  font-weight: 600 !important;
+  letter-spacing: 0.05em;
 }
 
 /* Add semi-transparent background to navbar on dark pages */
@@ -46,8 +52,11 @@
 .helly-theme .nav-link.active,
 .irving-theme .nav-link.active,
 .dylan-theme .nav-link.active {
-  color: #89aec8 !important; /* severance-slate - brighter blue for hover on dark backgrounds */
-  text-shadow: 0px 0px 3px rgba(137, 174, 200, 0.5);
+  color: #f0f6f7 !important; /* severance-frost - light color for better contrast */
+  text-shadow: 0px 0px 4px rgba(240, 246, 247, 0.7);
+  background-color: rgba(0, 44, 85, 0.5); /* severance-marine with opacity */
+  transform: translateY(-1px);
+  font-weight: 700 !important;
 }
 
 /* Add a subtle background to links on dark pages for better visibility */

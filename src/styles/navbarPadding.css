@@ -1,0 +1,40 @@
+/* Navbar padding adjustments for larger screens */
+
+/* Reduce padding on larger screens */
+@media (min-width: 1280px) {
+  .navbar-container {
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+    max-width: 1400px !important;
+  }
+}
+
+/* Further reduce padding on extra large screens */
+@media (min-width: 1536px) {
+  .navbar-container {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    max-width: 1600px !important;
+  }
+}
+
+/* Ensure the navbar strip remains full width */
+.navbar-strip {
+  width: 100% !important;
+}
+
+/* Add some extra space between nav items on larger screens */
+@media (min-width: 1280px) {
+  .nav-items-container {
+    gap: 2.5rem !important;
+  }
+}
+
+/* Ensure logo and CTA button have proper spacing */
+.logo-container {
+  margin-right: auto;
+}
+
+.cta-container {
+  margin-left: 2rem;
+}

@@ -7,6 +7,7 @@ import '../styles/navTextEffect.css';
 import '../styles/marqueeMenu.css';
 import '../styles/navbarFix.css';
 import '../styles/navbarContrast.css'; // Added for improved contrast
+import '../styles/navbarPadding.css'; // Added for adjusted padding on larger screens
 import { initNavTextAnimation } from '../scripts/nav-text-animation';
 import { initMarqueeMenu } from '../scripts/marqueeMenu';
 import { GooeyText } from '@/components/ui/gooey-text';
@@ -59,15 +60,15 @@ const Navbar: React.FC = () => {
 
   return (
     <header className={cn(
-      "fixed top-0 left-0 right-0 w-full z-[100] transition-all duration-300",
+      "fixed top-0 left-0 right-0 w-full z-[100] transition-all duration-300 navbar-strip",
       isScrolled
         ? "bg-wardrobe-light/95 backdrop-blur-sm shadow-sm py-4"
         : "bg-transparent py-6"
     )}>
-      <div className="container-custom flex items-center justify-between">
+      <div className="container-custom navbar-container flex items-center justify-between">
         <Link
           to="/"
-          className="flex items-center justify-center"
+          className="flex items-center justify-center logo-container"
         >
           <GooeyText
             texts={["LUMON", "LUMON", "LUMON", "LUMON", "SEVERED", "LUMON"]}
@@ -79,7 +80,7 @@ const Navbar: React.FC = () => {
         </Link>
 
         <div className="flex items-center">
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden md:flex items-center space-x-8 nav-items-container">
             {navItems.map((item) => (
               <Link
                 key={item.name}
@@ -99,7 +100,7 @@ const Navbar: React.FC = () => {
           {/* Apply Now button - only visible on desktop */}
           <Link
             to="/join-us"
-            className="lumon-button primary jetbrains-mono-button hidden md:block ml-8"
+            className="lumon-button primary jetbrains-mono-button hidden md:block ml-8 cta-container"
           >
             Apply Now
           </Link>
