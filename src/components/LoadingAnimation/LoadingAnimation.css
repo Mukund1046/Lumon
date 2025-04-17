@@ -1,0 +1,91 @@
+.loading-animation-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--severance-midnight, #0b0e29);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 1s ease;
+  overflow: hidden;
+}
+
+.loading-animation-container.visible {
+  opacity: 1;
+}
+
+.loading-animation-container.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loading-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  z-index: 10;
+}
+
+.loading-counter {
+  display: flex;
+  align-items: baseline;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--severance-frost, #f0f6f7);
+}
+
+.loading-counter-number {
+  font-size: 120px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.loading-counter-percent {
+  font-size: 40px;
+  margin-left: 8px;
+  opacity: 0.8;
+}
+
+.loading-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  color: var(--severance-frost, #f0f6f7);
+  opacity: 0.6;
+  margin-top: 1rem;
+}
+
+.lumon-logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Trap', sans-serif;
+  font-weight: 700;
+  font-size: 200px;
+  color: var(--severance-frost, #f0f6f7);
+  letter-spacing: 0.05em;
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .loading-counter-number {
+    font-size: 80px;
+  }
+  
+  .loading-counter-percent {
+    font-size: 30px;
+  }
+  
+  .lumon-logo {
+    font-size: 120px;
+  }
+}
