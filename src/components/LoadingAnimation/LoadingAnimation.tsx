@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import CountUp from '@/components/ui/CountUp/CountUp.jsx';
+import CountUp from '@/components/ui/CountUp/CountUp';
 import VerticalTransition from './VerticalTransition';
 import './LoadingAnimation.css';
 
