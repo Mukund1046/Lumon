@@ -8,7 +8,11 @@ import '../styles/heroMobile.css';
 import { initTextAnimation } from '../scripts/textAnimation';
 import AnimatedText from '../components/ui/AnimatedText';
 
-const Hero: React.FC = () => {
+interface HeroProps {
+  loadingComplete?: boolean;
+}
+
+const Hero: React.FC<HeroProps> = ({ loadingComplete = false }) => {
   // State to track if we're on a mobile device
   const [isMobile, setIsMobile] = useState(false);
 
@@ -30,14 +34,14 @@ const Hero: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    // Initialize the text animation when component mounts
+    // Initialize the text animation when component mounts or when loading completes
     // Small delay to ensure DOM is fully loaded
     const timer = setTimeout(() => {
       initTextAnimation();
-    }, 100);
+    }, loadingComplete ? 500 : 100); // Longer delay after loading animation
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [loadingComplete]); // Re-run when loadingComplete changes
 
   // Initialize the bulge effect
   useEffect(() => {

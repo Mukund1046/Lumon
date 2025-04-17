@@ -14,5 +14,28 @@
 
 .vertical-transition-overlay__path {
   fill: var(--severance-midnight, #0b0e29);
-  stroke: none;
+  stroke: var(--severance-frost, #f0f6f7);
+  stroke-width: 0.5;
+  stroke-opacity: 0.2;
+}
+
+/* Add a subtle gradient overlay for better visibility on large screens */
+.vertical-transition-overlay.large-screen .vertical-transition-overlay__path {
+  fill: var(--severance-midnight, #0b0e29);
+  stroke: var(--severance-frost, #f0f6f7);
+  stroke-width: 1;
+  stroke-opacity: 0.3;
+  filter: drop-shadow(0 0 8px rgba(240, 246, 247, 0.2));
+}
+
+.vertical-transition-overlay.large-screen::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, rgba(11, 14, 41, 0.3), rgba(11, 14, 41, 0.6));
+  pointer-events: none;
+  z-index: -1;
 }

@@ -24,6 +24,7 @@ const queryClient = new QueryClient();
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [loadingComplete, setLoadingComplete] = useState(false);
 
   useEffect(() => {
     // Check if this is the first visit
@@ -34,11 +35,16 @@ const App = () => {
       setIsLoading(true);
       // Mark as visited
       sessionStorage.setItem('hasVisited', 'true');
+    } else {
+      // If not first visit, mark loading as complete immediately
+      setLoadingComplete(true);
     }
   }, []);
 
   const handleLoadingComplete = () => {
     setIsLoading(false);
+    // Set loading complete flag to trigger animations
+    setLoadingComplete(true);
   };
 
   return (
@@ -51,7 +57,7 @@ const App = () => {
         <ColorSchemeProvider>
           <TransitionManager>
             <Routes>
-              <Route path="/" element={<HomePage />} />
+              <Route path="/" element={<HomePage loadingComplete={loadingComplete} />} />
               <Route path="/about" element={<AboutPage />} />
               <Route path="/departments" element={<DepartmentsPage />} />
               <Route path="/employees" element={<EmployeesPage />} />

@@ -7,9 +7,9 @@ interface VerticalTransitionProps {
   onTransitionComplete: () => void;
 }
 
-const VerticalTransition: React.FC<VerticalTransitionProps> = ({ 
-  isActive, 
-  onTransitionComplete 
+const VerticalTransition: React.FC<VerticalTransitionProps> = ({
+  isActive,
+  onTransitionComplete
 }) => {
   const overlayPathRef = useRef<SVGPathElement>(null);
   const [isAnimating, setIsAnimating] = useState(false);
@@ -38,7 +38,7 @@ const VerticalTransition: React.FC<VerticalTransitionProps> = ({
   useEffect(() => {
     if (isActive && !isAnimating && overlayPathRef.current) {
       setIsAnimating(true);
-      
+
       // Animation timeline
       gsap.timeline({
         onComplete: () => {
@@ -49,25 +49,25 @@ const VerticalTransition: React.FC<VerticalTransitionProps> = ({
       .set(overlayPathRef.current, {
         attr: { d: paths.step1.unfilled }
       })
-      .to(overlayPathRef.current, { 
+      .to(overlayPathRef.current, {
         duration: 0.8,
         ease: 'power4.in',
         attr: { d: paths.step1.inBetween.curve1 }
       }, 0)
-      .to(overlayPathRef.current, { 
+      .to(overlayPathRef.current, {
         duration: 0.2,
         ease: 'power1',
         attr: { d: paths.step1.filled }
       })
-      .set(overlayPathRef.current, { 
+      .set(overlayPathRef.current, {
         attr: { d: paths.step2.filled }
       })
-      .to(overlayPathRef.current, { 
+      .to(overlayPathRef.current, {
         duration: 0.2,
         ease: 'sine.in',
         attr: { d: paths.step2.inBetween.curve1 }
       })
-      .to(overlayPathRef.current, { 
+      .to(overlayPathRef.current, {
         duration: 1,
         ease: 'power4',
         attr: { d: paths.step2.unfilled }
@@ -75,19 +75,36 @@ const VerticalTransition: React.FC<VerticalTransitionProps> = ({
     }
   }, [isActive, isAnimating, onTransitionComplete]);
 
+  // Detect if we're on a large screen
+  const [isLargeScreen, setIsLargeScreen] = useState(false);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsLargeScreen(window.innerWidth >= 1280);
+    };
+
+    // Check initially
+    checkScreenSize();
+
+    // Add resize listener
+    window.addEventListener('resize', checkScreenSize);
+
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
+
   return (
-    <svg 
-      className={`vertical-transition-overlay ${isActive ? 'active' : ''}`} 
-      width="100%" 
-      height="100%" 
-      viewBox="0 0 100 100" 
+    <svg
+      className={`vertical-transition-overlay ${isActive ? 'active' : ''} ${isLargeScreen ? 'large-screen' : ''}`}
+      width="100%"
+      height="100%"
+      viewBox="0 0 100 100"
       preserveAspectRatio="none"
     >
-      <path 
-        ref={overlayPathRef} 
-        className="vertical-transition-overlay__path" 
-        vector-effect="non-scaling-stroke" 
-        d={paths.step1.unfilled} 
+      <path
+        ref={overlayPathRef}
+        className="vertical-transition-overlay__path"
+        vector-effect="non-scaling-stroke"
+        d={paths.step1.unfilled}
       />
     </svg>
   );

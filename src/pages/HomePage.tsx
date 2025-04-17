@@ -1,5 +1,5 @@
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import Footer from '../components/Footer';
@@ -7,7 +7,11 @@ import { addScrollAnimation } from '../lib/animationUtils';
 import { useLocomotiveScroll } from '../hooks/useLocomotiveScroll';
 import 'locomotive-scroll/dist/locomotive-scroll.css';
 
-const HomePage: React.FC = () => {
+interface HomePageProps {
+  loadingComplete?: boolean;
+}
+
+const HomePage: React.FC<HomePageProps> = ({ loadingComplete = false }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const locomotiveScroll = useLocomotiveScroll({
     ref: containerRef,
@@ -62,7 +66,7 @@ const HomePage: React.FC = () => {
       {/* Main content with higher z-index */}
       <div className="relative z-10">
         <Navbar />
-        <Hero />
+        <Hero loadingComplete={loadingComplete} />
       </div>
 
       {/* Sticky footer with lower z-index */}
