@@ -29,7 +29,7 @@ const DepartmentsPage: React.FC = () => {
   }, []);
 
   return (
-    <div className="w-full h-full overflow-hidden">
+    <div className="w-full h-full overflow-hidden departments-theme">
       <Navbar />
       <Departments />
       <Footer />

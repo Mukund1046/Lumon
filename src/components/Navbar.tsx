@@ -8,6 +8,7 @@ import '../styles/marqueeMenu.css';
 import '../styles/navbarFix.css';
 import '../styles/navbarContrast.css'; // Added for improved contrast
 import '../styles/navbarPadding.css'; // Added for adjusted padding on larger screens
+import '../styles/navbarPageThemes.css'; // Added for page-specific color schemes
 import { initNavTextAnimation } from '../scripts/nav-text-animation';
 import { initMarqueeMenu } from '../scripts/marqueeMenu';
 import { GooeyText } from '@/components/ui/gooey-text';

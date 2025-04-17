@@ -1,0 +1,150 @@
+/* Page-specific navbar styling to match logo and CTA button colors */
+
+/* Default theme (Homepage) */
+.nav-link {
+  color: var(--severance-marine, #002c55) !important;
+  text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.3);
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--severance-midnight, #0b0e29) !important;
+  text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.4);
+}
+
+/* About page theme */
+.about-theme .nav-link {
+  color: var(--severance-brass, #7b6727) !important;
+  text-shadow: 0px 0px 1px rgba(123, 103, 39, 0.3);
+}
+
+.about-theme .nav-link:hover,
+.about-theme .nav-link.active {
+  color: var(--severance-timber, #4e452a) !important;
+  text-shadow: 0px 0px 2px rgba(123, 103, 39, 0.4);
+}
+
+/* Departments page theme */
+.departments-theme .nav-link {
+  color: var(--office-darkGreen, #163f38) !important;
+  text-shadow: 0px 0px 1px rgba(22, 63, 56, 0.3);
+}
+
+.departments-theme .nav-link:hover,
+.departments-theme .nav-link.active {
+  color: var(--office-green, #7da17e) !important;
+  text-shadow: 0px 0px 2px rgba(22, 63, 56, 0.4);
+}
+
+/* Employees page theme */
+.employees-theme .nav-link {
+  color: var(--wardrobe-blue, #7f96ae) !important;
+  text-shadow: 0px 0px 1px rgba(127, 150, 174, 0.3);
+}
+
+.employees-theme .nav-link:hover,
+.employees-theme .nav-link.active {
+  color: var(--severance-slate, #89aec8) !important;
+  text-shadow: 0px 0px 2px rgba(127, 150, 174, 0.4);
+}
+
+/* Join Us page theme */
+.join-us-theme .nav-link {
+  color: var(--personal-blue, #03468b) !important;
+  text-shadow: 0px 0px 1px rgba(3, 70, 139, 0.3);
+}
+
+.join-us-theme .nav-link:hover,
+.join-us-theme .nav-link.active {
+  color: var(--severance-marine, #002c55) !important;
+  text-shadow: 0px 0px 2px rgba(3, 70, 139, 0.4);
+}
+
+/* Employee detail pages - already handled in navbarContrast.css */
+/* Mark detail page theme */
+.mark-theme .nav-link {
+  color: var(--severance-frost, #f0f6f7) !important;
+  text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.mark-theme .nav-link:hover,
+.mark-theme .nav-link.active {
+  color: var(--severance-slate, #89aec8) !important;
+  background-color: rgba(0, 44, 85, 0.5);
+  text-shadow: 0px 0px 4px rgba(240, 246, 247, 0.7);
+}
+
+/* Helly detail page theme */
+.helly-theme .nav-link {
+  color: var(--severance-frost, #f0f6f7) !important;
+  text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.helly-theme .nav-link:hover,
+.helly-theme .nav-link.active {
+  color: var(--severance-brass, #7b6727) !important;
+  background-color: rgba(0, 44, 85, 0.5);
+  text-shadow: 0px 0px 4px rgba(240, 246, 247, 0.7);
+}
+
+/* Irving detail page theme */
+.irving-theme .nav-link {
+  color: var(--severance-frost, #f0f6f7) !important;
+  text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.irving-theme .nav-link:hover,
+.irving-theme .nav-link.active {
+  color: var(--office-teal, #98b6b0) !important;
+  background-color: rgba(0, 44, 85, 0.5);
+  text-shadow: 0px 0px 4px rgba(240, 246, 247, 0.7);
+}
+
+/* Dylan detail page theme */
+.dylan-theme .nav-link {
+  color: var(--severance-frost, #f0f6f7) !important;
+  text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.dylan-theme .nav-link:hover,
+.dylan-theme .nav-link.active {
+  color: var(--personal-brown, #673b15) !important;
+  background-color: rgba(0, 44, 85, 0.5);
+  text-shadow: 0px 0px 4px rgba(240, 246, 247, 0.7);
+}
+
+/* Not Found page theme */
+.not-found-theme .nav-link {
+  color: var(--severance-marine, #002c55) !important;
+  text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.3);
+}
+
+.not-found-theme .nav-link:hover,
+.not-found-theme .nav-link.active {
+  color: var(--severance-brass, #7b6727) !important;
+  text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.4);
+}
+
+/* Mobile menu - ensure good contrast */
+.mobile-menu .nav-link {
+  color: var(--severance-marine, #002c55) !important;
+  font-weight: 600 !important;
+}
+
+.mobile-menu .nav-link:hover,
+.mobile-menu .nav-link.active {
+  color: var(--severance-midnight, #0b0e29) !important;
+  background-color: rgba(137, 174, 200, 0.2);
+}

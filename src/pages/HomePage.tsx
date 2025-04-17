@@ -58,7 +58,7 @@ const HomePage: React.FC = () => {
   }, []);
 
   return (
-    <div className="w-full bg-severance-frost items-center justify-center h-full overflow-auto">
+    <div className="w-full bg-severance-frost items-center justify-center h-full overflow-auto home-theme">
       {/* Main content with higher z-index */}
       <div className="relative z-10">
         <Navbar />

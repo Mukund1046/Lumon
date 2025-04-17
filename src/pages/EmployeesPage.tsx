@@ -21,7 +21,7 @@ const EmployeesPage: React.FC = () => {
   }, []);
 
   return (
-    <div className="w-full h-full overflow-hidden bg-wardrobe-dark">
+    <div className="w-full h-full overflow-hidden bg-wardrobe-dark employees-theme">
       <Navbar />
       <Employees />
       <Footer />

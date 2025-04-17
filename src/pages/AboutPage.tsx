@@ -16,7 +16,7 @@ const AboutPage: React.FC = () => {
   });
 
   return (
-    <div className="w-full items-center justify-center h-full overflow-auto">
+    <div className="w-full items-center justify-center h-full overflow-auto about-theme">
       {/* Main content with higher z-index */}
       <div className="relative z-10">
         <Navbar />

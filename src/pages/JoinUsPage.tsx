@@ -18,7 +18,7 @@ const JoinUsPage: React.FC = () => {
   });
 
   return (
-    <div className="w-full bg-severance-frost items-center justify-center h-full overflow-auto">
+    <div className="w-full bg-severance-frost items-center justify-center h-full overflow-auto join-us-theme">
       {/* Main content with higher z-index */}
       <div className="relative z-10">
         <Navbar />
