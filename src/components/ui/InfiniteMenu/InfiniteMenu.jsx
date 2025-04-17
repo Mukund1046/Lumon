@@ -78,50 +78,33 @@ void main() {
     vec2 cellSize = vec2(1.0) / vec2(float(cellsPerRow));
     vec2 cellOffset = vec2(float(cellX), float(cellY)) * cellSize;
 
-    // Get texture dimensions and calculate aspect ratio
-    ivec2 texSize = textureSize(uTex, 0);
-    float atlasAspect = float(texSize.x) / float(texSize.y);
-    float containerAspect = 1.0; // Circular container is square
-
-    // Calculate proper scale and offset for object-fit: cover behavior
-    // This ensures the image fills the circle without stretching
-    vec2 st = vec2(vUvs.x, 1.0 - vUvs.y); // Flip Y for correct orientation
+    // Flip Y for correct orientation
+    vec2 st = vec2(vUvs.x, 1.0 - vUvs.y);
 
     // Calculate the center point of the UV space
     vec2 center = vec2(0.5, 0.5);
 
-    // Calculate the distance from center (for circular masking)
+    // Calculate the distance from center for circular masking
     float dist = distance(st, center);
 
-    // Apply circular mask by adjusting UVs to maintain aspect ratio
-    // Use object-fit: cover approach - scale to fill while maintaining aspect ratio
-    float scale = 1.0; // Default scale
-
-    // Calculate the proper scale based on the atlas cell's aspect ratio
-    // We need to consider the aspect ratio of the individual image cell, not the entire atlas
-    float cellAspect = atlasAspect;
-
-    // Apply proper scaling to maintain aspect ratio
-    if (cellAspect > 1.0) {
-        // Wider than tall - scale based on height
-        scale = 1.0 / cellAspect;
-        // Center horizontally
-        st.x = ((st.x - 0.5) / scale) + 0.5;
-    } else {
-        // Taller than wide - scale based on width
-        scale = cellAspect;
-        // Center vertically
-        st.y = ((st.y - 0.5) / scale) + 0.5;
+    // Apply circular mask - discard fragments outside the circle
+    if (dist > 0.5) {
+        discard;
     }
 
-    // Clamp coordinates to prevent repeating
-    st = clamp(st, 0.0, 1.0);
-
     // Map to the correct cell in the atlas
+    // Since we're handling the aspect ratio in the texture initialization,
+    // we can simply map the UVs directly
     st = st * cellSize + cellOffset;
 
+    // Sample the texture
     outColor = texture(uTex, st);
-    outColor.a *= vAlpha;
+
+    // Apply alpha based on distance from center for a subtle fade effect
+    // and multiply by the vertex alpha for depth effect
+    float edgeSoftness = 0.05;
+    float circleMask = smoothstep(0.5, 0.5 - edgeSoftness, dist);
+    outColor.a *= circleMask * vAlpha;
 }
 `;
 
@@ -688,6 +671,10 @@ class InfiniteGridMenu {
     canvas.width = this.atlasSize * cellSize;
     canvas.height = this.atlasSize * cellSize;
 
+    // Fill with transparent background
+    ctx.fillStyle = 'rgba(0,0,0,0)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
     Promise.all(this.items.map(item =>
       new Promise(resolve => {
         const img = new Image();
@@ -699,7 +686,37 @@ class InfiniteGridMenu {
       images.forEach((img, i) => {
         const x = (i % this.atlasSize) * cellSize;
         const y = Math.floor(i / this.atlasSize) * cellSize;
-        ctx.drawImage(img, x, y, cellSize, cellSize);
+
+        // Calculate dimensions to maintain aspect ratio and center the image
+        // This ensures faces are properly centered in the circles
+        const imgAspect = img.width / img.height;
+        let drawWidth, drawHeight, offsetX, offsetY;
+
+        if (imgAspect >= 1) { // Wider than tall or square
+          drawHeight = cellSize;
+          drawWidth = drawHeight * imgAspect;
+          offsetX = (cellSize - drawWidth) / 2;
+          offsetY = 0;
+        } else { // Taller than wide
+          drawWidth = cellSize;
+          drawHeight = drawWidth / imgAspect;
+          offsetX = 0;
+          offsetY = (cellSize - drawHeight) / 2;
+        }
+
+        // Draw the image centered in the cell
+        ctx.save();
+
+        // Create circular clipping path
+        ctx.beginPath();
+        ctx.arc(x + cellSize/2, y + cellSize/2, cellSize/2, 0, Math.PI * 2);
+        ctx.closePath();
+        ctx.clip();
+
+        // Draw the image centered in the circle
+        ctx.drawImage(img, x + offsetX, y + offsetY, drawWidth, drawHeight);
+
+        ctx.restore();
       });
 
       gl.bindTexture(gl.TEXTURE_2D, this.tex);
