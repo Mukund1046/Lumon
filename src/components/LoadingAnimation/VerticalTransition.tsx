@@ -39,6 +39,11 @@ const VerticalTransition: React.FC<VerticalTransitionProps> = ({
     if (isActive && !isAnimating && overlayPathRef.current) {
       setIsAnimating(true);
 
+      // Adjust durations for mobile devices
+      const duration1 = isMobile ? 0.6 : 0.8; // Slightly faster on mobile
+      const duration2 = isMobile ? 0.15 : 0.2; // Slightly faster on mobile
+      const duration3 = isMobile ? 0.8 : 1.0; // Slightly faster on mobile
+
       // Animation timeline
       gsap.timeline({
         onComplete: () => {
@@ -50,12 +55,12 @@ const VerticalTransition: React.FC<VerticalTransitionProps> = ({
         attr: { d: paths.step1.unfilled }
       })
       .to(overlayPathRef.current, {
-        duration: 0.8,
-        ease: 'power4.in',
+        duration: duration1,
+        ease: isMobile ? 'power3.in' : 'power4.in', // Smoother ease on mobile
         attr: { d: paths.step1.inBetween.curve1 }
       }, 0)
       .to(overlayPathRef.current, {
-        duration: 0.2,
+        duration: duration2,
         ease: 'power1',
         attr: { d: paths.step1.filled }
       })
@@ -63,24 +68,27 @@ const VerticalTransition: React.FC<VerticalTransitionProps> = ({
         attr: { d: paths.step2.filled }
       })
       .to(overlayPathRef.current, {
-        duration: 0.2,
+        duration: duration2,
         ease: 'sine.in',
         attr: { d: paths.step2.inBetween.curve1 }
       })
       .to(overlayPathRef.current, {
-        duration: 1,
-        ease: 'power4',
+        duration: duration3,
+        ease: isMobile ? 'power3.out' : 'power4', // Smoother ease on mobile
         attr: { d: paths.step2.unfilled }
       });
     }
-  }, [isActive, isAnimating, onTransitionComplete]);
+  }, [isActive, isAnimating, onTransitionComplete, isMobile]);
 
-  // Detect if we're on a large screen
+  // Detect if we're on a large screen or mobile device
   const [isLargeScreen, setIsLargeScreen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const checkScreenSize = () => {
-      setIsLargeScreen(window.innerWidth >= 1280);
+      const width = window.innerWidth;
+      setIsLargeScreen(width >= 1280);
+      setIsMobile(width <= 768);
     };
 
     // Check initially
@@ -94,7 +102,7 @@ const VerticalTransition: React.FC<VerticalTransitionProps> = ({
 
   return (
     <svg
-      className={`vertical-transition-overlay ${isActive ? 'active' : ''} ${isLargeScreen ? 'large-screen' : ''}`}
+      className={`vertical-transition-overlay ${isActive ? 'active' : ''} ${isLargeScreen ? 'large-screen' : ''} ${isMobile ? 'mobile' : ''}`}
       width="100%"
       height="100%"
       viewBox="0 0 100 100"
