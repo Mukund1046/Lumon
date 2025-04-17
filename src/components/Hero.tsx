@@ -45,6 +45,9 @@ const Hero: React.FC<HeroProps> = ({ loadingComplete = false }) => {
 
   // Initialize the bulge effect
   useEffect(() => {
+    // Only initialize after loading is complete
+    if (!loadingComplete) return;
+
     // Load the bulge effect script
     const script = document.createElement('script');
     script.src = '/assets/js/effects/bulgeEffect.js';
@@ -97,7 +100,7 @@ const Hero: React.FC<HeroProps> = ({ loadingComplete = false }) => {
         document.head.removeChild(script);
       }
     };
-  }, [isMobile]); // Add isMobile as a dependency to re-initialize when mobile status changes
+  }, [isMobile, loadingComplete]); // Add loadingComplete as a dependency
   return (
     <section
       id="home"
@@ -161,7 +164,7 @@ const Hero: React.FC<HeroProps> = ({ loadingComplete = false }) => {
             data-scroll-speed="1"
             data-scroll-delay="0.2"
           >
-            <h2 className="text-xl xs:text-2xl sm:text-3xl font-trap font-trap-medium tracking-tight text-severance-frost/80 text-center transform translate-y-full animate-slide-up px-2">
+            <h2 className={`text-xl xs:text-2xl sm:text-3xl font-trap font-trap-medium tracking-tight text-severance-frost/80 text-center transform translate-y-full ${loadingComplete ? 'animate-slide-up' : ''} px-2`}>
               SEVERANCE TECHNOLOGY BY LUMON
             </h2>
           </div>
@@ -176,12 +179,13 @@ const Hero: React.FC<HeroProps> = ({ loadingComplete = false }) => {
               text="Experience complete separation between work and personal life. Our revolutionary procedure ensures your work self and home self remain distinct entities."
               className="font-jakarta text-sm sm:text-base font-light text-severance-frost/80 text-center leading-relaxed"
               delay={0.02}
+              loadingComplete={loadingComplete}
             />
           </div>
 
           {/* Single centered CTA button */}
           <div
-            className="opacity-0 animate-fade-in animate-delay-300 flex justify-center"
+            className={`opacity-0 ${loadingComplete ? 'animate-fade-in animate-delay-300' : ''} flex justify-center`}
             data-scroll
             data-scroll-speed="1.5"
           >

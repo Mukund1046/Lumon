@@ -6,24 +6,29 @@ interface AnimatedTextProps {
   className?: string;
   delay?: number;
   once?: boolean;
+  loadingComplete?: boolean;
 }
 
 const AnimatedText: React.FC<AnimatedTextProps> = ({
   text,
   className = '',
   delay = 0.03,
-  once = true
+  once = true,
+  loadingComplete = false
 }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    // Only start animation if loading is complete
+    if (!loadingComplete) return;
+
     // Start animation after a short delay to ensure component is mounted
     const timer = setTimeout(() => {
       setIsVisible(true);
     }, 500);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [loadingComplete]); // Re-run when loadingComplete changes
 
   // Split the text into words and then into characters
   const words = text.split(' ').map(word => {
