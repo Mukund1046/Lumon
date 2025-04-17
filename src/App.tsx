@@ -4,6 +4,8 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useState, useEffect } from "react";
+import LoadingAnimation from "./components/LoadingAnimation/LoadingAnimation";
 import TransitionManager from "./components/TransitionManager";
 import ColorSchemeProvider from "./components/ColorSchemeProvider";
 import HomePage from "./pages/HomePage";
@@ -20,11 +22,31 @@ import TypographyDemo from "./components/TypographyDemo";
 
 const queryClient = new QueryClient();
 
-const App = () => (
+const App = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    // Check if this is the first visit
+    const hasVisited = sessionStorage.getItem('hasVisited');
+
+    if (!hasVisited) {
+      // First visit - show loading animation
+      setIsLoading(true);
+      // Mark as visited
+      sessionStorage.setItem('hasVisited', 'true');
+    }
+  }, []);
+
+  const handleLoadingComplete = () => {
+    setIsLoading(false);
+  };
+
+  return (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
+      {isLoading && <LoadingAnimation onLoadingComplete={handleLoadingComplete} />}
       <BrowserRouter>
         <ColorSchemeProvider>
           <TransitionManager>
@@ -53,6 +75,7 @@ const App = () => (
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
-);
+  );
+};
 
 export default App;
