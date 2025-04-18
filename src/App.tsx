@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { Analytics } from "@vercel/analytics/react";
 import LoadingAnimation from "./components/LoadingAnimation/LoadingAnimation";
 import TransitionManager from "./components/TransitionManager";
 import ColorSchemeProvider from "./components/ColorSchemeProvider";
@@ -52,6 +53,7 @@ const App = () => {
     <TooltipProvider>
       <Toaster />
       <Sonner />
+      <Analytics />
       {isLoading && <LoadingAnimation onLoadingComplete={handleLoadingComplete} />}
       <BrowserRouter>
         <ColorSchemeProvider>
