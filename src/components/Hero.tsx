@@ -35,9 +35,8 @@ const Hero: React.FC<HeroProps> = ({ loadingComplete = false }) => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Reference for the main heading and subheading
+  // Reference for the main heading
   const mainHeadingRef = useRef<HTMLDivElement>(null);
-  const subHeadingRef = useRef<HTMLDivElement>(null);
 
   // Initialize the Severance opening animation
   useEffect(() => {
@@ -47,13 +46,6 @@ const Hero: React.FC<HeroProps> = ({ loadingComplete = false }) => {
     // Add animated class to trigger CSS transitions
     if (mainHeadingRef.current) {
       mainHeadingRef.current.classList.add('animated');
-    }
-
-    if (subHeadingRef.current) {
-      // Add a slight delay for the subheading
-      setTimeout(() => {
-        subHeadingRef.current?.classList.add('animated');
-      }, 300);
     }
   }, [loadingComplete]); // Re-run when loadingComplete changes
 
@@ -158,51 +150,34 @@ const Hero: React.FC<HeroProps> = ({ loadingComplete = false }) => {
 
       <div className="container-custom relative z-10 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto flex flex-col items-center">
-          {/* Primary headline with Severance opening animation */}
-          <div className="mb-2 sm:mb-4 overflow-hidden">
+          {/* Primary headline with Severance opening animation - Increased text size and adjusted spacing */}
+          <div className="mb-4 sm:mb-6 overflow-hidden">
             <div
               ref={mainHeadingRef}
-              className="severance-opening mb-2"
+              className="severance-opening"
               data-scroll
               data-scroll-speed="1"
               data-scroll-delay="0.1"
             >
               <div className="severance-opening__text">
-                <h1 className="severance-opening__text-inner text-5xl xs:text-6xl sm:text-7xl md:text-8xl font-trap font-trap-bold leading-none tracking-tighter text-center whitespace-nowrap text-severance-frost">
+                <h1 className="severance-opening__text-inner text-6xl xs:text-7xl sm:text-8xl md:text-9xl font-trap font-trap-bold leading-none tracking-tighter text-center whitespace-nowrap text-severance-frost">
                   SEVERED LIVES
                 </h1>
               </div>
             </div>
           </div>
 
-          {/* Refined secondary headline with Severance opening animation */}
-          <div
-            className="mb-3 sm:mb-4 overflow-hidden"
-            data-scroll
-            data-scroll-speed="1"
-            data-scroll-delay="0.2"
-          >
-            <div
-              ref={subHeadingRef}
-              className="severance-opening"
-            >
-              <div className="severance-opening__text severance-opening__secondary">
-                <h2 className="severance-opening__text-inner severance-opening__secondary-inner text-xl xs:text-2xl sm:text-3xl font-trap font-trap-medium tracking-tight text-severance-frost/80 text-center px-2">
-                  SEVERANCE TECHNOLOGY BY LUMON
-                </h2>
-              </div>
-            </div>
-          </div>
+          {/* Subheading removed to reduce clutter */}
 
-          {/* Shorter, lighter paragraph with better contrast */}
+          {/* Shorter, lighter paragraph with better contrast - Consistent spacing */}
           <div
-            className="mb-6 sm:mb-8 max-w-xl mx-auto overflow-hidden px-4 sm:px-6"
+            className="mb-4 sm:mb-6 max-w-2xl mx-auto overflow-hidden px-4 sm:px-6"
             data-scroll
             data-scroll-speed="1.2"
           >
             <AnimatedText
-              text="Experience complete separation between work and personal life. Our revolutionary procedure ensures your work self and home self remain distinct entities."
-              className="font-jakarta text-sm sm:text-base font-light text-severance-frost/80 text-center leading-relaxed"
+              text="Experience complete separation between work and personal life with our revolutionary procedure. Your work self and home self remain distinct entities, creating perfect balance."
+              className="font-jakarta text-xs sm:text-sm md:text-base font-light text-severance-frost/90 text-center leading-tight tracking-wide"
               delay={0.02}
               loadingComplete={loadingComplete}
             />
