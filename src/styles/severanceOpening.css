@@ -1,0 +1,76 @@
+:root {
+  --text-color: var(--severance-midnight, #0b0e29);
+  --background-color: var(--severance-frost, #f0f6f7);
+}
+
+.severance-opening {
+  position: relative;
+  overflow: hidden;
+}
+
+.severance-opening__text {
+  width: 100%;
+  position: relative;
+  clip-path: inset(0 100% 0 0);
+  overflow: hidden;
+}
+
+.severance-opening__text::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background-color: var(--background-color);
+}
+
+.severance-opening__text-inner {
+  width: 100%;
+  transform: translateY(-105%);
+  will-change: transform;
+}
+
+/* Ensure the animation only runs once */
+.severance-opening.animated .severance-opening__text {
+  clip-path: inset(0 0% 0 0);
+  transition: clip-path 1s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+/* Line disappearing animation */
+.severance-opening.animated .severance-opening__text::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background-color: var(--background-color);
+  animation: lineDisappear 0.8s cubic-bezier(0.25, 0.1, 0.25, 1) 1.5s forwards;
+}
+
+@keyframes lineDisappear {
+  0% { width: 100%; left: 0; right: auto; }
+  100% { width: 0%; left: 0; right: auto; }
+}
+
+.severance-opening.animated .severance-opening__text-inner {
+  transform: translateY(0);
+  transition: transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1) 0.2s;
+}
+
+/* Secondary text animation with slight delay */
+.severance-opening.animated .severance-opening__secondary {
+  clip-path: inset(0 0% 0 0);
+  transition: clip-path 1s cubic-bezier(0.25, 0.1, 0.25, 1) 0.4s;
+}
+
+.severance-opening.animated .severance-opening__secondary-inner {
+  transform: translateY(0);
+  transition: transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1) 0.6s;
+}
+
+/* Line disappearing animation for secondary text */
+.severance-opening.animated .severance-opening__secondary::before {
+  animation: lineDisappear 0.8s cubic-bezier(0.25, 0.1, 0.25, 1) 1.8s forwards;
+}

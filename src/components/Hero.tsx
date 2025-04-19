@@ -1,10 +1,12 @@
 
 import React, { useEffect, useRef, useState } from 'react';
+import gsap from 'gsap';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import '../styles/textEffect.css';
 import '../styles/heroMobile.css';
+import '../styles/severanceOpening.css';
 import { initTextAnimation } from '../scripts/textAnimation';
 import AnimatedText from '../components/ui/AnimatedText';
 
@@ -33,14 +35,26 @@ const Hero: React.FC<HeroProps> = ({ loadingComplete = false }) => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  useEffect(() => {
-    // Initialize the text animation when component mounts or when loading completes
-    // Small delay to ensure DOM is fully loaded
-    const timer = setTimeout(() => {
-      initTextAnimation();
-    }, loadingComplete ? 500 : 100); // Longer delay after loading animation
+  // Reference for the main heading and subheading
+  const mainHeadingRef = useRef<HTMLDivElement>(null);
+  const subHeadingRef = useRef<HTMLDivElement>(null);
 
-    return () => clearTimeout(timer);
+  // Initialize the Severance opening animation
+  useEffect(() => {
+    // Only run animation if loading is complete
+    if (!loadingComplete) return;
+
+    // Add animated class to trigger CSS transitions
+    if (mainHeadingRef.current) {
+      mainHeadingRef.current.classList.add('animated');
+    }
+
+    if (subHeadingRef.current) {
+      // Add a slight delay for the subheading
+      setTimeout(() => {
+        subHeadingRef.current?.classList.add('animated');
+      }, 300);
+    }
   }, [loadingComplete]); // Re-run when loadingComplete changes
 
   // Initialize the bulge effect
@@ -144,29 +158,40 @@ const Hero: React.FC<HeroProps> = ({ loadingComplete = false }) => {
 
       <div className="container-custom relative z-10 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto flex flex-col items-center">
-          {/* Primary headline with increased contrast and hierarchy */}
+          {/* Primary headline with Severance opening animation */}
           <div className="mb-2 sm:mb-4 overflow-hidden">
-            <h1
-              className="hero-text text-5xl xs:text-6xl sm:text-7xl md:text-8xl font-trap font-trap-bold leading-none tracking-tighter text-center whitespace-nowrap"
+            <div
+              ref={mainHeadingRef}
+              className="severance-opening mb-2"
               data-scroll
               data-scroll-speed="1"
               data-scroll-delay="0.1"
             >
-              SEVERED LIVES
-              <span>SEVERED LIVES</span>
-            </h1>
+              <div className="severance-opening__text">
+                <h1 className="severance-opening__text-inner text-5xl xs:text-6xl sm:text-7xl md:text-8xl font-trap font-trap-bold leading-none tracking-tighter text-center whitespace-nowrap text-severance-frost">
+                  SEVERED LIVES
+                </h1>
+              </div>
+            </div>
           </div>
 
-          {/* Refined secondary headline */}
+          {/* Refined secondary headline with Severance opening animation */}
           <div
             className="mb-3 sm:mb-4 overflow-hidden"
             data-scroll
             data-scroll-speed="1"
             data-scroll-delay="0.2"
           >
-            <h2 className={`text-xl xs:text-2xl sm:text-3xl font-trap font-trap-medium tracking-tight text-severance-frost/80 text-center transform translate-y-full ${loadingComplete ? 'animate-slide-up' : ''} px-2`}>
-              SEVERANCE TECHNOLOGY BY LUMON
-            </h2>
+            <div
+              ref={subHeadingRef}
+              className="severance-opening"
+            >
+              <div className="severance-opening__text severance-opening__secondary">
+                <h2 className="severance-opening__text-inner severance-opening__secondary-inner text-xl xs:text-2xl sm:text-3xl font-trap font-trap-medium tracking-tight text-severance-frost/80 text-center px-2">
+                  SEVERANCE TECHNOLOGY BY LUMON
+                </h2>
+              </div>
+            </div>
           </div>
 
           {/* Shorter, lighter paragraph with better contrast */}
