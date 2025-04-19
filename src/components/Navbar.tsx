@@ -4,13 +4,13 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import '../styles/navTextEffect.css';
-import '../styles/marqueeMenu.css';
 import '../styles/navbarFix.css';
 import '../styles/navbarContrast.css'; // Added for improved contrast
 import '../styles/navbarPadding.css'; // Added for adjusted padding on larger screens
 import '../styles/navbarPageThemes.css'; // Added for page-specific color schemes
+import '../styles/osmoMenu.css'; // Added for Osmo-style menu animation
 import { initNavTextAnimation } from '../scripts/nav-text-animation';
-import { initMarqueeMenu } from '../scripts/marqueeMenu';
+import { initOsmoMenu } from '../scripts/osmoMenu';
 import { GooeyText } from '@/components/ui/gooey-text';
 import { useColorScheme } from './ColorSchemeProvider';
 
@@ -29,15 +29,56 @@ const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Initialize text animation for navigation links and marquee menu
+  // Initialize text animation for navigation links
   useEffect(() => {
     // Small delay to ensure DOM is fully loaded
     const timer = setTimeout(() => {
       initNavTextAnimation();
-      initMarqueeMenu();
     }, 500);
 
     return () => clearTimeout(timer);
+  }, []);
+
+  // Initialize Osmo menu
+  useEffect(() => {
+    // Initialize the menu only once
+    const timer = setTimeout(() => {
+      const osmoMenu = initOsmoMenu();
+
+      // Create a function to update the React state from GSAP
+      window.updateMobileMenuState = (isOpen: boolean) => {
+        if (isOpen !== mobileMenuOpen) {
+          setMobileMenuOpen(isOpen);
+        }
+      };
+
+      // Direct connection between toggle button and menu
+      const menuToggle = document.getElementById('osmo-menu-toggle');
+      if (menuToggle) {
+        menuToggle.addEventListener('click', () => {
+          const newState = !mobileMenuOpen;
+          setMobileMenuOpen(newState);
+          if (newState && window.osmoOpenMenu) {
+            window.osmoOpenMenu();
+          } else if (!newState && window.osmoCloseMenu) {
+            window.osmoCloseMenu();
+          }
+        });
+      }
+    }, 500);
+
+    return () => {
+      // Clean up
+      clearTimeout(timer);
+      window.updateMobileMenuState = undefined;
+    };
+  }, [mobileMenuOpen]);
+
+  // Sync menu state with React state when mobileMenuOpen changes
+  useEffect(() => {
+    if (window.syncOsmoMenuState) {
+      window.syncOsmoMenuState(mobileMenuOpen);
+    }
   }, [mobileMenuOpen]);
 
   // Handle route changes
@@ -108,73 +149,78 @@ const Navbar: React.FC = () => {
 
           {/* Mobile menu toggle - only visible on mobile */}
           <button
-            className="md:hidden text-foreground jetbrains-mono-button icon-only"
-            onClick={() => {
-              const newState = !mobileMenuOpen;
-              setMobileMenuOpen(newState);
-              if (newState) {
-                // Initialize marquee menu when opening
-                setTimeout(() => initMarqueeMenu(), 100);
-              }
-            }}
+            className="md:hidden osmo-menu-button"
+            id="osmo-menu-toggle"
+            data-osmo-menu-toggle
           >
-            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            <div className="osmo-menu-button-text">
+              <p className="p-large">Menu</p>
+              <p className="p-large">Close</p>
+            </div>
+            <div className="osmo-icon-wrap">
+              <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 16 16" fill="none" className="osmo-menu-button-icon">
+                <path d="M7.33333 16L7.33333 -3.2055e-07L8.66667 -3.78832e-07L8.66667 16L7.33333 16Z" fill="currentColor"></path>
+                <path d="M16 8.66667L-2.62269e-07 8.66667L-3.78832e-07 7.33333L16 7.33333L16 8.66667Z" fill="currentColor"></path>
+              </svg>
+            </div>
           </button>
         </div>
       </div>
 
-      {/* Mobile menu */}
-      <div className={cn(
-        "mobile-menu md:hidden absolute top-full left-0 right-0 bg-severance-frost shadow-md transition-all duration-300 overflow-hidden z-[100]",
-        mobileMenuOpen ? "max-h-96" : "max-h-0"
-      )}>
-        <div className="container-custom py-4 flex flex-col space-y-4">
-          {navItems.map((item) => (
-            <div key={item.name} className="mobile-menu-item">
-              <Link
-                to={item.path}
-                className={cn(
-                  "font-mono text-sm py-2 transition-colors uppercase nav-link block w-full",
-                  isActive(item.path)
-                    ? "text-wardrobe-blue font-medium active"
-                    : "text-wardrobe-dark hover:text-wardrobe-blue"
-                )}
-              >
-                {item.name}
-              </Link>
-              <div className="marquee">
-                <div className="marquee__inner-wrap">
-                  <div className="marquee__inner" aria-hidden="true">
-                    <span>Lumon</span>
-                    <div className="marquee__img" style={{ backgroundImage: 'url(/assets/severance126.jpg)' }}></div>
-                    <span>Severance</span>
-                    <div className="marquee__img" style={{ backgroundImage: 'url(/assets/severance127.jpg)' }}></div>
-                    <span>Kier</span>
-                    <div className="marquee__img" style={{ backgroundImage: 'url(/assets/severance128.jpg)' }}></div>
-                    <span>MDR</span>
-                    <div className="marquee__img" style={{ backgroundImage: 'url(/assets/severance129.jpg)' }}></div>
-                    <span>Lumon</span>
-                    <div className="marquee__img" style={{ backgroundImage: 'url(/assets/severance126.jpg)' }}></div>
-                    <span>Severance</span>
-                    <div className="marquee__img" style={{ backgroundImage: 'url(/assets/severance127.jpg)' }}></div>
-                    <span>Kier</span>
-                    <div className="marquee__img" style={{ backgroundImage: 'url(/assets/severance128.jpg)' }}></div>
-                    <span>MDR</span>
-                    <div className="marquee__img" style={{ backgroundImage: 'url(/assets/severance129.jpg)' }}></div>
-                  </div>
-                </div>
+      {/* Osmo-style Mobile Menu */}
+      <div data-nav="closed" className="osmo-mobile-menu" id="osmo-mobile-menu">
+        <div className="osmo-overlay" data-osmo-menu-toggle></div>
+        <nav className="osmo-menu">
+          <button
+            className="osmo-close-button"
+            data-osmo-menu-toggle
+          >
+            <div className="osmo-icon-wrap">
+              <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 16 16" fill="none" className="osmo-menu-button-icon">
+                <path d="M7.33333 16L7.33333 -3.2055e-07L8.66667 -3.78832e-07L8.66667 16L7.33333 16Z" fill="currentColor"></path>
+                <path d="M16 8.66667L-2.62269e-07 8.66667L-3.78832e-07 7.33333L16 7.33333L16 8.66667Z" fill="currentColor"></path>
+              </svg>
+            </div>
+            <span>Close</span>
+          </button>
+          <div className="osmo-menu-bg">
+            <div className="osmo-bg-panel first"></div>
+            <div className="osmo-bg-panel second"></div>
+            <div className="osmo-bg-panel"></div>
+          </div>
+          <div className="osmo-menu-inner">
+            <ul className="osmo-menu-list">
+              {navItems.map((item, index) => (
+                <li key={item.name} className="osmo-menu-list-item">
+                  <Link
+                    to={item.path}
+                    className="osmo-menu-link"
+                    data-osmo-menu-toggle
+                  >
+                    <p className="osmo-menu-link-heading">{item.name}</p>
+                    <p className="osmo-eyebrow">{String(index + 1).padStart(2, '0')}</p>
+                    <div className="osmo-menu-link-bg"></div>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <div className="osmo-menu-details" data-osmo-menu-fade>
+              <p className="p-small">Lumon Industries</p>
+              <div className="socials-row">
+                <Link
+                  to="/join-us"
+                  className="p-large text-link"
+                  data-osmo-menu-toggle
+                >Apply Now</Link>
+                <Link
+                  to="/privacy"
+                  className="p-large text-link"
+                  data-osmo-menu-toggle
+                >Privacy</Link>
               </div>
             </div>
-          ))}
-          <div className="flex justify-center w-full mt-4">
-            <Link
-              to="/join-us"
-              className="lumon-button primary mobile-menu-apply jetbrains-mono-button text-sm uppercase tracking-wide mx-auto"
-            >
-              Apply Now
-            </Link>
           </div>
-        </div>
+        </nav>
       </div>
     </header>
   );
