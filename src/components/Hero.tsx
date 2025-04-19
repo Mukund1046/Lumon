@@ -147,13 +147,13 @@ const Hero: React.FC<HeroProps> = ({ loadingComplete = false }) => {
           {/* Primary headline with increased contrast and hierarchy */}
           <div className="mb-2 sm:mb-4 overflow-hidden">
             <h1
-              className="hero-text text-5xl xs:text-6xl sm:text-7xl md:text-8xl font-trap font-trap-bold leading-none tracking-tighter text-center"
+              className="hero-text text-5xl xs:text-6xl sm:text-7xl md:text-8xl font-trap font-trap-bold leading-none tracking-tighter text-center whitespace-nowrap"
               data-scroll
               data-scroll-speed="1"
               data-scroll-delay="0.1"
             >
-              WORK-LIFE
-              <span>WORK-LIFE</span>
+              SEVERED LIVES
+              <span>SEVERED LIVES</span>
             </h1>
           </div>
 
