@@ -39,10 +39,11 @@ const Navbar: React.FC = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  // Initialize Osmo menu
+  // Initialize Osmo menu on component mount
   useEffect(() => {
-    // Initialize the menu only once
-    const timer = setTimeout(() => {
+    // Initialize the menu
+    const initMenu = () => {
+      // Initialize the menu
       const osmoMenu = initOsmoMenu();
 
       // Create a function to update the React state from GSAP
@@ -52,27 +53,19 @@ const Navbar: React.FC = () => {
         }
       };
 
-      // Direct connection between toggle button and menu
-      const menuToggle = document.getElementById('osmo-menu-toggle');
-      if (menuToggle) {
-        menuToggle.addEventListener('click', () => {
-          const newState = !mobileMenuOpen;
-          setMobileMenuOpen(newState);
-          if (newState && window.osmoOpenMenu) {
-            window.osmoOpenMenu();
-          } else if (!newState && window.osmoCloseMenu) {
-            window.osmoCloseMenu();
-          }
-        });
-      }
-    }, 500);
+      console.log('Menu initialized');
+    };
+
+    // Initialize immediately
+    initMenu();
+
+    // Also initialize after a delay to ensure DOM is fully loaded
+    const timer = setTimeout(initMenu, 500);
 
     return () => {
-      // Clean up
       clearTimeout(timer);
-      window.updateMobileMenuState = undefined;
     };
-  }, [mobileMenuOpen]);
+  }, []);
 
   // Sync menu state with React state when mobileMenuOpen changes
   useEffect(() => {
@@ -85,6 +78,11 @@ const Navbar: React.FC = () => {
   useEffect(() => {
     // Close mobile menu when route changes
     setMobileMenuOpen(false);
+
+    // Explicitly close the menu
+    if (typeof window.osmoCloseMenu === 'function') {
+      window.osmoCloseMenu();
+    }
 
     // Scroll to top when navigating to a new page
     window.scrollTo(0, 0);
@@ -151,7 +149,25 @@ const Navbar: React.FC = () => {
           <button
             className="md:hidden osmo-menu-button"
             id="osmo-menu-toggle"
-            data-osmo-menu-toggle
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+
+              // Toggle menu state
+              const newState = !mobileMenuOpen;
+              setMobileMenuOpen(newState);
+
+              // Open or close menu using our global functions
+              if (newState) {
+                if (typeof window.osmoOpenMenu === 'function') {
+                  window.osmoOpenMenu();
+                }
+              } else {
+                if (typeof window.osmoCloseMenu === 'function') {
+                  window.osmoCloseMenu();
+                }
+              }
+            }}
           >
             <div className="osmo-menu-button-text">
               <p className="p-large">Menu</p>
@@ -169,11 +185,24 @@ const Navbar: React.FC = () => {
 
       {/* Osmo-style Mobile Menu */}
       <div data-nav="closed" className="osmo-mobile-menu" id="osmo-mobile-menu">
-        <div className="osmo-overlay" data-osmo-menu-toggle></div>
+        <div
+          className="osmo-overlay"
+          onClick={() => {
+            setMobileMenuOpen(false);
+            if (typeof window.osmoCloseMenu === 'function') {
+              window.osmoCloseMenu();
+            }
+          }}
+        ></div>
         <nav className="osmo-menu">
           <button
             className="osmo-close-button"
-            data-osmo-menu-toggle
+            onClick={() => {
+              setMobileMenuOpen(false);
+              if (typeof window.osmoCloseMenu === 'function') {
+                window.osmoCloseMenu();
+              }
+            }}
           >
             <div className="osmo-icon-wrap">
               <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 16 16" fill="none" className="osmo-menu-button-icon">
@@ -195,7 +224,12 @@ const Navbar: React.FC = () => {
                   <Link
                     to={item.path}
                     className="osmo-menu-link"
-                    data-osmo-menu-toggle
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      if (typeof window.osmoCloseMenu === 'function') {
+                        window.osmoCloseMenu();
+                      }
+                    }}
                   >
                     <p className="osmo-menu-link-heading">{item.name}</p>
                     <p className="osmo-eyebrow">{String(index + 1).padStart(2, '0')}</p>
@@ -210,12 +244,22 @@ const Navbar: React.FC = () => {
                 <Link
                   to="/join-us"
                   className="p-large text-link"
-                  data-osmo-menu-toggle
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    if (typeof window.osmoCloseMenu === 'function') {
+                      window.osmoCloseMenu();
+                    }
+                  }}
                 >Apply Now</Link>
                 <Link
                   to="/privacy"
                   className="p-large text-link"
-                  data-osmo-menu-toggle
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    if (typeof window.osmoCloseMenu === 'function') {
+                      window.osmoCloseMenu();
+                    }
+                  }}
                 >Privacy</Link>
               </div>
             </div>
