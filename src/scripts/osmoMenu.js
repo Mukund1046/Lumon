@@ -27,7 +27,7 @@ const openMobileMenu = () => {
   // Set initial states
   gsap.set(overlay, { autoAlpha: 0 });
   gsap.set(menuContent, { xPercent: 100 });
-  gsap.set(bgPanels, { xPercent: 101 });
+  gsap.set(bgPanels, { xPercent: 0 });
   // Don't set opacity to 0 for menu links
   gsap.set(eyebrows, { autoAlpha: 0 });
   gsap.set(fadeTargets, { autoAlpha: 0, yPercent: 50 });
@@ -35,11 +35,10 @@ const openMobileMenu = () => {
   // Create animation sequence
   const tl = gsap.timeline();
 
-  // Animate elements
+  // Animate elements - removed panel animations
   tl.to(overlay, { autoAlpha: 1, duration: 0.3 })
     .to(menuContent, { xPercent: 0, duration: 0.5, ease: 'power2.out' }, '<')
-    .to(bgPanels, { xPercent: 0, stagger: 0.1, duration: 0.5, ease: 'power2.out' }, '<')
-    // Skip animating menu links opacity since we want them visible immediately
+    // Skip panel animations to prevent horizontal overflow
     .to(eyebrows, { autoAlpha: 1, duration: 0.3 }, '<+0.2')
     .to(fadeTargets, { autoAlpha: 1, yPercent: 0, duration: 0.3 }, '<');
 };
@@ -73,11 +72,11 @@ const closeMobileMenu = () => {
     }
   });
 
-  // Animate elements
+  // Animate elements - removed panel animations
   tl.to([fadeTargets, eyebrows], { autoAlpha: 0, duration: 0.2 })
     // Skip animating menu links opacity since we want them visible
     .to(menuContent, { xPercent: 100, duration: 0.3, ease: 'power2.in' }, '<+0.1')
-    .to(bgPanels, { xPercent: 101, stagger: 0.05, duration: 0.3, ease: 'power2.in' }, '<')
+    // Skip panel animations to prevent horizontal overflow
     .to(overlay, { autoAlpha: 0, duration: 0.2 }, '<');
 
   // Failsafe: hide menu after a delay if animation fails
@@ -116,7 +115,7 @@ export const initOsmoMenu = () => {
     const menuLinks = menu.querySelectorAll('.osmo-menu-link-heading');
 
     gsap.set(menuContent, { xPercent: 100 });
-    gsap.set(bgPanels, { xPercent: 101 });
+    gsap.set(bgPanels, { xPercent: 0 });
     // Don't set opacity to 0 for menu links
   }
 
