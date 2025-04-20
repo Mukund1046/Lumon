@@ -1,5 +1,6 @@
 import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
+// Import core styles
 import './index.css'
 import './styles/buttonEffect.css'
 import './styles/typography.css'

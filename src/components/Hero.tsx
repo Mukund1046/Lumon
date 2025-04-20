@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 import '../styles/textEffect.css';
 import '../styles/heroMobile.css';
 import '../styles/severanceOpening.css';
+import '../styles/responsiveBackground.css';
 import { initTextAnimation } from '../scripts/textAnimation';
 import AnimatedText from '../components/ui/AnimatedText';
 
@@ -46,6 +47,7 @@ const Hero: React.FC<HeroProps> = ({ loadingComplete = false }) => {
     // Add animated class to trigger CSS transitions
     if (mainHeadingRef.current) {
       mainHeadingRef.current.classList.add('animated');
+      console.log('Hero entrance animation started');
     }
   }, [loadingComplete]); // Re-run when loadingComplete changes
 
@@ -78,25 +80,55 @@ const Hero: React.FC<HeroProps> = ({ loadingComplete = false }) => {
 
         console.log(`Bulge effect initialized (${isMobile ? 'mobile' : 'desktop'} mode)`);
 
-        // Ensure canvas is properly sized
+        // Enhanced canvas sizing function
         const resizeCanvas = () => {
-          const displayWidth = canvas.clientWidth;
-          const displayHeight = canvas.clientHeight;
+          // Get the parent container dimensions
+          const container = canvas.parentElement;
+          if (!container) return;
 
+          const displayWidth = container.clientWidth;
+          const displayHeight = container.clientHeight;
+
+          // Update canvas dimensions if they don't match the display dimensions
           if (canvas.width !== displayWidth || canvas.height !== displayHeight) {
             canvas.width = displayWidth;
             canvas.height = displayHeight;
+
+            // Force redraw after resize
+            const ctx = canvas.getContext('2d');
+            if (ctx) {
+              ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+
+            console.log(`Canvas resized to ${displayWidth}x${displayHeight}`);
           }
         };
 
         // Initial resize
         resizeCanvas();
 
-        // Resize on window resize
-        window.addEventListener('resize', resizeCanvas);
+        // Resize on window resize with debounce
+        let resizeTimeout: number | null = null;
+        const handleResize = () => {
+          if (resizeTimeout) {
+            window.clearTimeout(resizeTimeout);
+          }
+          resizeTimeout = window.setTimeout(() => {
+            resizeCanvas();
+          }, 100);
+        };
+
+        window.addEventListener('resize', handleResize);
+        window.addEventListener('orientationchange', handleResize);
 
         // Return cleanup function
-        return () => window.removeEventListener('resize', resizeCanvas);
+        return () => {
+          window.removeEventListener('resize', handleResize);
+          window.removeEventListener('orientationchange', handleResize);
+          if (resizeTimeout) {
+            window.clearTimeout(resizeTimeout);
+          }
+        };
       }
     };
 
@@ -117,7 +149,7 @@ const Hero: React.FC<HeroProps> = ({ loadingComplete = false }) => {
     >
       {/* Background image with bulge effect */}
       <div
-        className="absolute inset-0 z-0"
+        className="absolute inset-0 z-0 overflow-hidden"
         data-scroll data-scroll-speed="-0.2"
       >
         <canvas id="hero-canvas" className="w-full h-full object-cover"></canvas>
@@ -125,7 +157,7 @@ const Hero: React.FC<HeroProps> = ({ loadingComplete = false }) => {
 
       {/* Fallback background image (hidden when WebGL works) */}
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat -z-10"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat -z-10 overflow-hidden"
         style={{
           backgroundImage: 'url(/assets/severance126.jpg)',
           backgroundSize: 'cover',

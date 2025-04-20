@@ -32,8 +32,8 @@ class Cell {
 type TransitionType = 'demo1' | 'demo2' | 'demo4' | 'demo5' | 'demo6';
 
 // Map paths to transition types
-const pathToTransition: Record<string, TransitionType> = {
-  '/': 'demo1',           // Home page uses demo1 (vertical rows)
+const pathToTransition: Record<string, TransitionType | null> = {
+  '/': null,              // Home page has no transition to allow hero animation to be fully seen
   '/about': 'demo2',      // About page uses demo2 (from center)
   '/departments': 'demo4', // Departments page uses demo4 (from edges to center)
   '/employees': 'demo5',   // Employees page uses demo5 (vertical columns)
@@ -57,6 +57,21 @@ const TransitionManager: React.FC<TransitionManagerProps> = ({ children }) => {
 
   // Create cells for the overlay
   useEffect(() => {
+    // Skip initialization for homepage
+    if (location.pathname === '/' || pathToTransition[location.pathname] === null) {
+      console.log('Skipping transition initialization for homepage');
+      isInitialRender.current = false;
+      isAnimating.current = false;
+
+      // Ensure the overlay is hidden for homepage
+      if (overlayRef.current) {
+        overlayRef.current.style.display = 'none';
+        overlayRef.current.style.opacity = '0';
+      }
+
+      return;
+    }
+
     // Function to initialize the transition effect
     const initTransition = () => {
       if (!overlayRef.current) {
@@ -132,25 +147,33 @@ const TransitionManager: React.FC<TransitionManagerProps> = ({ children }) => {
 
       // Initial animation (fade out the overlay)
       if (isInitialRender.current) {
-        window.gsap.set(overlay, { opacity: 1 });
+        // Skip initial animation for homepage to allow hero animation to be fully seen
+        if (location.pathname === '/' || pathToTransition[location.pathname] === null) {
+          console.log('Skipping initial transition for homepage');
+          isInitialRender.current = false;
+          isAnimating.current = false;
+          overlay.style.opacity = '0';
+        } else {
+          window.gsap.set(overlay, { opacity: 1 });
 
-        window.gsap.fromTo(flatCells.current.map(cell => cell.el),
-          { scale: 1, opacity: 1, transformOrigin: '50% 100%' },
-          {
-            scale: 0,
-            opacity: 0,
-            duration: 0.4,
-            ease: 'power2',
-            stagger: (index: number) => {
-              const cell = flatCells.current[index];
-              return 0.03 * (cell.row + window.gsap.utils.random(0, 5));
-            },
-            onComplete: () => {
-              isInitialRender.current = false;
-              isAnimating.current = false;
+          window.gsap.fromTo(flatCells.current.map(cell => cell.el),
+            { scale: 1, opacity: 1, transformOrigin: '50% 100%' },
+            {
+              scale: 0,
+              opacity: 0,
+              duration: 0.4,
+              ease: 'power2',
+              stagger: (index: number) => {
+                const cell = flatCells.current[index];
+                return 0.03 * (cell.row + window.gsap.utils.random(0, 5));
+              },
+              onComplete: () => {
+                isInitialRender.current = false;
+                isAnimating.current = false;
+              }
             }
-          }
-        );
+          );
+        }
       }
     };
 
@@ -159,7 +182,16 @@ const TransitionManager: React.FC<TransitionManagerProps> = ({ children }) => {
 
     // Cleanup function
     return () => {
-      // Any cleanup code here
+      // Ensure the overlay is properly hidden when unmounting
+      if (overlayRef.current) {
+        overlayRef.current.style.display = 'none';
+        overlayRef.current.style.opacity = '0';
+      }
+
+      // Reset any GSAP animations
+      if (window.gsap && flatCells.current.length > 0) {
+        window.gsap.killTweensOf(flatCells.current.map(cell => cell.el));
+      }
     };
   }, [location.pathname]);
 
@@ -205,20 +237,37 @@ const TransitionManager: React.FC<TransitionManagerProps> = ({ children }) => {
     }
 
     // Update data attribute on document body for CSS styling
-    const transitionType = pathToTransition[location.pathname] || 'demo1';
-    document.body.setAttribute('data-transition', transitionType);
+    if (location.pathname === '/' || pathToTransition[location.pathname] === null) {
+      // For homepage, skip transitions
+      document.body.setAttribute('data-transition', 'none');
+    } else {
+      const transitionType = pathToTransition[location.pathname] || 'demo1';
+      document.body.setAttribute('data-transition', transitionType);
+    }
 
     prevPathname.current = location.pathname;
   }, [location.pathname]);
 
   // Set initial data attribute
   useEffect(() => {
-    const transitionType = pathToTransition[location.pathname] || 'demo1';
-    document.body.setAttribute('data-transition', transitionType);
+    if (location.pathname === '/' || pathToTransition[location.pathname] === null) {
+      // For homepage, skip transitions
+      document.body.setAttribute('data-transition', 'none');
+    } else {
+      const transitionType = pathToTransition[location.pathname] || 'demo1';
+      document.body.setAttribute('data-transition', transitionType);
+    }
   }, []);
 
   // Perform transition animation
   const performTransition = (path: string, updateHistory = true) => {
+    // Skip transition for homepage to allow hero animation to be fully seen
+    if (path === '/' || pathToTransition[path] === null) {
+      console.log('Skipping transition for homepage');
+      if (updateHistory) navigate(path);
+      return;
+    }
+
     // Check if we can perform the transition
     if (isAnimating.current) {
       console.log('Animation already in progress, skipping transition');

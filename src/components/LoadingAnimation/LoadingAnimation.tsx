@@ -20,7 +20,10 @@ const LoadingAnimation: React.FC<LoadingAnimationProps> = ({ onLoadingComplete }
 
   // Handle transition completion
   const handleTransitionComplete = useCallback(() => {
+    // Hide the loading animation
     setIsVisible(false);
+
+    // Notify parent component that loading is complete
     setTimeout(() => {
       onLoadingComplete();
     }, 500);

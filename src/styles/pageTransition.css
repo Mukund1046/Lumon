@@ -18,6 +18,19 @@
     -webkit-transform: translateZ(0);
 }
 
+/* Special case for homepage - hide the overlay completely */
+[data-transition="none"] .page-transition-overlay {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+[data-transition="none"] .page-transition-overlay div {
+    opacity: 0 !important;
+    transform: scale(0) !important;
+    display: none !important;
+}
+
 /* Demo1 - Vertical rows */
 .page-transition-overlay div {
     background-color: var(--severance-midnight, #0b0e29);

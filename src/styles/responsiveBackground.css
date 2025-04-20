@@ -1,0 +1,106 @@
+/* Responsive background image fixes */
+
+/* Ensure the hero section is properly contained */
+#home {
+  position: relative;
+  overflow: hidden !important;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Ensure the canvas is properly sized and positioned */
+#hero-canvas {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+}
+
+/* Ensure the fallback background is properly sized and positioned */
+#home [style*="background-image"] {
+  background-size: cover !important;
+  background-position: center center !important;
+  width: 100% !important;
+  height: 100% !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+}
+
+/* Ensure the noise texture overlay is properly sized and positioned */
+#home .animate-noise {
+  width: 100% !important;
+  height: 100% !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  background-size: 256px 256px !important;
+}
+
+/* Large screens */
+@media (min-width: 1440px) {
+  #hero-canvas {
+    object-position: center center !important;
+  }
+  
+  #home [style*="background-image"] {
+    background-position: center center !important;
+  }
+}
+
+/* Medium screens */
+@media (min-width: 768px) and (max-width: 1439px) {
+  #hero-canvas {
+    object-position: center center !important;
+  }
+  
+  #home [style*="background-image"] {
+    background-position: center center !important;
+  }
+}
+
+/* Small screens */
+@media (max-width: 767px) {
+  #hero-canvas {
+    object-position: center 30% !important;
+  }
+  
+  #home [style*="background-image"] {
+    background-position: center 30% !important;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+  #hero-canvas {
+    object-position: center 25% !important;
+  }
+  
+  #home [style*="background-image"] {
+    background-position: center 25% !important;
+  }
+}
+
+/* Fix for bulge effect */
+.bulge-effect-container {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  overflow: hidden !important;
+}
+
+/* Prevent any horizontal scrolling */
+html, body {
+  overflow-x: hidden !important;
+  width: 100%;
+}
