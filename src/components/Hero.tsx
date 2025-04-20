@@ -1,6 +1,5 @@
 
-import React, { useEffect, useRef, useState } from 'react';
-import gsap from 'gsap';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
@@ -8,7 +7,7 @@ import '../styles/textEffect.css';
 import '../styles/heroMobile.css';
 import '../styles/severanceOpening.css';
 import '../styles/responsiveBackground.css';
-import { initTextAnimation } from '../scripts/textAnimation';
+import '../styles/elevatorEffect.css';
 import AnimatedText from '../components/ui/AnimatedText';
 
 interface HeroProps {
@@ -18,6 +17,14 @@ interface HeroProps {
 const Hero: React.FC<HeroProps> = ({ loadingComplete = false }) => {
   // State to track if we're on a mobile device
   const [isMobile, setIsMobile] = useState(false);
+  // Reference for the audio element
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  // State to track if the audio has been played
+  const [audioPlayed, setAudioPlayed] = useState(false);
+  // State to track if the audio is currently playing
+  const [audioPlaying, setAudioPlaying] = useState(false);
+  // State to track if the audio has completed
+  const [audioComplete, setAudioComplete] = useState(false);
 
   // Check if we're on a mobile device
   useEffect(() => {
@@ -39,6 +46,68 @@ const Hero: React.FC<HeroProps> = ({ loadingComplete = false }) => {
   // Reference for the main heading
   const mainHeadingRef = useRef<HTMLDivElement>(null);
 
+  // Function to play the elevator chime sound
+  const playElevatorSound = useCallback(() => {
+    if (audioRef.current && !audioPlayed) {
+      console.log('Attempting to play elevator sound...');
+
+      // Create a user interaction event to work around autoplay restrictions
+      const userInteraction = () => {
+        if (audioRef.current) {
+          // Set audio playing state
+          setAudioPlaying(true);
+
+          // Set volume to maximum
+          audioRef.current.volume = 1.0;
+
+          // Make sure it's not muted
+          audioRef.current.muted = false;
+
+          // Load the audio
+          audioRef.current.load();
+
+          // Play the audio
+          const playPromise = audioRef.current.play();
+
+          if (playPromise !== undefined) {
+            playPromise
+              .then(() => {
+                setAudioPlayed(true);
+                console.log('Elevator chime sound played successfully');
+
+                // Add event listener for when audio ends
+                audioRef.current?.addEventListener('ended', () => {
+                  setAudioPlaying(false);
+                  setAudioComplete(true);
+                  console.log('Elevator chime sound completed');
+                });
+              })
+              .catch(error => {
+                console.error('Error playing audio:', error);
+                setAudioPlaying(false);
+
+                // Try again with user interaction
+                document.addEventListener('click', function playOnClick() {
+                  if (audioRef.current) {
+                    audioRef.current.play()
+                      .then(() => {
+                        setAudioPlayed(true);
+                        console.log('Elevator chime sound played on click');
+                      })
+                      .catch(e => console.error('Still failed to play:', e));
+                  }
+                  document.removeEventListener('click', playOnClick);
+                }, { once: true });
+              });
+          }
+        }
+      };
+
+      // Execute immediately - this might work if the user has already interacted with the page
+      userInteraction();
+    }
+  }, [audioPlayed]);
+
   // Initialize the Severance opening animation
   useEffect(() => {
     // Only run animation if loading is complete
@@ -48,8 +117,50 @@ const Hero: React.FC<HeroProps> = ({ loadingComplete = false }) => {
     if (mainHeadingRef.current) {
       mainHeadingRef.current.classList.add('animated');
       console.log('Hero entrance animation started');
+
+      // Check if this is the first load (after the loading animation)
+      const isFirstLoad = sessionStorage.getItem('hasPlayedAudio') !== 'true';
+
+      if (isFirstLoad) {
+        // Mark that we've played the audio
+        sessionStorage.setItem('hasPlayedAudio', 'true');
+
+        // Wait a short moment for the animation to start before playing the sound
+        setTimeout(() => {
+          playElevatorSound();
+        }, 100);
+      }
     }
-  }, [loadingComplete]); // Re-run when loadingComplete changes
+  }, [loadingComplete, playElevatorSound]); // Re-run when loadingComplete changes
+
+  // Add a click handler to the document to enable audio playback
+  useEffect(() => {
+    // Only add the click handler if loading is complete and audio hasn't played yet
+    if (!loadingComplete || audioPlayed) return;
+
+    const handleUserInteraction = () => {
+      if (audioRef.current && !audioPlayed) {
+        // Try to play the audio on user interaction
+        audioRef.current.play()
+          .then(() => {
+            setAudioPlayed(true);
+            setAudioPlaying(true);
+            console.log('Audio played on user interaction');
+          })
+          .catch(error => {
+            console.error('Failed to play audio on user interaction:', error);
+          });
+      }
+    };
+
+    // Add the click handler to the document
+    document.addEventListener('click', handleUserInteraction, { once: true });
+
+    // Clean up the event listener
+    return () => {
+      document.removeEventListener('click', handleUserInteraction);
+    };
+  }, [loadingComplete, audioPlayed]);
 
   // Initialize the bulge effect
   useEffect(() => {
@@ -66,17 +177,76 @@ const Hero: React.FC<HeroProps> = ({ loadingComplete = false }) => {
     script.onload = () => {
       const canvas = document.getElementById('hero-canvas') as HTMLCanvasElement;
       if (canvas && window.BulgeEffect) {
-        // Optimize parameters for mobile
-        const strength = isMobile ? 1.5 : 2.0;  // Less strength on mobile for better performance
-        const radius = isMobile ? 0.5 : 0.4;     // Larger radius on mobile for better visibility
+        // Parameters are defined directly in the BulgeEffect constructor
 
-        // Create the bulge effect with optimized parameters
-        new window.BulgeEffect({
+        // Create the bulge effect instance
+        const bulgeEffect = new window.BulgeEffect({
           canvas,
-          image: '/assets/severance126.jpg',
-          strength,
-          radius
+          image: '/Mark.jpg',
+          strength: isMobile ? 2.0 : 2.5,  // Increased strength for more dramatic effect
+          radius: isMobile ? 0.6 : 0.5     // Increased radius for more dramatic effect
         });
+
+        // The Severance elevator chime is about 5 seconds long
+        // We need to synchronize the bulge effect with the audio
+
+        // Check if this is NOT the first load (we don't want to play the audio twice)
+        const isFirstLoad = sessionStorage.getItem('hasPlayedAudio') === 'true';
+
+        // If this is not the first load (e.g., coming back from another page),
+        // then play the audio here
+        if (!isFirstLoad) {
+          // Don't play the audio here on first load, as it will be played by the
+          // opening animation effect above
+          console.log('Not playing audio in bulge effect - first load');
+        }
+
+        // If the bulge effect has a setStrength method, we can use it to create a pulsing effect
+        // that matches the elevator chime sound
+        if (bulgeEffect.setStrength && bulgeEffect.setRadius) {
+          // Initial strength
+          let initialStrength = isMobile ? 2.0 : 2.5;
+          let initialRadius = isMobile ? 0.6 : 0.5;
+
+          // Create a timeline that matches the elevator chime sound
+          // The chime has a distinctive pattern at around 0.5s, 1.5s, and 3s
+
+          // First chime (0.5s) - increase strength
+          setTimeout(() => {
+            bulgeEffect.setStrength(initialStrength * 1.5);
+            bulgeEffect.setRadius(initialRadius * 1.2);
+          }, 500);
+
+          // Return to normal (1.0s)
+          setTimeout(() => {
+            bulgeEffect.setStrength(initialStrength);
+            bulgeEffect.setRadius(initialRadius);
+          }, 1000);
+
+          // Second chime (1.5s) - increase strength again
+          setTimeout(() => {
+            bulgeEffect.setStrength(initialStrength * 1.8);
+            bulgeEffect.setRadius(initialRadius * 1.4);
+          }, 1500);
+
+          // Return to normal (2.0s)
+          setTimeout(() => {
+            bulgeEffect.setStrength(initialStrength);
+            bulgeEffect.setRadius(initialRadius);
+          }, 2000);
+
+          // Third chime (3.0s) - maximum strength for the final transition
+          setTimeout(() => {
+            bulgeEffect.setStrength(initialStrength * 2.2);
+            bulgeEffect.setRadius(initialRadius * 1.6);
+          }, 3000);
+
+          // Final return to normal (4.0s)
+          setTimeout(() => {
+            bulgeEffect.setStrength(initialStrength);
+            bulgeEffect.setRadius(initialRadius);
+          }, 4000);
+        }
 
         console.log(`Bulge effect initialized (${isMobile ? 'mobile' : 'desktop'} mode)`);
 
@@ -138,15 +308,54 @@ const Hero: React.FC<HeroProps> = ({ loadingComplete = false }) => {
         document.head.removeChild(script);
       }
     };
-  }, [isMobile, loadingComplete]); // Add loadingComplete as a dependency
+  }, [isMobile, loadingComplete, playElevatorSound]); // Add loadingComplete and playElevatorSound as dependencies
   return (
     <section
       id="home"
       className={cn(
         "relative min-h-screen pt-16 sm:pt-20 pb-8 sm:pb-12 flex items-center overflow-hidden",
+        "elevator-scene elevator-zoom", // Add elevator scene classes
+        audioPlaying && "audio-playing", // Add class when audio is playing
+        audioComplete && "audio-complete", // Add class when audio is complete
         isMobile && "hero-mobile" // Add mobile-specific class
       )}
     >
+      {/* Audio element for elevator chime sound */}
+      <audio
+        ref={audioRef}
+        preload="auto"
+        className="hidden"
+        playsInline
+        controls={false}
+      >
+        <source src="/Severance.mp3" type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
+
+      {/* Play button for the elevator sound effect */}
+      <button
+        onClick={() => {
+          // Reset the audio played state in session storage
+          sessionStorage.removeItem('hasPlayedAudio');
+          // Play the elevator sound
+          playElevatorSound();
+        }}
+        style={{
+          position: 'fixed',
+          bottom: '20px',
+          right: '20px',
+          zIndex: 9999,
+          padding: '10px',
+          background: 'rgba(0,0,0,0.5)',
+          color: 'white',
+          border: 'none',
+          borderRadius: '4px',
+          cursor: 'pointer',
+          fontSize: '12px'
+        }}
+      >
+        Play Elevator Sound
+      </button>
       {/* Background image with bulge effect */}
       <div
         className="absolute inset-0 z-0 overflow-hidden"
@@ -159,9 +368,9 @@ const Hero: React.FC<HeroProps> = ({ loadingComplete = false }) => {
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat -z-10 overflow-hidden"
         style={{
-          backgroundImage: 'url(/assets/severance126.jpg)',
+          backgroundImage: 'url(/Mark.jpg)',
           backgroundSize: 'cover',
-          backgroundPosition: 'center center',
+          backgroundPosition: 'center top', /* Position at top to show Mark's face looking up */
           width: '100%',
           height: '100%'
         }}

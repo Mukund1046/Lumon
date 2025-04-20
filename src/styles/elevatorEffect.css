@@ -1,0 +1,125 @@
+/* Elevator effect styles */
+
+/* Enhance the bulge effect to mimic the elevator scene */
+#hero-canvas {
+  transition: filter 0.5s ease-out;
+  will-change: filter, transform;
+}
+
+/* Add a subtle pulse effect to match the elevator chime */
+@keyframes elevatorPulse {
+  0% { transform: scale(1); filter: brightness(1); }
+  10% { transform: scale(1.01); filter: brightness(1.05); }
+  20% { transform: scale(1); filter: brightness(1); }
+  30% { transform: scale(1.02); filter: brightness(1.1); }
+  40% { transform: scale(1); filter: brightness(1); }
+  60% { transform: scale(1.03); filter: brightness(1.15); }
+  70% { transform: scale(1.01); filter: brightness(1.1); }
+  80% { transform: scale(1); filter: brightness(1); }
+  100% { transform: scale(1); filter: brightness(1); }
+}
+
+.audio-playing #hero-canvas {
+  animation: elevatorPulse 5s ease-in-out;
+}
+
+/* Add a subtle vignette effect to mimic the elevator lighting */
+.elevator-scene::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+    circle at center,
+    transparent 30%,
+    rgba(11, 14, 41, 0.7) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Add a subtle flicker effect to mimic the elevator lights */
+@keyframes flicker {
+  0% { opacity: 0.95; }
+  5% { opacity: 1; }
+  10% { opacity: 0.95; }
+  15% { opacity: 0.9; }
+  20% { opacity: 1; }
+  25% { opacity: 0.95; }
+  30% { opacity: 1; }
+  35% { opacity: 0.95; }
+  40% { opacity: 1; }
+  45% { opacity: 0.95; }
+  50% { opacity: 1; }
+  55% { opacity: 0.95; }
+  60% { opacity: 1; }
+  65% { opacity: 0.95; }
+  70% { opacity: 1; }
+  75% { opacity: 0.95; }
+  80% { opacity: 1; }
+  85% { opacity: 0.95; }
+  90% { opacity: 1; }
+  95% { opacity: 0.95; }
+  100% { opacity: 1; }
+}
+
+.elevator-flicker {
+  animation: flicker 4s linear infinite;
+}
+
+/* Add a subtle zoom effect to mimic the camera movement */
+@keyframes elevatorZoom {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.elevator-zoom {
+  animation: elevatorZoom 8s ease-in-out infinite;
+}
+
+/* Add a subtle blur effect when the audio plays */
+.audio-playing #hero-canvas {
+  filter: blur(1px);
+  transition: filter 0.3s ease-in-out;
+}
+
+/* Remove blur after the transition */
+.audio-complete #hero-canvas {
+  filter: blur(0);
+  transition: filter 0.5s ease-out;
+}
+
+/* Add a subtle color shift to match the elevator scene */
+.audio-playing .absolute.inset-0 {
+  transition: background-color 0.5s ease;
+}
+
+/* Add a subtle blue tint during the transition */
+.audio-playing::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(11, 14, 41, 0.2),
+    rgba(11, 14, 41, 0.4)
+  );
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0;
+  animation: fadeInOut 5s ease-in-out forwards;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; }
+  20% { opacity: 0.3; }
+  60% { opacity: 0.6; }
+  80% { opacity: 0.3; }
+  100% { opacity: 0; }
+}
