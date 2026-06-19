@@ -34,7 +34,7 @@
 .loading-counter {
   display: flex;
   align-items: baseline;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-offgrid, 'Offgrid Sans', sans-serif);
   color: var(--severance-frost, #f0f6f7);
 }
 
@@ -52,7 +52,7 @@
 }
 
 .loading-label {
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-offgrid, 'Offgrid Sans', sans-serif);
   font-size: 16px;
   font-weight: 500;
   letter-spacing: 0.2em;
@@ -66,7 +66,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-family: 'Trap', sans-serif;
+  font-family: var(--font-moderniz, 'Moderniz', sans-serif);
   font-weight: 700;
   font-size: 200px;
   color: var(--severance-frost, #f0f6f7);

@@ -82,3 +82,14 @@
   animation: bg-shift 15s ease infinite;
   background-size: 200% 200%;
 }
+
+.hero-copy {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.hero-copy--visible {
+  opacity: 1;
+  transform: translateY(0);
+}

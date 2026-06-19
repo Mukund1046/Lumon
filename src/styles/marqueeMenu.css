@@ -73,7 +73,7 @@
   padding: 0 1rem;
   text-transform: uppercase;
   color: var(--severance-frost, #f0f6f7);
-  font-family: var(--font-jetbrains, 'JetBrains Mono', monospace);
+  font-family: var(--font-offgrid, 'Offgrid Sans', sans-serif);
 }
 
 /* Apply Now button in mobile menu */

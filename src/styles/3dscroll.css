@@ -39,7 +39,7 @@
   font-size: clamp(1.5rem, 15vw, 6.5rem);
   color: var(--severance-frost);
   z-index: 10;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--font-moderniz, 'Moderniz', sans-serif);
   font-weight: 300; /* Light */
   text-transform: uppercase;
   letter-spacing: 0.02em;
@@ -87,7 +87,7 @@
   font-size: clamp(2rem,8vw,5rem);
   color: var(--severance-frost);
   text-transform: uppercase;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--font-moderniz, 'Moderniz', sans-serif);
   font-weight: 300; /* Light */
 }
 
@@ -96,7 +96,7 @@
   max-width: 15ch;
   margin: 0 auto;
   color: var(--severance-frost);
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--font-moderniz, 'Moderniz', sans-serif);
   font-weight: 300; /* Light */
 }
 
@@ -109,7 +109,7 @@
   position: relative;
   align-self: end;
   color: var(--severance-frost);
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--font-offgrid, 'Offgrid Sans', sans-serif);
   font-weight: 300; /* Light */
   text-transform: uppercase;
   letter-spacing: 0.05em;

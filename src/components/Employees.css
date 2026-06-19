@@ -58,7 +58,7 @@
 }
 
 .face-title {
-  font-family: 'JetBrains Mono', monospace !important;
+  font-family: var(--font-offgrid, 'Offgrid Sans', sans-serif) !important;
   font-weight: 500 !important;
   color: var(--wardrobe-light) !important;
   text-transform: uppercase;

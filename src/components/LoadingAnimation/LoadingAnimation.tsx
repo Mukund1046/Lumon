@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import CountUp from '@/components/ui/CountUp/CountUp';
 import VerticalTransition from './VerticalTransition';
 import './LoadingAnimation.css';
@@ -8,13 +8,11 @@ interface LoadingAnimationProps {
 }
 
 const LoadingAnimation: React.FC<LoadingAnimationProps> = ({ onLoadingComplete }) => {
-  const [isCountingComplete, setIsCountingComplete] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
 
   // Handle count up completion
   const handleCountUpComplete = useCallback(() => {
-    setIsCountingComplete(true);
     setIsTransitioning(true);
   }, []);
 
@@ -36,7 +34,7 @@ const LoadingAnimation: React.FC<LoadingAnimationProps> = ({ onLoadingComplete }
           <CountUp
             from={0}
             to={100}
-            duration={5}
+            duration={1.2}
             className="loading-counter-number"
             onEnd={handleCountUpComplete}
           />

@@ -104,9 +104,12 @@ export default {
 				},
 			},
 			fontFamily: {
-				trap: ['Trap', 'Space Grotesk', 'Arial Black', 'Helvetica Neue', 'sans-serif'],
-				jakarta: ['Plus Jakarta Sans', 'sans-serif'],
-				mono: ['JetBrains Mono', 'monospace'],
+				moderniz: ['Moderniz', 'Arial Black', 'Helvetica Neue', 'sans-serif'],
+				offgrid: ['Offgrid Sans', 'Helvetica Neue', 'Arial', 'sans-serif'],
+				trap: ['Moderniz', 'Arial Black', 'Helvetica Neue', 'sans-serif'],
+				jakarta: ['Offgrid Sans', 'Helvetica Neue', 'Arial', 'sans-serif'],
+				mono: ['Offgrid Sans', 'Helvetica Neue', 'Arial', 'sans-serif'],
+				'jetbrains-mono': ['Offgrid Sans', 'Helvetica Neue', 'Arial', 'sans-serif'],
 			},
 			borderRadius: {
 				lg: 'var(--radius)',

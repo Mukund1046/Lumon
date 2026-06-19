@@ -1,46 +1,31 @@
 
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { Analytics } from "@vercel/analytics/react";
-import LoadingAnimation from "./components/LoadingAnimation/LoadingAnimation";
+import { lazy, Suspense, useState } from "react";
 import TransitionManager from "./components/TransitionManager";
 import ColorSchemeProvider from "./components/ColorSchemeProvider";
 import HomePage from "./pages/HomePage";
-import AboutPage from "./pages/AboutPage";
-import DepartmentsPage from "./pages/DepartmentsPage";
-import EmployeesPage from "./pages/EmployeesPage";
-import MarkDetailPage from "./pages/MarkDetailPage";
-import HellyDetailPage from "./pages/HellyDetailPage";
-import IrvingDetailPage from "./pages/IrvingDetailPage";
-import DylanDetailPage from "./pages/DylanDetailPage";
-import JoinUsPage from "./pages/JoinUsPage";
-import NotFound from "./pages/NotFound";
-import TypographyDemo from "./components/TypographyDemo";
 
-const queryClient = new QueryClient();
+const LoadingAnimation = lazy(() => import("./components/LoadingAnimation/LoadingAnimation"));
+const AboutPage = lazy(() => import("./pages/AboutPage"));
+const DepartmentsPage = lazy(() => import("./pages/DepartmentsPage"));
+const EmployeesPage = lazy(() => import("./pages/EmployeesPage"));
+const MarkDetailPage = lazy(() => import("./pages/MarkDetailPage"));
+const HellyDetailPage = lazy(() => import("./pages/HellyDetailPage"));
+const IrvingDetailPage = lazy(() => import("./pages/IrvingDetailPage"));
+const DylanDetailPage = lazy(() => import("./pages/DylanDetailPage"));
+const JoinUsPage = lazy(() => import("./pages/JoinUsPage"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+const TypographyDemo = lazy(() => import("./components/TypographyDemo"));
 
 const App = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [loadingComplete, setLoadingComplete] = useState(false);
+  const [isLoading, setIsLoading] = useState(
+    () => sessionStorage.getItem("hasVisited") !== "true"
+  );
+  const [loadingComplete, setLoadingComplete] = useState(!isLoading);
 
-  useEffect(() => {
-    // Check if this is the first visit
-    const hasVisited = sessionStorage.getItem('hasVisited');
-
-    if (!hasVisited) {
-      // First visit - show loading animation
-      setIsLoading(true);
-      // Mark as visited
-      sessionStorage.setItem('hasVisited', 'true');
-    } else {
-      // If not first visit, mark loading as complete immediately
-      setLoadingComplete(true);
-    }
-  }, []);
+  if (isLoading) {
+    sessionStorage.setItem("hasVisited", "true");
+  }
 
   const handleLoadingComplete = () => {
     setIsLoading(false);
@@ -49,15 +34,16 @@ const App = () => {
   };
 
   return (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <Analytics />
-      {isLoading && <LoadingAnimation onLoadingComplete={handleLoadingComplete} />}
+    <>
+      {isLoading && (
+        <Suspense fallback={null}>
+          <LoadingAnimation onLoadingComplete={handleLoadingComplete} />
+        </Suspense>
+      )}
       <BrowserRouter>
         <ColorSchemeProvider>
           <TransitionManager>
+            <Suspense fallback={<div className="min-h-screen bg-severance-midnight" />}>
             <Routes>
               <Route path="/" element={<HomePage loadingComplete={loadingComplete} />} />
               <Route path="/about" element={<AboutPage />} />
@@ -78,11 +64,11 @@ const App = () => {
               {/* Catch-all route */}
               <Route path="*" element={<NotFound />} />
             </Routes>
+            </Suspense>
           </TransitionManager>
         </ColorSchemeProvider>
       </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
+    </>
   );
 };
 

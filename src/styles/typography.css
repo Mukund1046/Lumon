@@ -1,168 +1,262 @@
 /* Neo-Modernist Typography System
    - Clean, minimal spacing
-   - Tight letter spacing for Trap
+   - Moderniz display headings
+   - Offgrid Sans body, navigation, and controls
    - Structured vertical rhythm and consistent font scaling
    - Semantic font sizes with rem units
    - High visual contrast between text types
 */
 
+@font-face {
+    font-family: "Moderniz";
+    src: url("../../Severance Assets/Fonts/Moderniz/moderniz.otf")
+        format("opentype");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Offgrid Sans";
+    src: url("../../Severance Assets/Fonts/Offgrid/OffgridSans-Thin.woff2")
+        format("woff2");
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Offgrid Sans";
+    src: url("../../Severance Assets/Fonts/Offgrid/OffgridSans-ExtraLight.woff2")
+        format("woff2");
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Offgrid Sans";
+    src: url("../../Severance Assets/Fonts/Offgrid/OffgridSans-Light.woff2")
+        format("woff2");
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Offgrid Sans";
+    src: url("../../Severance Assets/Fonts/Offgrid/OffgridSans-Regular.woff2")
+        format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Offgrid Sans";
+    src: url("../../Severance Assets/Fonts/Offgrid/OffgridSans-Medium.woff2")
+        format("woff2");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Offgrid Sans";
+    src: url("../../Severance Assets/Fonts/Offgrid/OffgridSans-SemiBold.woff2")
+        format("woff2");
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Offgrid Sans";
+    src: url("../../Severance Assets/Fonts/Offgrid/OffgridSans-Bold.woff2")
+        format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Offgrid Sans";
+    src: url("../../Severance Assets/Fonts/Offgrid/OffgridSans-ExtraBold.woff2")
+        format("woff2");
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Offgrid Sans";
+    src: url("../../Severance Assets/Fonts/Offgrid/OffgridSans-Black.woff2")
+        format("woff2");
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
 :root {
-  /* Base typography settings */
-  --font-size-base: 1rem;
-  --line-height-base: 1.5;
+    /* Base typography settings */
+    --font-size-base: 1rem;
+    --line-height-base: 1.5;
 
-  /* Font families */
-  --font-trap: 'Trap', 'Space Grotesk', 'Arial Black', 'Helvetica Neue', sans-serif;
-  --font-jakarta: 'Plus Jakarta Sans', sans-serif;
-  --font-jetbrains: 'JetBrains Mono', monospace;
+    /* Font families */
+    --font-moderniz: "Moderniz", "Arial Black", "Helvetica Neue", sans-serif;
+    --font-offgrid: "Offgrid Sans", "Helvetica Neue", Arial, sans-serif;
+    /* Legacy aliases keep existing utilities and components compatible. */
+    --font-trap: var(--font-moderniz);
+    --font-jakarta: var(--font-offgrid);
+    --font-jetbrains: var(--font-offgrid);
 
-  /* Font sizes (using a structured scale) */
-  --font-size-xs: 0.75rem;    /* 12px */
-  --font-size-sm: 0.875rem;   /* 14px */
-  --font-size-md: 1rem;       /* 16px */
-  --font-size-lg: 1.25rem;    /* 20px */
-  --font-size-xl: 1.5rem;     /* 24px */
-  --font-size-2xl: 2rem;      /* 32px */
-  --font-size-3xl: 2.5rem;    /* 40px */
-  --font-size-4xl: 3rem;      /* 48px */
+    /* Font sizes (using a structured scale) */
+    --font-size-xs: 0.75rem; /* 12px */
+    --font-size-sm: 0.875rem; /* 14px */
+    --font-size-md: 1rem; /* 16px */
+    --font-size-lg: 1.25rem; /* 20px */
+    --font-size-xl: 1.5rem; /* 24px */
+    --font-size-2xl: 2rem; /* 32px */
+    --font-size-3xl: 2.5rem; /* 40px */
+    --font-size-4xl: 3rem; /* 48px */
 
-  /* Letter spacing */
-  --letter-spacing-tight: -0.03em;
-  --letter-spacing-normal: 0;
-  --letter-spacing-wide: 0.05em;
+    /* Letter spacing */
+    --letter-spacing-tight: -0.07em;
+    --letter-spacing-normal: -0.02em;
+    --letter-spacing-wide: 0.05em;
 
-  /* Line heights for vertical rhythm */
-  --line-height-tight: 1.1;
-  --line-height-normal: 1.5;
-  --line-height-loose: 1.7;
+    /* Line heights for vertical rhythm */
+    --line-height-tight: 1.1;
+    --line-height-normal: 1.5;
+    --line-height-loose: 1.7;
 
-  /* Font weights */
-  --font-weight-regular: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
-  --font-weight-bold: 700;
+    /* Font weights */
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
 }
 
 /* Base typography reset */
 html {
-  font-size: 16px;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  font-family: var(--font-jakarta);
-  font-size: var(--font-size-md);
-  line-height: var(--line-height-normal);
-  font-weight: var(--font-weight-regular);
+    font-family: var(--font-jakarta);
+    font-size: var(--font-size-md);
+    line-height: var(--line-height-normal);
+    font-weight: var(--font-weight-regular);
 }
 
-/* Trap Heading - Used for main headings */
+/* Display heading - Used for main headings */
 .trap-heading {
-  font-family: var(--font-trap);
-  font-weight: var(--font-weight-bold);
-  letter-spacing: var(--letter-spacing-tight);
-  line-height: var(--line-height-tight);
-  margin: 0 0 1.5rem 0;
-  text-transform: uppercase;
+    font-family: var(--font-trap);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: var(--letter-spacing-tight);
+    line-height: var(--line-height-tight);
+    margin: 0 0 1.5rem 0;
+    text-transform: uppercase;
 }
 
 .trap-heading.h1 {
-  font-size: var(--font-size-4xl);
-  margin-bottom: 2rem;
+    font-size: var(--font-size-4xl);
+    margin-bottom: 2rem;
 }
 
 .trap-heading.h2 {
-  font-size: var(--font-size-3xl);
-  margin-bottom: 1.75rem;
+    font-size: var(--font-size-3xl);
+    margin-bottom: 1.75rem;
 }
 
 .trap-heading.h3 {
-  font-size: var(--font-size-2xl);
-  margin-bottom: 1.5rem;
+    font-size: var(--font-size-2xl);
+    margin-bottom: 1.5rem;
 }
 
 .trap-heading.h4 {
-  font-size: var(--font-size-xl);
-  margin-bottom: 1.25rem;
+    font-size: var(--font-size-xl);
+    margin-bottom: 1.25rem;
 }
 
 /* Jakarta Subheading - Used for section headers */
 .jakarta-subheading {
-  font-family: var(--font-jakarta);
-  font-weight: var(--font-weight-semibold);
-  letter-spacing: var(--letter-spacing-normal);
-  line-height: var(--line-height-tight);
-  margin: 0 0 1rem 0;
+    font-family: var(--font-jakarta);
+    font-weight: var(--font-weight-semibold);
+    letter-spacing: var(--letter-spacing-normal);
+    line-height: var(--line-height-tight);
+    margin: 0 0 1rem 0;
 }
 
 .jakarta-subheading.h3 {
-  font-size: var(--font-size-xl);
+    font-size: var(--font-size-xl);
 }
 
 .jakarta-subheading.h4 {
-  font-size: var(--font-size-lg);
+    font-size: var(--font-size-lg);
 }
 
 .jakarta-subheading.h5 {
-  font-size: var(--font-size-md);
-  font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-bold);
 }
 
 /* Jakarta Body - Used for main content */
 .jakarta-body {
-  font-family: var(--font-jakarta);
-  font-weight: var(--font-weight-regular);
-  letter-spacing: var(--letter-spacing-normal);
-  line-height: var(--line-height-normal);
-  margin: 0 0 1rem 0;
+    font-family: var(--font-jakarta);
+    font-weight: var(--font-weight-regular);
+    letter-spacing: var(--letter-spacing-normal);
+    line-height: var(--line-height-normal);
+    margin: 0 0 1rem 0;
 }
 
 .jakarta-body.large {
-  font-size: var(--font-size-lg);
-  line-height: var(--line-height-loose);
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-loose);
 }
 
 .jakarta-body.medium {
-  font-size: var(--font-size-md);
+    font-size: var(--font-size-md);
 }
 
 .jakarta-body.small {
-  font-size: var(--font-size-sm);
-  line-height: var(--line-height-normal);
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-normal);
 }
 
 /* JetBrains Mono Nav - Used for navigation */
 .jetbrains-mono-nav {
-  font-family: var(--font-jetbrains);
-  font-weight: var(--font-weight-medium);
-  font-size: var(--font-size-sm);
-  letter-spacing: var(--letter-spacing-wide);
-  text-transform: uppercase;
-  line-height: var(--line-height-tight);
+    font-family: var(--font-jetbrains);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-sm);
+    letter-spacing: var(--letter-spacing-wide);
+    text-transform: uppercase;
+    line-height: var(--line-height-tight);
 }
 
 /* JetBrains Mono Button - Used for buttons and CTAs */
 .jetbrains-mono-button {
-  font-family: var(--font-jetbrains);
-  font-weight: var(--font-weight-medium);
-  font-size: var(--font-size-sm);
-  letter-spacing: var(--letter-spacing-wide);
-  text-transform: uppercase;
-  line-height: 1;
+    font-family: var(--font-jetbrains);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-sm);
+    letter-spacing: var(--letter-spacing-wide);
+    text-transform: uppercase;
+    line-height: 1;
 }
 
 /* Additional utility classes */
 .text-center {
-  text-align: center;
+    text-align: center;
 }
 
 .text-uppercase {
-  text-transform: uppercase;
+    text-transform: uppercase;
 }
 
 .no-margin {
-  margin: 0;
+    margin: 0;
 }
 
 /* Ensure proper spacing between text elements */
@@ -170,38 +264,38 @@ body {
 * + h2.trap-heading,
 * + h3.trap-heading,
 * + h4.trap-heading {
-  margin-top: 2.5rem;
+    margin-top: 2.5rem;
 }
 
 * + h3.jakarta-subheading,
 * + h4.jakarta-subheading,
 * + h5.jakarta-subheading {
-  margin-top: 2rem;
+    margin-top: 2rem;
 }
 
 * + p.jakarta-body {
-  margin-top: 1rem;
+    margin-top: 1rem;
 }
 
 /* Maintain vertical rhythm with consistent spacing */
 p.jakarta-body + p.jakarta-body {
-  margin-top: 1rem;
+    margin-top: 1rem;
 }
 
 /* High contrast adjustments */
 .trap-heading {
-  color: var(--severance-midnight, #0b0e29);
+    color: var(--severance-midnight, #0b0e29);
 }
 
 .jakarta-subheading {
-  color: var(--severance-marine, #002c55);
+    color: var(--severance-marine, #002c55);
 }
 
 .jakarta-body {
-  color: var(--severance-timber, #4e452a);
+    color: var(--severance-timber, #4e452a);
 }
 
 .jetbrains-mono-nav,
 .jetbrains-mono-button {
-  color: var(--severance-slate, #89aec8);
+    color: var(--severance-slate, #89aec8);
 }

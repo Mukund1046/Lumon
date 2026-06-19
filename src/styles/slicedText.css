@@ -34,7 +34,7 @@
   margin-bottom: 20vh;
   font-weight: 600;
   opacity: 0.6;
-  font-family: "Space Grotesk", sans-serif;
+  font-family: var(--font-offgrid, "Offgrid Sans", sans-serif);
   font-weight: 300;
   max-width: 40ch;
   line-height: 1.6;
@@ -88,17 +88,17 @@
 }
 
 .font-trap {
-  font-family: "Trap", sans-serif;
+  font-family: var(--font-moderniz, "Moderniz", sans-serif);
   font-weight: 400;
 }
 
 .font-space-grotesk {
-  font-family: "Space Grotesk", sans-serif;
+  font-family: var(--font-offgrid, "Offgrid Sans", sans-serif);
   font-weight: 300;
 }
 
 .font-jetbrains {
-  font-family: "JetBrains Mono", monospace;
+  font-family: var(--font-offgrid, "Offgrid Sans", sans-serif);
   font-weight: 400;
 }
 

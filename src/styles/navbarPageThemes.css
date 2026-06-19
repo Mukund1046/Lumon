@@ -12,6 +12,17 @@
   text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.4);
 }
 
+.home-theme .nav-link,
+.home-theme .nav-link:hover,
+.home-theme .nav-link.active,
+.home-theme .logo-container .gooey-text-span {
+  color: #fff !important;
+}
+
+.home-theme .nav-link {
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.65);
+}
+
 /* About page theme */
 .about-theme .nav-link {
   color: var(--severance-brass, #7b6727) !important;

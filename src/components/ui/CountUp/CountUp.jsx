@@ -1,5 +1,4 @@
 import { useEffect, useRef } from "react";
-import { useInView, useMotionValue, useSpring } from "framer-motion";
 
 export default function CountUp({
   to,
@@ -14,72 +13,54 @@ export default function CountUp({
   onEnd,
 }) {
   const ref = useRef(null);
-  const motionValue = useMotionValue(direction === "down" ? to : from);
-
-  // Calculate damping and stiffness based on duration
-  const damping = 20 + 40 * (1 / duration); // Adjust this formula for finer control
-  const stiffness = 100 * (1 / duration);   // Adjust this formula for finer control
-
-  const springValue = useSpring(motionValue, {
-    damping,
-    stiffness,
-  });
-
-  const isInView = useInView(ref, { once: true, margin: "0px" });
-
-  // Set initial text content to the initial value based on direction
   useEffect(() => {
-    if (ref.current) {
-      ref.current.textContent = String(direction === "down" ? to : from);
-    }
-  }, [from, to, direction]);
+    if (!startWhen || !ref.current) return;
 
-  // Start the animation when in view and startWhen is true
-  useEffect(() => {
-    if (isInView && startWhen) {
-      if (typeof onStart === "function") {
-        onStart();
-      }
+    const startValue = direction === "down" ? to : from;
+    const endValue = direction === "down" ? from : to;
+    let animationFrame = 0;
+    let startTime = 0;
 
-      const timeoutId = setTimeout(() => {
-        motionValue.set(direction === "down" ? from : to);
-      }, delay * 1000);
+    const format = (value) => {
+      const formatted = Intl.NumberFormat("en-US", {
+        useGrouping: !!separator,
+        maximumFractionDigits: 0,
+      }).format(Math.round(value));
 
-      const durationTimeoutId = setTimeout(() => {
-        if (typeof onEnd === "function") {
-          onEnd();
+      return separator ? formatted.replace(/,/g, separator) : formatted;
+    };
+
+    ref.current.textContent = format(startValue);
+
+    const timeoutId = window.setTimeout(() => {
+      onStart?.();
+
+      const animate = (time) => {
+        if (!startTime) startTime = time;
+        const progress = Math.min((time - startTime) / (duration * 1000), 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+
+        if (ref.current) {
+          ref.current.textContent = format(
+            startValue + (endValue - startValue) * eased
+          );
         }
-      }, delay * 1000 + duration * 1000);
 
-      return () => {
-        clearTimeout(timeoutId);
-        clearTimeout(durationTimeoutId);
+        if (progress < 1) {
+          animationFrame = requestAnimationFrame(animate);
+        } else {
+          onEnd?.();
+        }
       };
-    }
-  }, [isInView, startWhen, motionValue, direction, from, to, delay, onStart, onEnd, duration]);
 
-  // Update text content with formatted number on spring value change
-  useEffect(() => {
-    const unsubscribe = springValue.on("change", (latest) => {
-      if (ref.current) {
-        const options = {
-          useGrouping: !!separator,
-          minimumFractionDigits: 0,
-          maximumFractionDigits: 0,
-        };
+      animationFrame = requestAnimationFrame(animate);
+    }, delay * 1000);
 
-        const formattedNumber = Intl.NumberFormat("en-US", options).format(
-          latest.toFixed(0)
-        );
-
-        ref.current.textContent = separator
-          ? formattedNumber.replace(/,/g, separator)
-          : formattedNumber;
-      }
-    });
-
-    return () => unsubscribe();
-  }, [springValue, separator]);
+    return () => {
+      window.clearTimeout(timeoutId);
+      cancelAnimationFrame(animationFrame);
+    };
+  }, [delay, direction, duration, from, onEnd, onStart, separator, startWhen, to]);
 
   return <span className={`${className}`} ref={ref} />;
 }

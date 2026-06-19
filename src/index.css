@@ -1,11 +1,4 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
-
-/* Import local Trap font */
-@import url('/assets/fonts/trap/trap.css');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

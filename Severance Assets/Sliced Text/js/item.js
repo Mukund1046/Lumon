@@ -30,12 +30,21 @@ export class Item {
 	 * Generates the HTML layout for the inner elements based on 'totalCells'.
 	 */
 	layout() {
-		let newHTML = '';
+		const fragment = document.createDocumentFragment();
+		const text = this.DOM.el.dataset.text ?? '';
+
 		for (let i = 0; i < this.totalCells; ++i) {
-			newHTML += `<span class="gtext__box"><span class="gtext__box-inner">${this.DOM.el.dataset.text}</span></span>`;
+			const box = document.createElement('span');
+			const inner = document.createElement('span');
+
+			box.className = 'gtext__box';
+			inner.className = 'gtext__box-inner';
+			inner.textContent = text;
+			box.appendChild(inner);
+			fragment.appendChild(box);
 		}
 
-		this.DOM.el.innerHTML = newHTML;
+		this.DOM.el.replaceChildren(fragment);
 		this.DOM.innerWrap = this.DOM.el.querySelectorAll('.gtext__box');
 		this.DOM.inner = this.DOM.el.querySelectorAll('.gtext__box-inner');
 	}

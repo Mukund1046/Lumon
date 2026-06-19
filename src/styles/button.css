@@ -1,6 +1,4 @@
-/* Neo-Modernist Button Styles
-   Based on the JetBrains Mono button styling from the typography system
-*/
+/* Neo-Modernist Button Styles */
 
 /* Base button styles */
 .lumon-button,
@@ -9,7 +7,7 @@ button.secondary,
 .btn-primary,
 .btn-secondary {
   /* Typography */
-  font-family: var(--font-jetbrains, 'JetBrains Mono', monospace);
+  font-family: var(--font-offgrid, 'Offgrid Sans', sans-serif);
   font-weight: var(--font-weight-medium, 500);
   font-size: var(--font-size-sm, 0.875rem);
   letter-spacing: var(--letter-spacing-wide, 0.05em);

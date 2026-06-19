@@ -1,23 +1,8 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { GooeyText } from '@/components/ui/gooey-text';
-import { ArrowUp } from 'lucide-react';
-import ComesInGoesOutUnderline from '@/fancy/components/text/underline-comes-in-goes-out';
 
 const Footer: React.FC = () => {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const navItems = [
-    { name: 'Home', path: '/' },
-    { name: 'About', path: '/about' },
-    { name: 'Departments', path: '/departments' },
-    { name: 'Employees', path: '/employees' },
-    { name: 'Join Us', path: '/join-us' },
-  ];
-
   return (
     <div className="sticky z-0 bottom-0 left-0 w-full h-80 bg-severance-midnight flex justify-center items-center">
       <div className="relative overflow-hidden w-full h-full flex justify-end px-12 text-right items-start py-12 text-severance-slate">
@@ -25,71 +10,41 @@ const Footer: React.FC = () => {
           <ul className="space-y-3">
             <li className="text-severance-frost">
               <Link to="/">
-                <ComesInGoesOutUnderline
-                  label="Home"
-                  className="font-jetbrains-mono"
-                  underlineHeightRatio={0.08}
-                  transition={{ duration: 0.5, ease: "easeInOut" }}
-                />
+                <span className="font-jetbrains-mono hover:underline">Home</span>
               </Link>
             </li>
             <li className="text-severance-frost">
               <Link to="/about">
-                <ComesInGoesOutUnderline
-                  label="About"
-                  className="font-jetbrains-mono"
-                  underlineHeightRatio={0.08}
-                  transition={{ duration: 0.5, ease: "easeInOut" }}
-                />
+                <span className="font-jetbrains-mono hover:underline">About</span>
               </Link>
             </li>
             <li className="text-severance-frost">
               <Link to="/departments">
-                <ComesInGoesOutUnderline
-                  label="Departments"
-                  className="font-jetbrains-mono"
-                  underlineHeightRatio={0.08}
-                  transition={{ duration: 0.5, ease: "easeInOut" }}
-                />
+                <span className="font-jetbrains-mono hover:underline">Departments</span>
               </Link>
             </li>
           </ul>
           <ul className="space-y-3">
             <li className="text-severance-frost">
               <Link to="/employees">
-                <ComesInGoesOutUnderline
-                  label="Employees"
-                  className="font-jetbrains-mono"
-                  underlineHeightRatio={0.08}
-                  transition={{ duration: 0.5, ease: "easeInOut" }}
-                />
+                <span className="font-jetbrains-mono hover:underline">Employees</span>
               </Link>
             </li>
             <li className="text-severance-frost">
               <Link to="/join-us">
-                <ComesInGoesOutUnderline
-                  label="Join Us"
-                  className="font-jetbrains-mono"
-                  underlineHeightRatio={0.08}
-                  transition={{ duration: 0.5, ease: "easeInOut" }}
-                />
+                <span className="font-jetbrains-mono hover:underline">Join Us</span>
               </Link>
             </li>
             <li className="text-severance-frost">
               <Link to="/privacy">
-                <ComesInGoesOutUnderline
-                  label="Privacy"
-                  className="font-jetbrains-mono"
-                  underlineHeightRatio={0.08}
-                  transition={{ duration: 0.5, ease: "easeInOut" }}
-                />
+                <span className="font-jetbrains-mono hover:underline">Privacy</span>
               </Link>
             </li>
           </ul>
         </div>
-        <h2 className="absolute bottom-0 left-0 translate-y-1/3 sm:text-[192px] text-[80px] text-severance-brass font-trap font-bold opacity-20">
+        <div aria-hidden="true" className="absolute bottom-0 left-0 translate-y-1/3 sm:text-[192px] text-[80px] text-severance-slate font-trap font-bold opacity-70">
           LUMON
-        </h2>
+        </div>
       </div>
     </div>
   );

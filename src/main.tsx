@@ -1,4 +1,6 @@
 import { createRoot } from 'react-dom/client'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import App from './App.tsx'
 // Import core styles
 import './index.css'
@@ -16,6 +18,10 @@ import './styles/3dscroll.css'
 import './styles/shinyButton.css'
 import './styles/navbarContrast.css'
 import { initButtonEffect } from './scripts/buttonEffect'
+
+gsap.registerPlugin(ScrollTrigger);
+window.gsap = gsap;
+window.ScrollTrigger = ScrollTrigger;
 
 createRoot(document.getElementById("root")!).render(<App />);
 
