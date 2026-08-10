@@ -12,7 +12,7 @@
     --columns: 16;
     grid-template-columns: repeat(var(--columns, 16), 1fr);
     /* Ensure the overlay is visible in all browsers */
-    background-color: transparent;
+    background-color: var(--transition-surface, #0b0e29);
     /* Prevent any potential issues with stacking contexts */
     transform: translateZ(0);
     -webkit-transform: translateZ(0);
@@ -33,7 +33,7 @@
 
 /* Demo1 - Vertical rows */
 .page-transition-overlay div {
-    background-color: var(--severance-midnight, #0b0e29);
+    background-color: var(--transition-cell, #163f38);
     will-change: transform, opacity;
     /* Ensure cells are visible in all browsers */
     transform: translateZ(0);
@@ -45,7 +45,7 @@
 
 /* Demo2 - From center */
 [data-transition="demo2"] .page-transition-overlay div {
-    background-color: var(--office-darkGreen, #163f38);
+    background-color: var(--transition-cell, #163f38);
     will-change: transform, opacity;
     transform: translateZ(0);
     -webkit-transform: translateZ(0);
@@ -53,7 +53,7 @@
 
 /* Demo4 - From edges to center */
 [data-transition="demo4"] .page-transition-overlay div {
-    background-color: var(--wardrobe-dark, #18232a);
+    background-color: var(--transition-cell, #163f38);
     will-change: transform, opacity;
     transform: translateZ(0);
     -webkit-transform: translateZ(0);
@@ -61,7 +61,7 @@
 
 /* Demo5 - Vertical columns */
 [data-transition="demo5"] .page-transition-overlay div {
-    background-color: var(--personal-brown, #673b15);
+    background-color: var(--transition-cell, #163f38);
     will-change: transform, opacity;
     transform: translateZ(0);
     -webkit-transform: translateZ(0);
@@ -69,10 +69,15 @@
 
 /* Demo6 - Horizontal slide */
 [data-transition="demo6"] .page-transition-overlay div {
-    background-color: var(--wardrobe-blue, #7f96ae);
+    background-color: var(--transition-cell, #163f38);
     will-change: transform, opacity;
     transform: translateZ(0);
     -webkit-transform: translateZ(0);
+}
+
+/* Route theme rules must not replace the cover with a bright accent colour. */
+[data-color-scheme] .page-transition-overlay div {
+    background-color: var(--transition-cell, #163f38) !important;
 }
 
 /* Fallback for browsers that don't support CSS Grid properly */

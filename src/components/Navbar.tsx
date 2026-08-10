@@ -1,24 +1,19 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import '../styles/navTextEffect.css';
 import '../styles/navbarFix.css';
 import '../styles/navbarContrast.css'; // Added for improved contrast
 import '../styles/navbarPadding.css'; // Added for adjusted padding on larger screens
 import '../styles/navbarPageThemes.css'; // Added for page-specific color schemes
 import '../styles/osmoMenu.css'; // Added for Osmo-style menu animation
-import { initNavTextAnimation } from '../scripts/nav-text-animation';
 import { initOsmoMenu } from '../scripts/osmoMenu';
 import { GooeyText } from '@/components/ui/gooey-text';
-import { useColorScheme } from './ColorSchemeProvider';
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
-  const { colorScheme } = useColorScheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,16 +22,6 @@ const Navbar: React.FC = () => {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Initialize text animation for navigation links
-  useEffect(() => {
-    // Small delay to ensure DOM is fully loaded
-    const timer = setTimeout(() => {
-      initNavTextAnimation();
-    }, 500);
-
-    return () => clearTimeout(timer);
   }, []);
 
   // Initialize Osmo menu on component mount
@@ -74,6 +59,11 @@ const Navbar: React.FC = () => {
     }
   }, [mobileMenuOpen]);
 
+  // Reset before the new route paints so no page inherits the old scroll offset.
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
   // Handle route changes
   useEffect(() => {
     // Close mobile menu when route changes
@@ -84,8 +74,6 @@ const Navbar: React.FC = () => {
       window.osmoCloseMenu();
     }
 
-    // Scroll to top when navigating to a new page
-    window.scrollTo(0, 0);
   }, [location.pathname]);
 
   const navItems = [
@@ -102,8 +90,8 @@ const Navbar: React.FC = () => {
     <header className={cn(
       "fixed top-0 left-0 right-0 w-full z-[100] transition-all duration-300 navbar-strip",
       isScrolled
-        ? "bg-wardrobe-light/95 backdrop-blur-sm shadow-sm py-4"
-        : "bg-transparent py-6"
+        ? "bg-severance-midnight/95 backdrop-blur-md shadow-lg py-4"
+        : "bg-severance-midnight/45 backdrop-blur-sm py-6"
     )}>
       <div className="container-custom navbar-container flex items-center justify-between">
         <Link
@@ -115,7 +103,7 @@ const Navbar: React.FC = () => {
             morphTime={1.5}
             cooldownTime={5}
             className="h-8 w-28 flex items-center justify-center"
-            textClassName="font-trap font-trap-bold text-2xl font-semibold tracking-tight text-wardrobe-dark text-center"
+            textClassName="font-trap font-trap-bold text-2xl font-semibold tracking-tight text-severance-frost text-center"
           />
         </Link>
 
@@ -126,7 +114,7 @@ const Navbar: React.FC = () => {
                 key={item.name}
                 to={item.path}
                 className={cn(
-                  "font-mono text-sm tracking-wide transition-colors uppercase nav-link",
+                  "font-offgrid text-sm tracking-wide transition-colors uppercase nav-link",
                   isActive(item.path)
                     ? "text-wardrobe-blue font-medium active"
                     : "text-wardrobe-dark hover:text-wardrobe-blue"

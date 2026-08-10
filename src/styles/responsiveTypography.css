@@ -1,0 +1,85 @@
+/* Guardrails for Moderniz's wider display glyphs. */
+:root {
+  --display-h1: clamp(2.25rem, 9vw, 7rem);
+  --display-h2: clamp(1.9rem, 6.5vw, 4.5rem);
+  --display-h3: clamp(1.5rem, 4.5vw, 3rem);
+}
+
+html,
+body,
+#root {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.trap-heading,
+[class*="font-trap"],
+[class*="font-moderniz"] {
+  max-inline-size: 100%;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+
+h1.trap-heading,
+h1[class*="font-trap"],
+h1[class*="font-moderniz"] {
+  font-size: var(--display-h1);
+  line-height: 0.95;
+  letter-spacing: -0.045em;
+}
+
+h2.trap-heading,
+h2[class*="font-trap"],
+h2[class*="font-moderniz"] {
+  font-size: var(--display-h2);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+h3.trap-heading,
+h3[class*="font-trap"],
+h3[class*="font-moderniz"] {
+  font-size: var(--display-h3);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+img,
+svg,
+canvas,
+video {
+  max-inline-size: 100%;
+}
+
+@media (max-width: 767px) {
+  .container-custom {
+    padding-inline: 1rem;
+  }
+
+  [class*="font-trap"],
+  [class*="font-moderniz"] {
+    letter-spacing: -0.035em;
+  }
+
+  .whitespace-nowrap[class*="font-trap"],
+  .whitespace-nowrap[class*="font-moderniz"] {
+    white-space: normal;
+  }
+
+  .lumon-button,
+  .btn,
+  button.primary,
+  button.secondary {
+    max-width: 100%;
+    min-height: 2.75rem;
+    padding-inline: 1rem;
+    white-space: normal;
+    text-align: center;
+  }
+}

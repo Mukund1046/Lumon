@@ -33,11 +33,19 @@ type TransitionType = 'demo1' | 'demo2' | 'demo4' | 'demo5' | 'demo6';
 
 // Map paths to transition types
 const pathToTransition: Record<string, TransitionType | null> = {
-  '/': null,              // Home page has no transition to allow hero animation to be fully seen
+  '/': 'demo1',           // Use the same restrained cover when returning home
   '/about': 'demo2',      // About page uses demo2 (from center)
   '/departments': 'demo4', // Departments page uses demo4 (from edges to center)
   '/employees': 'demo5',   // Employees page uses demo5 (vertical columns)
   '/join-us': 'demo6',     // Join Us page uses demo6 (horizontal slide)
+};
+
+const transitionPaletteByPath: Record<string, { surface: string; cell: string }> = {
+  '/': { surface: '#0b0e29', cell: '#163f38' },
+  '/about': { surface: '#171d28', cell: '#35523b' },
+  '/departments': { surface: '#1f3451', cell: '#0d4e8c' },
+  '/employees': { surface: '#0e1b3b', cell: '#336268' },
+  '/join-us': { surface: '#0e1b3b', cell: '#336268' },
 };
 
 interface TransitionManagerProps {
@@ -57,21 +65,6 @@ const TransitionManager: React.FC<TransitionManagerProps> = ({ children }) => {
 
   // Create cells for the overlay
   useEffect(() => {
-    // Skip initialization for homepage
-    if (location.pathname === '/' || pathToTransition[location.pathname] === null) {
-      console.log('Skipping transition initialization for homepage');
-      isInitialRender.current = false;
-      isAnimating.current = false;
-
-      // Ensure the overlay is hidden for homepage
-      if (overlayRef.current) {
-        overlayRef.current.style.display = 'none';
-        overlayRef.current.style.opacity = '0';
-      }
-
-      return;
-    }
-
     // Function to initialize the transition effect
     const initTransition = () => {
       if (!overlayRef.current) {
@@ -147,8 +140,8 @@ const TransitionManager: React.FC<TransitionManagerProps> = ({ children }) => {
 
       // Initial animation (fade out the overlay)
       if (isInitialRender.current) {
-        // Skip initial animation for homepage to allow hero animation to be fully seen
-        if (location.pathname === '/' || pathToTransition[location.pathname] === null) {
+        // Skip only the application's first home render.
+        if (isInitialRender.current && location.pathname === '/') {
           console.log('Skipping initial transition for homepage');
           isInitialRender.current = false;
           isAnimating.current = false;
@@ -168,8 +161,18 @@ const TransitionManager: React.FC<TransitionManagerProps> = ({ children }) => {
                 return 0.03 * (cell.row + window.gsap.utils.random(0, 5));
               },
               onComplete: () => {
-                isInitialRender.current = false;
-                isAnimating.current = false;
+                // The grid cells have cleared, but the overlay itself is now
+                // opaque to prevent transition flashes. Fade that base away on
+                // direct loads so it cannot leave the page covered.
+                window.gsap.to(overlay, {
+                  opacity: 0,
+                  duration: 0.24,
+                  ease: 'power2.out',
+                  onComplete: () => {
+                    isInitialRender.current = false;
+                    isAnimating.current = false;
+                  }
+                });
               }
             }
           );
@@ -180,20 +183,7 @@ const TransitionManager: React.FC<TransitionManagerProps> = ({ children }) => {
     // Start initialization
     initTransition();
 
-    // Cleanup function
-    return () => {
-      // Ensure the overlay is properly hidden when unmounting
-      if (overlayRef.current) {
-        overlayRef.current.style.display = 'none';
-        overlayRef.current.style.opacity = '0';
-      }
-
-      // Reset any GSAP animations
-      if (window.gsap && flatCells.current.length > 0) {
-        window.gsap.killTweensOf(flatCells.current.map(cell => cell.el));
-      }
-    };
-  }, [location.pathname]);
+  }, []);
 
   // Handle navigation link clicks
   useEffect(() => {
@@ -237,37 +227,20 @@ const TransitionManager: React.FC<TransitionManagerProps> = ({ children }) => {
     }
 
     // Update data attribute on document body for CSS styling
-    if (location.pathname === '/' || pathToTransition[location.pathname] === null) {
-      // For homepage, skip transitions
-      document.body.setAttribute('data-transition', 'none');
-    } else {
-      const transitionType = pathToTransition[location.pathname] || 'demo1';
-      document.body.setAttribute('data-transition', transitionType);
-    }
+    const transitionType = pathToTransition[location.pathname] || 'demo1';
+    document.body.setAttribute('data-transition', transitionType);
 
     prevPathname.current = location.pathname;
   }, [location.pathname]);
 
   // Set initial data attribute
   useEffect(() => {
-    if (location.pathname === '/' || pathToTransition[location.pathname] === null) {
-      // For homepage, skip transitions
-      document.body.setAttribute('data-transition', 'none');
-    } else {
-      const transitionType = pathToTransition[location.pathname] || 'demo1';
-      document.body.setAttribute('data-transition', transitionType);
-    }
+    const transitionType = pathToTransition[location.pathname] || 'demo1';
+    document.body.setAttribute('data-transition', transitionType);
   }, []);
 
   // Perform transition animation
   const performTransition = (path: string, updateHistory = true) => {
-    // Skip transition for homepage to allow hero animation to be fully seen
-    if (path === '/' || pathToTransition[path] === null) {
-      console.log('Skipping transition for homepage');
-      if (updateHistory) navigate(path);
-      return;
-    }
-
     // Check if we can perform the transition
     if (isAnimating.current) {
       console.log('Animation already in progress, skipping transition');
@@ -296,6 +269,12 @@ const TransitionManager: React.FC<TransitionManagerProps> = ({ children }) => {
     const fromTransition = pathToTransition[prevPathname.current] || 'demo1';
     const toTransition = pathToTransition[path] || 'demo1';
 
+    // A deep base hides the old route; a muted companion tone makes the moving
+    // cells visible without clashing with the destination's page palette.
+    const palette = transitionPaletteByPath[path] || transitionPaletteByPath['/'];
+    overlay.style.setProperty('--transition-surface', palette.surface);
+    overlay.style.setProperty('--transition-cell', palette.cell);
+
     // Make sure the overlay is visible
     overlay.style.display = 'grid';
 
@@ -319,31 +298,30 @@ const TransitionManager: React.FC<TransitionManagerProps> = ({ children }) => {
         ease: showConfig.ease,
         stagger: showConfig.stagger,
         onComplete: () => {
+          window.scrollTo(0, 0);
           // Update URL if needed
           if (updateHistory) {
             navigate(path);
           }
 
-          // Configure hide animation based on destination transition type
           const hideConfig = getHideConfig(toTransition);
-
-          // Hide overlay
-          window.gsap.fromTo(
-            flatCells.current.map(cell => cell.el),
-            {
-              transformOrigin: hideConfig.transformOrigin
-            },
-            {
-              scale: 0,
-              opacity: 0,
-              duration: hideConfig.duration,
-              ease: hideConfig.ease,
-              stagger: hideConfig.stagger,
-              onComplete: () => {
-                isAnimating.current = false;
-              }
+          window.gsap.to(flatCells.current.map(cell => cell.el), {
+            scale: 0,
+            opacity: 0,
+            duration: hideConfig.duration,
+            ease: hideConfig.ease,
+            stagger: hideConfig.stagger,
+            onComplete: () => {
+              window.gsap.to(overlay, {
+                opacity: 0,
+                duration: 0.18,
+                ease: 'power2.out',
+                onComplete: () => {
+                  isAnimating.current = false;
+                }
+              });
             }
-          );
+          });
         }
       }
     );

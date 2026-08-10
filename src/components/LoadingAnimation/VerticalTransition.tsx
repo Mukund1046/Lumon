@@ -103,7 +103,7 @@ const VerticalTransition: React.FC<VerticalTransitionProps> = ({
       <path
         ref={overlayPathRef}
         className="vertical-transition-overlay__path"
-        vector-effect="non-scaling-stroke"
+        vectorEffect="non-scaling-stroke"
         d={paths.step1.unfilled}
       />
     </svg>

@@ -70,7 +70,7 @@
 /* Small screens */
 @media (max-width: 767px) {
   #hero-canvas {
-    object-position: center 30% !important;
+    display: none !important;
   }
   
   #home [style*="background-image"] {
@@ -81,7 +81,7 @@
 /* Extra small screens */
 @media (max-width: 480px) {
   #hero-canvas {
-    object-position: center 25% !important;
+    display: none !important;
   }
   
   #home [style*="background-image"] {

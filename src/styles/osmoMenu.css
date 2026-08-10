@@ -54,7 +54,7 @@
   margin-left: auto;
   position: relative;
   overflow: auto;
-  background-color: var(--severance-slate, #8c8c8c);
+  background-color: var(--severance-midnight, #0b0e29);
 }
 
 /* Menu Background */
@@ -85,7 +85,7 @@
 /* Background Panels */
 .osmo-bg-panel {
   z-index: 0;
-  background-color: var(--severance-slate, #8c8c8c);
+  background-color: var(--severance-midnight, #0b0e29);
   position: absolute;
   inset: 0%;
   border-top-left-radius: 1.25em;
@@ -99,12 +99,12 @@
 }
 
 .osmo-bg-panel.first {
-  background-color: var(--severance-brass, #7b6727);
+  background-color: var(--severance-marine, #002c55);
   z-index: 2;
 }
 
 .osmo-bg-panel.second {
-  background-color: var(--severance-frost, #f0f6f7);
+  background-color: #173d59;
   z-index: 1;
 }
 
@@ -152,7 +152,7 @@
   transition: all .55s cubic-bezier(.65, .05, 0, 1);
   position: relative;
   color: var(--severance-frost, #f0f6f7);
-  text-shadow: 0px 1em 0px var(--severance-slate, #8c8c8c);
+  text-shadow: 0px 1em 0px var(--severance-slate, #89aec8);
   margin: 0;
   padding: 0;
   opacity: 1 !important;
@@ -163,7 +163,7 @@
 /* Eyebrow Text */
 .osmo-eyebrow {
   z-index: 15;
-  color: var(--severance-brass, #7b6727);
+  color: var(--severance-slate, #89aec8);
   text-transform: uppercase;
   font-family: var(--font-offgrid, 'Offgrid Sans', sans-serif);
   font-weight: 400;
@@ -196,6 +196,12 @@
   transform: translateY(50%);
   z-index: 15;
   position: relative;
+  color: var(--severance-frost, #f0f6f7);
+}
+
+.osmo-menu-details .text-link,
+.osmo-menu-details .p-small {
+  color: var(--severance-frost, #f0f6f7) !important;
 }
 
 /* Menu Button */
@@ -209,7 +215,8 @@
   display: flex;
   border: none;
   cursor: pointer;
-  color: var(--color-neutral-800);
+  color: var(--severance-frost, #f0f6f7);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
 }
 
 .osmo-menu-button-text {
@@ -243,19 +250,23 @@
 /* Close Button */
 .osmo-close-button {
   position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
+  top: 0;
+  left: 0;
+  right: 0;
+  min-height: 4.5rem;
+  justify-content: flex-end;
   z-index: 20;
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background: transparent;
+  background: rgba(11, 14, 41, 0.92);
   border: none;
+  border-bottom: 1px solid rgba(240, 246, 247, 0.2);
   color: var(--severance-frost, #f0f6f7);
   font-family: var(--font-offgrid, 'Offgrid Sans', sans-serif);
   font-size: 0.875rem;
   cursor: pointer;
-  padding: 0.5rem;
+  padding: 1rem var(--menu-padding);
 }
 
 .osmo-close-button .osmo-icon-wrap {
@@ -310,7 +321,7 @@
 @media screen and (max-width: 767px) {
   .osmo-menu {
     width: 100%;
-    padding-top: calc(6 * var(--menu-padding));
+    padding-top: 5.75rem;
   }
 
   .osmo-bg-panel {
@@ -343,7 +354,7 @@
 
 @media screen and (max-width: 479px) {
   .osmo-menu {
-    padding-top: calc(7 * var(--menu-padding));
+    padding-top: 5.75rem;
     padding-bottom: calc(2 * var(--menu-padding));
   }
 }

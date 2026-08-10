@@ -4,8 +4,8 @@ import { lazy, Suspense, useState } from "react";
 import TransitionManager from "./components/TransitionManager";
 import ColorSchemeProvider from "./components/ColorSchemeProvider";
 import HomePage from "./pages/HomePage";
+import LoadingAnimation from "./components/LoadingAnimation/LoadingAnimation";
 
-const LoadingAnimation = lazy(() => import("./components/LoadingAnimation/LoadingAnimation"));
 const AboutPage = lazy(() => import("./pages/AboutPage"));
 const DepartmentsPage = lazy(() => import("./pages/DepartmentsPage"));
 const EmployeesPage = lazy(() => import("./pages/EmployeesPage"));
@@ -18,16 +18,20 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 const TypographyDemo = lazy(() => import("./components/TypographyDemo"));
 
 const App = () => {
-  const [isLoading, setIsLoading] = useState(
-    () => sessionStorage.getItem("hasVisited") !== "true"
-  );
-  const [loadingComplete, setLoadingComplete] = useState(!isLoading);
+  // The pre-loading animation plays only on the homepage and only the first
+  // time in a session. On later visits (and on other pages) it is skipped so
+  // the site loads instantly, but loadingComplete still flips so the entrance
+  // animations fire.
+  const isFirstHomeVisit =
+    typeof window !== 'undefined' &&
+    window.location.pathname === '/' &&
+    sessionStorage.getItem('hasVisited') !== 'true';
 
-  if (isLoading) {
-    sessionStorage.setItem("hasVisited", "true");
-  }
+  const [isLoading, setIsLoading] = useState(isFirstHomeVisit);
+  const [loadingComplete, setLoadingComplete] = useState(!isFirstHomeVisit);
 
   const handleLoadingComplete = () => {
+    sessionStorage.setItem('hasVisited', 'true');
     setIsLoading(false);
     // Set loading complete flag to trigger animations
     setLoadingComplete(true);
@@ -36,9 +40,7 @@ const App = () => {
   return (
     <>
       {isLoading && (
-        <Suspense fallback={null}>
-          <LoadingAnimation onLoadingComplete={handleLoadingComplete} />
-        </Suspense>
+        <LoadingAnimation onLoadingComplete={handleLoadingComplete} />
       )}
       <BrowserRouter>
         <ColorSchemeProvider>

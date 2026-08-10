@@ -8,9 +8,7 @@
 }
 
 .hero-mobile #hero-canvas {
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: cover !important;
+  display: none !important;
 }
 
 .hero-mobile [style*="background-image"] {
@@ -22,14 +20,7 @@
 @media (max-width: 768px) {
   /* Improve canvas positioning and sizing */
   #hero-canvas {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
+    display: none !important;
   }
 
   /* Ensure the fallback background is properly sized and positioned */

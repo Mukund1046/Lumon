@@ -6,6 +6,7 @@ import App from './App.tsx'
 import './index.css'
 import './styles/buttonEffect.css'
 import './styles/typography.css'
+import './styles/responsiveTypography.css'
 import './styles/button.css'
 import './styles/colorSchemes.css'
 import './styles/gooeyText.css'
@@ -18,10 +19,17 @@ import './styles/3dscroll.css'
 import './styles/shinyButton.css'
 import './styles/navbarContrast.css'
 import { initButtonEffect } from './scripts/buttonEffect'
+import { registerAppResources } from './lib/appPreloads'
+import { preloadManager } from './lib/preloadManager'
 
 gsap.registerPlugin(ScrollTrigger);
 window.gsap = gsap;
 window.ScrollTrigger = ScrollTrigger;
+
+// Start loading all app resources in the background immediately so the
+// loading screen can report real progress and the site runs smoothly.
+registerAppResources();
+preloadManager.start();
 
 createRoot(document.getElementById("root")!).render(<App />);
 

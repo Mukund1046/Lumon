@@ -30,6 +30,7 @@
 
 /* Page-specific color schemes */
 [data-color-scheme="woe"] {
+  --transition-surface: #171d28;
   --page-primary: var(--woe-primary);
   --page-dark: var(--woe-dark);
   --page-light: var(--woe-light);
@@ -57,6 +58,7 @@
 }
 
 [data-color-scheme="malice"] {
+  --transition-surface: #1f3451;
   --page-primary: var(--malice-primary);
   --page-dark: var(--malice-dark);
   --page-light: var(--malice-light);
@@ -84,6 +86,7 @@
 }
 
 [data-color-scheme="dread"] {
+  --transition-surface: #0e1b3b;
   --page-primary: var(--dread-primary);
   --page-dark: var(--dread-dark);
   --page-light: var(--dread-neutral);
@@ -111,6 +114,7 @@
 }
 
 [data-color-scheme="frolic"] {
+  --transition-surface: #0e1b3b;
   --page-primary: var(--frolic-primary);
   --page-dark: var(--frolic-dark);
   --page-light: var(--frolic-neutral);
@@ -218,19 +222,23 @@
 [data-color-scheme="woe"] button,
 [data-color-scheme="woe"] .lumon-button {
   --hover-bg: var(--woe-primary);
+  --hover-fg: var(--woe-light);
 }
 
 [data-color-scheme="malice"] button,
 [data-color-scheme="malice"] .lumon-button {
   --hover-bg: var(--malice-accent);
+  --hover-fg: var(--malice-dark);
 }
 
 [data-color-scheme="dread"] button,
 [data-color-scheme="dread"] .lumon-button {
   --hover-bg: var(--dread-accent);
+  --hover-fg: var(--dread-dark);
 }
 
 [data-color-scheme="frolic"] button,
 [data-color-scheme="frolic"] .lumon-button {
   --hover-bg: var(--frolic-accent);
+  --hover-fg: var(--frolic-dark);
 }

@@ -35,7 +35,8 @@ export const initButtonEffect = () => {
       // Skip buttons inside certain components that might cause issues
       if (button.closest('.cmdk-item') ||
           button.closest('[role="dialog"]') ||
-          button.closest('[role="menu"]')) {
+          button.closest('[role="menu"]') ||
+          button.closest('#home')) {
         return;
       }
 
