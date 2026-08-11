@@ -1,7 +1,6 @@
 // Global type declarations
 
 interface Window {
-  BulgeEffect: any;
   gsap: typeof import('gsap').gsap;
   ScrollTrigger: typeof import('gsap/ScrollTrigger').ScrollTrigger;
   Lenis?: new (options?: Record<string, unknown>) => {
@@ -14,3 +13,4 @@ interface Window {
   osmoOpenMenu?: () => void;
   osmoCloseMenu?: () => void;
 }
+

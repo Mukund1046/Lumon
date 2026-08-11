@@ -67,6 +67,8 @@ const LoadingAnimation: React.FC<LoadingAnimationProps> = ({ onLoadingComplete }
 
       <div className="lumon-logo">LUMON</div>
 
+      <div className="loading-audio-hint">Click anywhere to enable audio on the home page</div>
+
       <VerticalTransition
         isActive={isTransitioning}
         onTransitionComplete={handleTransitionComplete}

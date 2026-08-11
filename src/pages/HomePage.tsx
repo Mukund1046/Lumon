@@ -2,7 +2,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
-import Footer from '../components/Footer';
 import { addScrollAnimation } from '../lib/animationUtils';
 import { useLocomotiveScroll } from '../hooks/useLocomotiveScroll';
 import 'locomotive-scroll/dist/locomotive-scroll.css';
@@ -68,9 +67,6 @@ const HomePage: React.FC<HomePageProps> = ({ loadingComplete = false }) => {
         <Navbar />
         <Hero loadingComplete={loadingComplete} />
       </div>
-
-      {/* Sticky footer with lower z-index */}
-      <Footer />
     </div>
   );
 };

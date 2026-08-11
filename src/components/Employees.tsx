@@ -130,46 +130,40 @@ const employees: Employee[] = [
 
 const Employees: React.FC = () => {
   return (
-    <section id="employees" className="employees-section bg-wardrobe-dark text-wardrobe-light relative overflow-hidden">
-      {/* Background elements */}
+    <section id="employees" className="employees-section">
+      {/* Layered background */}
       <div className="employees-background"></div>
       <div className="employees-grid"></div>
+      <div className="employees-glow"></div>
+      <div className="employees-noise" aria-hidden="true"></div>
 
-      {/* Noise texture overlay */}
-      <div
-        className="absolute inset-0 opacity-15 mix-blend-overlay animate-noise"
-        style={{ backgroundImage: 'url(/assets/noise.png)', backgroundRepeat: 'repeat' }}
-      ></div>
-
-      <div className="container-custom employees-content">
-        <div className="max-w-3xl mx-auto text-center mb-12">
-          <h2 className="text-4xl md:text-5xl font-trap font-medium tracking-tight mb-4 employees-title">
-            Our <span className="text-wardrobe-blue">Employees</span>
+      <div className="employees-content">
+        <header className="employees-header">
+          <p className="employees-eyebrow">Lumon Industries · Macrodata Refinement</p>
+          <h2 className="employees-title">
+            <span className="employees-title-line">The Severed</span>
+            <span className="employees-title-line employees-title-line--offset">Floor</span>
           </h2>
-
-          <p className="text-wardrobe-light/80 font-space-grotesk text-lg md:text-xl mb-8 max-w-2xl mx-auto">
-            Meet the dedicated team members who have chosen the severed work experience.
-            Each contributes to Lumon's mission in their unique way.
+          <p className="employees-hint">
+            <span className="employees-hint-dot" aria-hidden="true"></span>
+            Drag the sphere to explore
           </p>
+        </header>
 
-          <p className="text-wardrobe-blue/90 font-jetbrains-mono text-sm mb-4 italic">
-            Drag the sphere to explore our employees
-          </p>
+        <div className="employees-stage">
+          <div className="infinite-menu-container">
+            <InfiniteMenu
+              items={employees}
+              onItemClick={(item) => {
+                window.location.href = item.link;
+              }}
+            />
+          </div>
         </div>
 
-        {/* InfiniteMenu Component */}
-        <div className="infinite-menu-container">
-          <InfiniteMenu
-            items={employees}
-            onItemClick={(item) => {
-              window.location.href = item.link;
-            }}
-          />
-        </div>
-
-        <div className="text-center mt-8 text-wardrobe-light/60 font-space-grotesk text-sm">
-          <p>All employees shown have undergone the severance procedure.</p>
-        </div>
+        <footer className="employees-footer">
+          <p>All personnel shown are voluntarily severed.</p>
+        </footer>
       </div>
     </section>
   );

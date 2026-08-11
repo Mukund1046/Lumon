@@ -10,6 +10,12 @@ declare global {
   }
 }
 
+// Broadcasts when the current page transition has fully cleared. Consumers
+// (e.g. the hero video) start heavy/audible work only after the reveal ends.
+const notifyTransitionComplete = (): void => {
+  window.dispatchEvent(new CustomEvent('lumon:transition-complete'));
+};
+
 // Cell class for creating grid cells
 class Cell {
   el: HTMLDivElement;
@@ -146,6 +152,7 @@ const TransitionManager: React.FC<TransitionManagerProps> = ({ children }) => {
           isInitialRender.current = false;
           isAnimating.current = false;
           overlay.style.opacity = '0';
+          notifyTransitionComplete();
         } else {
           window.gsap.set(overlay, { opacity: 1 });
 
@@ -318,6 +325,7 @@ const TransitionManager: React.FC<TransitionManagerProps> = ({ children }) => {
                 ease: 'power2.out',
                 onComplete: () => {
                   isAnimating.current = false;
+                  notifyTransitionComplete();
                 }
               });
             }

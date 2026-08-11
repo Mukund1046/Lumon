@@ -76,6 +76,35 @@
   z-index: 1;
 }
 
+.loading-audio-hint {
+  position: absolute;
+  bottom: 48px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-offgrid, 'Offgrid Sans', sans-serif);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--severance-frost, #f0f6f7);
+  opacity: 0.5;
+  text-align: center;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 10;
+}
+
+@media (max-width: 768px) {
+  .loading-audio-hint {
+    bottom: 32px;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    white-space: normal;
+    max-width: 100%;
+    padding: 0 2rem;
+  }
+}
+
 @media (max-width: 768px) {
   .loading-counter-number {
     font-size: 80px;

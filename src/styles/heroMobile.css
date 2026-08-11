@@ -7,7 +7,8 @@
   overflow: hidden !important;
 }
 
-.hero-mobile #hero-canvas {
+.hero-mobile #hero-video,
+.hero-mobile #hero-video {
   display: none !important;
 }
 
@@ -19,7 +20,8 @@
 /* Ensure proper background image display on mobile */
 @media (max-width: 768px) {
   /* Improve canvas positioning and sizing */
-  #hero-canvas {
+  #hero-video,
+  #hero-video {
     display: none !important;
   }
 
@@ -80,7 +82,7 @@
   position: relative !important;
 }
 
-.mobile-menu.max-h-96 ~ #home #hero-canvas,
+.mobile-menu.max-h-96 ~ #home #hero-video,
 .mobile-menu.max-h-96 ~ #home [style*="background-image"],
 .mobile-menu.max-h-96 ~ #home .animate-noise {
   z-index: 0 !important;
@@ -93,3 +95,4 @@
   z-index: 100 !important;
   position: absolute !important;
 }
+

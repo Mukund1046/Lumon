@@ -1,55 +1,188 @@
+/* Employees page - the severed floor.
+   Only the chrome around the globe is styled here; the WebGL sphere itself
+   (InfiniteMenu) is left untouched. */
+
 .employees-section {
+  --emp-bg0: #0a0f14;
+  --emp-bg1: #101a22;
+  --emp-bg2: #16222b;
+  --emp-line: rgba(148, 180, 200, 0.09);
+  --emp-accent: #9cc4d8;
+  --emp-accent-soft: rgba(156, 196, 216, 0.35);
+  --emp-text: #e7edf2;
+  --emp-muted: rgba(231, 237, 242, 0.55);
+
   min-height: 100vh;
-  padding: 6rem 0 3rem;
-  background-color: var(--wardrobe-dark);
-  color: var(--wardrobe-light);
+  padding: 96px 0 32px;
+  background-color: var(--emp-bg1);
+  color: var(--emp-text);
   position: relative;
   overflow: hidden;
+  font-family: var(--font-offgrid, 'Offgrid Sans', sans-serif);
 }
 
-.infinite-menu-container {
-  height: 75vh;
-  width: 100%;
-  position: relative;
-  margin: 0 auto;
-  overflow: hidden;
-  border-radius: 12px;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), inset 0 0 0 1px rgba(127, 150, 174, 0.2);
-  background-color: rgba(24, 35, 42, 0.85);
-  backdrop-filter: blur(10px);
-  transition: all 0.3s ease;
-  z-index: 10;
-}
-
-.infinite-menu-container::before {
-  content: '';
+/* Layered background */
+.employees-background {
   position: absolute;
-  top: -10%;
-  left: -10%;
-  width: 120%;
-  height: 120%;
-  background: radial-gradient(circle at center, rgba(127, 150, 174, 0.1) 0%, transparent 70%);
-  z-index: -1;
+  inset: 0;
+  background: linear-gradient(172deg, var(--emp-bg2) 0%, var(--emp-bg1) 42%, var(--emp-bg0) 100%);
+  z-index: 0;
+}
+
+.employees-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--emp-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--emp-line) 1px, transparent 1px);
+  background-size: 52px 52px;
+  mask-image: radial-gradient(ellipse at 50% 42%, rgba(0, 0, 0, 0.9), transparent 78%);
+  -webkit-mask-image: radial-gradient(ellipse at 50% 42%, rgba(0, 0, 0, 0.9), transparent 78%);
+  z-index: 1;
   pointer-events: none;
 }
 
-.infinite-menu-container::after {
-  content: '';
+.employees-glow {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 6%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 78vw;
+  height: 62vh;
+  background: radial-gradient(ellipse at center, rgba(127, 160, 186, 0.16) 0%, transparent 70%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.employees-noise {
+  position: absolute;
+  inset: 0;
   background-image: url('/assets/noise.png');
   background-repeat: repeat;
   opacity: 0.05;
   mix-blend-mode: overlay;
+  z-index: 2;
   pointer-events: none;
 }
 
-/* Override InfiniteMenu styles to match Severance theme */
+/* Content column */
+.employees-content {
+  position: relative;
+  z-index: 10;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 0 72px;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  min-height: 620px;
+}
+
+/* Header - centered */
+.employees-header {
+  flex: 0 0 auto;
+  padding-top: 8px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.employees-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 0 0 16px;
+  font-family: var(--font-jetbrains-mono, 'JetBrains Mono', monospace);
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--emp-accent);
+}
+
+.employees-eyebrow::before,
+.employees-eyebrow::after {
+  content: '';
+  width: 44px;
+  height: 1px;
+  background: var(--emp-accent);
+  opacity: 0.7;
+}
+
+.employees-title {
+  margin: 0;
+  font-family: var(--font-moderniz, 'Moderniz', sans-serif);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.employees-title-line {
+  display: block;
+  font-size: clamp(44px, 6.5vw, 96px);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+}
+
+.employees-title-line--offset {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--emp-text);
+  opacity: 0.85;
+}
+
+.employees-hint {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 18px 0 0;
+  font-family: var(--font-jetbrains-mono, 'JetBrains Mono', monospace);
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--emp-accent);
+}
+
+.employees-hint-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--emp-accent);
+  box-shadow: 0 0 12px 2px var(--emp-accent-soft);
+  animation: employees-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes employees-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.35; transform: scale(0.72); }
+}
+
+/* Globe stage - rectangle panel container */
+.employees-stage {
+  flex: 0 0 auto;
+  height: 68vh;
+  min-height: 560px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 12px;
+}
+
+.infinite-menu-container {
+  position: relative;
+  width: min(100%, 1400px);
+  height: 100%;
+  margin: 0 auto;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(148, 180, 200, 0.14);
+  background: radial-gradient(ellipse at center, rgba(127, 160, 186, 0.1) 0%, rgba(10, 15, 20, 0.55) 70%);
+  box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.8);
+  z-index: 4;
+}
+
+/* Globe floats over the container backdrop */
 #infinite-grid-menu-canvas {
-  background-color: var(--wardrobe-dark) !important;
+  background-color: transparent !important;
   cursor: grab !important;
 }
 
@@ -57,124 +190,107 @@
   cursor: grabbing !important;
 }
 
+/* Centered face title */
 .face-title {
-  font-family: var(--font-offgrid, 'Offgrid Sans', sans-serif) !important;
+  font-family: var(--font-jetbrains-mono, 'JetBrains Mono', monospace) !important;
   font-weight: 500 !important;
-  color: var(--wardrobe-light) !important;
+  color: var(--emp-text) !important;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  font-size: 1rem !important;
-  text-shadow: 0 0 5px rgba(223, 225, 226, 0.3) !important;
-  transform: translateX(-50%) !important;
-  bottom: 10% !important;
-  left: 50% !important;
-  text-align: center !important;
-  width: 100% !important;
+  letter-spacing: 0.32em;
+  font-size: 13px !important;
+  bottom: 6% !important;
 }
 
 .face-title.active {
-  transform: translateX(-50%) !important;
   transition: opacity 0.5s ease, transform 0.5s ease !important;
 }
 
-/* Face description removed */
-
+/* Action arrow button */
 .action-button {
-  background-color: var(--wardrobe-blue) !important;
-  border: none !important;
-  box-shadow: 0 0 20px rgba(127, 150, 174, 0.5);
-  transition: all 0.3s ease;
-  width: 70px !important;
-  height: 70px !important;
-  bottom: 5rem !important;
-}
-
-.action-button:hover {
-  transform: translateX(-50%) scale(1.1) !important;
-  box-shadow: 0 0 30px rgba(127, 150, 174, 0.7);
+  background: rgba(10, 15, 20, 0.6) !important;
+  border: 1px solid var(--emp-accent-soft) !important;
+  border-radius: 50% !important;
+  box-shadow: 0 0 24px -4px var(--emp-accent-soft);
+  width: 64px !important;
+  height: 64px !important;
 }
 
 .action-button.active {
-  transform: translateX(-50%) scale(1) !important;
-  transition: opacity 0.5s ease, transform 0.5s ease, bottom 0.5s ease !important;
+  bottom: 3.4rem !important;
+}
+
+.action-button:hover {
+  transform: translateX(-50%) scale(1.08);
+  border-color: var(--emp-accent) !important;
+  box-shadow: 0 0 34px -2px var(--emp-accent);
+}
+
+.action-button.inactive {
+  bottom: -80px !important;
 }
 
 .action-button-icon {
-  color: var(--wardrobe-dark) !important;
-  font-size: 30px !important;
+  color: var(--emp-accent) !important;
+  font-size: 24px !important;
 }
 
-/* Add a subtle background pattern */
-.employees-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: linear-gradient(to bottom, rgba(24, 35, 42, 0.9), rgba(24, 35, 42, 1));
-  z-index: 0;
+/* Footer line */
+.employees-footer {
+  flex: 0 0 auto;
+  padding: 0 0 8px;
+  text-align: center;
 }
 
-/* Add a subtle grid pattern */
-.employees-grid {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: linear-gradient(rgba(127, 150, 174, 0.05) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(127, 150, 174, 0.05) 1px, transparent 1px);
-  background-size: 40px 40px;
-  z-index: 1;
-  opacity: 0.5;
+.employees-footer p {
+  margin: 0;
+  font-family: var(--font-jetbrains-mono, 'JetBrains Mono', monospace);
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--emp-muted);
 }
 
-/* Responsive adjustments */
+/* Responsive */
 @media (max-width: 768px) {
-  .infinite-menu-container {
-    height: 60vh;
+  .employees-section {
+    padding: 76px 0 16px;
   }
 
-  .face-title {
-    font-size: 0.875rem !important;
-    transform: translateX(-50%) !important;
+  .employees-content {
+    padding: 0 24px;
+    height: calc(100vh - 96px);
+    min-height: 540px;
   }
 
-  .face-title.active {
-    transform: translateX(-50%) !important;
+  .employees-eyebrow {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+  }
+
+  .employees-eyebrow::before,
+  .employees-eyebrow::after {
+    width: 24px;
+  }
+
+  .employees-title-line {
+    font-size: clamp(34px, 12vw, 52px);
+  }
+
+  .employees-title-line--offset {
+    -webkit-text-stroke: 1px var(--emp-text);
+  }
+
+  .employees-hint {
+    font-size: 9px;
+    letter-spacing: 0.2em;
   }
 
   .action-button {
-    width: 60px !important;
-    height: 60px !important;
-    bottom: 3rem !important;
+    width: 56px !important;
+    height: 56px !important;
   }
 
-  .action-button-icon {
-    font-size: 24px !important;
+  .action-button.active {
+    bottom: 2.6rem !important;
   }
-}
-
-/* Additional container for better layout */
-.employees-content {
-  position: relative;
-  z-index: 10;
-  padding: 0 1rem;
-}
-
-/* Section title styling */
-.employees-title {
-  position: relative;
-  display: inline-block;
-  margin-bottom: 1.5rem;
-}
-
-.employees-title::after {
-  content: '';
-  position: absolute;
-  bottom: -0.5rem;
-  left: 0;
-  width: 60px;
-  height: 3px;
-  background-color: var(--wardrobe-blue);
 }

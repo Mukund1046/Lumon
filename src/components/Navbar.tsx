@@ -91,7 +91,7 @@ const Navbar: React.FC = () => {
       "fixed top-0 left-0 right-0 w-full z-[100] transition-all duration-300 navbar-strip",
       isScrolled
         ? "bg-severance-midnight/95 backdrop-blur-md shadow-lg py-4"
-        : "bg-severance-midnight/45 backdrop-blur-sm py-6"
+        : "bg-transparent py-6"
     )}>
       <div className="container-custom navbar-container flex items-center justify-between">
         <Link

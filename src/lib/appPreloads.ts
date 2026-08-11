@@ -10,8 +10,6 @@
 import {
   preloadManager,
   loadImage,
-  loadAudio,
-  loadScript,
   loadFonts,
 } from './preloadManager';
 
@@ -19,11 +17,20 @@ import {
 const singleAssets: Array<{ id: string; weight: number; load: () => Promise<unknown> }> = [
   { id: 'fonts', weight: 12, load: loadFonts },
   { id: 'hero-image', weight: 8, load: () => loadImage('/Mark-optimized.jpg') },
+  { id: 'hero-video', weight: 10, load: () => loadVideo('/elevator-scene.mp4') },
   { id: 'noise-texture', weight: 2, load: () => loadImage('/assets/noise.png') },
   { id: 'og-image', weight: 2, load: () => loadImage('/assets/severance126.jpg') },
-  { id: 'elevator-chime', weight: 6, load: () => loadAudio('/Severance.mp3') },
-  { id: 'bulge-effect', weight: 4, load: () => loadScript('/assets/js/effects/bulgeEffect.js') },
 ];
+
+// Preloads a hero scene video (the video carries its own elevator audio, so no
+// separate audio file is needed). Warming the cache avoids a stall on first play.
+const loadVideo = (src: string): Promise<void> =>
+  new Promise((resolve) => {
+    fetch(src)
+      .then((res) => (res.ok ? res.arrayBuffer() : undefined))
+      .then(() => resolve())
+      .catch(() => resolve());
+  });
 
 // Employee gallery images shown on the employees page.
 const employeeImages = [

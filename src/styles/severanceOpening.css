@@ -13,6 +13,8 @@
   position: relative;
   clip-path: inset(0 100% 0 0);
   overflow: hidden;
+  /* Keep the reveal line above the glyphs instead of slicing the letterheads. */
+  padding-top: 8px;
 }
 
 .severance-opening__text::before {
