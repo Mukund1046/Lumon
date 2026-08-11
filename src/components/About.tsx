@@ -74,7 +74,7 @@ const About: React.FC = () => {
       <div className="intro">
         <h1 className="intro__title">
           <span className="intro__title-pre">Severance</span>
-          <span className="intro__title-sub">Work-Life Separation</span>
+          <span className="intro__title-sub">Work Life Separation</span>
         </h1>
         <span className="intro__info">Scroll moderately to fully experience the animations</span>
       </div>

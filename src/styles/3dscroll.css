@@ -170,6 +170,24 @@
     --grid-columns: 2;
     --grid-gap: 4vw;
   }
+
+  .intro__title {
+    line-height: 1.15;
+  }
+
+  .intro__title-pre {
+    font-size: clamp(1.1rem, 4.5vw, 1.8rem);
+  }
+
+  .intro__title-sub {
+    font-size: clamp(1.4rem, 7.5vw, 2.5rem);
+    max-width: 14ch;
+  }
+
+  .grid-section__title {
+    font-size: clamp(1.2rem, 7vw, 3.5rem);
+    padding: 0 6vw;
+  }
 }
 
 @media screen and (max-width: 480px) {
@@ -178,7 +196,7 @@
     --grid-gap: 6vw;
   }
 
-  .grid-section__title {
-    font-size: clamp(1.2rem, 10vw, 4rem);
+  .intro__title-sub {
+    font-size: clamp(1.25rem, 7vw, 1.8rem);
   }
 }

@@ -253,13 +253,19 @@
 /* Responsive */
 @media (max-width: 768px) {
   .employees-section {
-    padding: 76px 0 16px;
+    padding: 76px 0 24px;
   }
 
   .employees-content {
     padding: 0 24px;
-    height: calc(100vh - 96px);
-    min-height: 540px;
+    height: auto;
+    min-height: auto;
+  }
+
+  .employees-stage {
+    height: 58vh;
+    min-height: 380px;
+    padding-top: 8px;
   }
 
   .employees-eyebrow {
@@ -273,7 +279,7 @@
   }
 
   .employees-title-line {
-    font-size: clamp(34px, 12vw, 52px);
+    font-size: clamp(30px, 10vw, 44px);
   }
 
   .employees-title-line--offset {

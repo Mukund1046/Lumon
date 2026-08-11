@@ -7,9 +7,8 @@
   overflow: hidden !important;
 }
 
-.hero-mobile #hero-video,
 .hero-mobile #hero-video {
-  display: none !important;
+  display: block !important;
 }
 
 .hero-mobile [style*="background-image"] {
@@ -19,10 +18,9 @@
 
 /* Ensure proper background image display on mobile */
 @media (max-width: 768px) {
-  /* Improve canvas positioning and sizing */
-  #hero-video,
+  /* Show the elevator video on mobile */
   #hero-video {
-    display: none !important;
+    display: block !important;
   }
 
   /* Ensure the fallback background is properly sized and positioned */
@@ -44,7 +42,7 @@
     height: 100vh !important;
     max-height: none !important;
     display: flex !important;
-    align-items: center !important;
+    align-items: flex-end !important;
     justify-content: center !important;
     overflow: hidden !important;
   }
@@ -53,6 +51,22 @@
   #home .container-custom {
     position: relative !important;
     z-index: 10 !important;
+  }
+
+  /* Center the hero intro and content below it on mobile */
+  #home .relative.z-10 > div {
+    align-items: center !important;
+    text-align: center !important;
+    justify-content: center !important;
+  }
+
+  #home .relative.z-10 .lg\:max-w-xl {
+    max-width: 100% !important;
+  }
+
+  #home .relative.z-10 a {
+    margin-left: auto !important;
+    margin-right: auto !important;
   }
 
   /* Ensure the noise texture overlay is properly sized and positioned */

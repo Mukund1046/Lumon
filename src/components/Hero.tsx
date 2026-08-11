@@ -1,7 +1,5 @@
 
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import '../styles/textEffect.css';
 import '../styles/heroMobile.css';
@@ -26,6 +24,9 @@ const Hero: React.FC<HeroProps> = ({ loadingComplete = false }) => {
   const [audioPlaying, setAudioPlaying] = useState(false);
   // State to track if the audio has completed
   const [audioComplete, setAudioComplete] = useState(false);
+  // State to track if the video has decoded its first frame (so we can drop
+  // the static fallback image as soon as the video is actually visible)
+  const [videoReady, setVideoReady] = useState(false);
 
   // Check if we're on a mobile device
   useEffect(() => {
@@ -52,7 +53,7 @@ const Hero: React.FC<HeroProps> = ({ loadingComplete = false }) => {
   // back to home. The video carries its own elevator audio, so it is started
   // unmuted — the audio and picture can never drift apart.
   useEffect(() => {
-    if (!loadingComplete || isMobile) return;
+    if (!loadingComplete) return;
 
     const video = videoRef.current;
     if (!video) return;
@@ -116,8 +117,6 @@ const Hero: React.FC<HeroProps> = ({ loadingComplete = false }) => {
   // while it starts, so nothing is shown mid-transition. Never fires on
   // navigation links, so the sound never rings while leaving home.
   useEffect(() => {
-    if (isMobile) return;
-
     const handleGesture = (e: PointerEvent | KeyboardEvent) => {
       if (hasPlayedAudioRef.current) return;
       const target = e.target as Element | null;
@@ -173,26 +172,25 @@ const Hero: React.FC<HeroProps> = ({ loadingComplete = false }) => {
         isMobile && "hero-mobile" // Add mobile-specific class
       )}
     >
-      {/* Background motion: elevator scene video (outie → innie), desktop only.
+      {/* Background motion: elevator scene video (outie → innie).
           No loop: the video pauses on its last frame. Started muted-free once
           the page reveal has finished (see effect above). */}
-      {!isMobile && (
-        <div className="absolute inset-0 z-[1] overflow-hidden">
-          <video
-            id="hero-video"
-            ref={videoRef}
-            preload="auto"
-            playsInline
-            disablePictureInPicture
-            onEnded={handleVideoEnded}
-            aria-hidden="true"
-          >
-            <source src="/elevator-scene.mp4" type="video/mp4" />
-          </video>
-        </div>
-      )}
+      <div className="absolute inset-0 z-[1] overflow-hidden">
+        <video
+          id="hero-video"
+          ref={videoRef}
+          preload="auto"
+          playsInline
+          disablePictureInPicture
+          onLoadedData={() => setVideoReady(true)}
+          onEnded={handleVideoEnded}
+          aria-hidden="true"
+        >
+          <source src="/elevator-scene.mp4" type="video/mp4" />
+        </video>
+      </div>
 
-      {/* Fallback background image (hidden when the video works) */}
+      {/* Fallback background image (hidden once the video has loaded its first frame) */}
       <div
         className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat overflow-hidden"
         style={{
@@ -200,7 +198,8 @@ const Hero: React.FC<HeroProps> = ({ loadingComplete = false }) => {
           backgroundSize: 'cover',
           backgroundPosition: 'center top', /* Position at top to show Mark's face looking up */
           width: '100%',
-          height: '100%'
+          height: '100%',
+          ...(videoReady ? { visibility: 'hidden' } : {}),
         }}
       ></div>
 
@@ -249,15 +248,6 @@ const Hero: React.FC<HeroProps> = ({ loadingComplete = false }) => {
               delay={0.02}
               loadingComplete={loadingComplete}
             />
-
-            <div className={`opacity-0 ${loadingComplete ? 'animate-fade-in animate-delay-300' : ''} mt-6 sm:mt-8 lg:flex lg:justify-end`}>
-              <Link to="/join-us" className="group">
-                <span className="lumon-button primary jetbrains-mono-button flex items-center px-4 sm:px-6 py-2.5 sm:py-3 text-xs sm:text-sm bg-severance-frost text-severance-midnight hover:bg-severance-frost/90 transition-all duration-300 shadow-md">
-                  Apply for Severance
-                  <ArrowRight className="ml-2 h-3 w-3 sm:h-4 sm:w-4 transition-transform group-hover:translate-x-1" />
-                </span>
-              </Link>
-            </div>
           </div>
         </div>
       </div>

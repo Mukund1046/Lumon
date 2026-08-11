@@ -125,14 +125,6 @@ const Navbar: React.FC = () => {
             ))}
           </nav>
 
-          {/* Apply Now button - only visible on desktop */}
-          <Link
-            to="/join-us"
-            className="lumon-button primary jetbrains-mono-button hidden md:block ml-8 cta-container"
-          >
-            Apply Now
-          </Link>
-
           {/* Mobile menu toggle - only visible on mobile */}
           <button
             className="md:hidden osmo-menu-button"
@@ -229,16 +221,6 @@ const Navbar: React.FC = () => {
             <div className="osmo-menu-details" data-osmo-menu-fade>
               <p className="p-small">Lumon Industries</p>
               <div className="socials-row">
-                <Link
-                  to="/join-us"
-                  className="p-large text-link"
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    if (typeof window.osmoCloseMenu === 'function') {
-                      window.osmoCloseMenu();
-                    }
-                  }}
-                >Apply Now</Link>
                 <Link
                   to="/privacy"
                   className="p-large text-link"
